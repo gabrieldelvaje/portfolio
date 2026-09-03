@@ -523,35 +523,112 @@
 }
 
 .sugar-cane-preview {
-  padding: 0;
-  background: #fff;
-}
-
-.sugar-preview-dark {
-  display: none !important;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: .85fr 1.15fr;
+  align-items: center;
+  gap: 20px;
+  padding: 26px 34px;
+  background: #242021;
 }
 
 [data-theme="dark"] .sugar-cane-preview {
   border: 1px solid var(--line);
-  background: #0e1117;
 }
 
-[data-theme="dark"] .sugar-preview-light {
-  display: none;
+.sugar-orbit {
+  position: absolute;
+  z-index: -1;
+  left: 9%;
+  top: 50%;
+  width: 42%;
+  aspect-ratio: 1;
+  border: 1px solid var(--blue);
+  border-radius: 50%;
+  transform: translateY(-50%);
 }
 
-[data-theme="dark"] .sugar-preview-dark {
-  display: block !important;
+.sugar-orbit::after {
+  content: "";
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  right: 8%;
+  top: 9%;
+  border-radius: 50%;
+  background: var(--blue);
 }
 
-.sugar-cane-preview img {
-  width: 100%;
-  height: 100%;
+.sugar-emoji {
+  z-index: 1;
   display: block;
-  object-fit: cover;
-  object-position: center;
-  border-radius: inherit;
-  transform: scale(1.02);
+  justify-self: center;
+  font-family: "Segoe UI Emoji","Apple Color Emoji",sans-serif;
+  font-size: clamp(58px,6vw,88px);
+  line-height: 1;
+  filter: drop-shadow(0 10px 16px rgba(0,0,0,.24));
+  transition: transform .5s cubic-bezier(.22,1,.36,1);
+}
+
+.chat-preview {
+  z-index: 1;
+  width: 100%;
+  display: grid;
+  gap: 13px;
+}
+
+.chat-preview i {
+  position: relative;
+  display: block;
+  width: 88%;
+  height: 47px;
+  border: 1px solid rgba(244,242,240,.72);
+  border-radius: 18px;
+  background: rgba(244,242,240,.025);
+  transition: transform .45s cubic-bezier(.22,1,.36,1), background-color .25s ease;
+}
+
+.chat-preview i:nth-child(2) {
+  justify-self: end;
+  width: 76%;
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+.chat-preview i::before,
+.chat-preview i::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  height: 1px;
+  border-radius: 2px;
+  background: rgba(244,242,240,.76);
+}
+
+.chat-preview i::before {
+  width: 56%;
+  top: 16px;
+}
+
+.chat-preview i::after {
+  width: 34%;
+  top: 27px;
+}
+
+.sugar-cane-preview:hover .sugar-emoji {
+  transform: translateY(-4px) rotate(-4deg) scale(1.06);
+}
+
+.sugar-cane-preview:hover .chat-preview i:first-child {
+  transform: translateX(5px);
+}
+
+.sugar-cane-preview:hover .chat-preview i:nth-child(2) {
+  transform: translateX(-5px);
+}
+
+.sugar-cane-preview:hover .chat-preview i:last-child {
+  transform: translateX(3px);
 }
 
 @media (max-width: 1100px) {
