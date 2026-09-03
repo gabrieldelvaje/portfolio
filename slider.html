@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Gabriel Delvaje — immersive data analytics portfolio." />
+  <meta name="theme-color" content="#f3f2ee" />
+  <title>Gabriel Delvaje — Sliding Portfolio</title>
+  <link rel="stylesheet" href="slider.css" />
+  <link rel="stylesheet" href="slider-effects.css?v=4" />
+</head>
+<body>
+  <header class="topbar">
+    <nav aria-label="Portfolio sections">
+      <div class="section-links">
+        <button data-go="0" class="active">About me</button>
+        <button data-go="1">Resume</button>
+        <button data-go="2">Work</button>
+      </div>
+      <button class="mode-toggle" aria-label="Switch to dark theme" aria-pressed="false">
+        <span class="mode-slider"></span><span class="mode-sun">☀</span><span class="mode-moon">☾</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="slider" aria-live="polite">
+    <section class="slide about-slide active" data-slide="0" aria-label="About me">
+      <div class="slide-inner about-grid">
+        <div class="about-statement">
+          <p class="kicker">DATA ANALYTICS · VISUALIZATION</p>
+          <h1>Hi, I’m<br /><span>Gabriel.</span></h1>
+          <p class="lede">I transform complex data into clear visual narratives that help people make better decisions.</p>
+          <div class="contact-row">
+            <a href="mailto:gabrieldelvaje@gmail.com">Email ↗</a>
+            <a href="https://www.linkedin.com/in/gdelvaje" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            <a href="https://github.com/gabrieldelvaje" target="_blank" rel="noreferrer">GitHub ↗</a>
+          </div>
+        </div>
+        <div class="portrait-stage">
+          <span class="portrait-index">01</span>
+          <img src="assets/gabriel-portrait.png" alt="Gabriel Delvaje" />
+          <div class="portrait-caption"><span></span> São Paulo, Brazil</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide resume-slide" data-slide="1" aria-label="Resume" hidden>
+      <div class="slide-inner resume-grid">
+        <div class="resume-title">
+          <span>02</span><h1>Experience<br />in motion.</h1>
+          <p>A cross-disciplinary path through analytics, commercial strategy and computational thinking.</p>
+        </div>
+        <div class="experience-stack">
+          <article><time>Nov/25 — Present</time><h2>Data Analyst <i>UNIMIL</i></h2><p>Power BI dashboards, SQL models and advanced DAX for Marketing &amp; Commercial performance.</p></article>
+          <article><time>Sep/24 — Oct/25</time><h2>Data Analyst <i>COMERC</i></h2><p>Financial and credit risk analytics, automated reporting and decision-ready dashboards.</p></article>
+          <article><time>Feb/24 — Sep/24</time><h2>Revenue &amp; Pricing <i>COMERC</i></h2><p>Python automation, margin analysis and commercial pricing intelligence.</p></article>
+        </div>
+        <div class="resume-side">
+          <article class="education-card"><small>EDUCATION</small><h3>Applied &amp; Computational Mathematics</h3><p>USP · 2023—2025</p></article>
+          <article class="education-card blue"><small>POST DEGREE</small><h3>Data Science &amp; Artificial Intelligence</h3><p>Anhembi-Morumbi · 2025—2026</p></article>
+          <div class="skill-cloud"><span>Power BI</span><span>SQL</span><span>Python</span><span>DAX</span><span>Excel</span><span>Figma</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide work-slide" data-slide="2" aria-label="Selected work" hidden>
+      <div class="slide-inner work-layout">
+        <div class="work-heading"><span>03 / SELECTED WORK</span><h1>Data made<br /><em>visible.</em></h1><p>Three directions for case studies. Scroll once more to loop back to the beginning.</p></div>
+        <div class="work-cards">
+          <article class="work-card primary">
+            <div class="mock-dashboard"><div class="mock-kpis"><i></i><i></i><i></i></div><div class="mock-line"></div><div class="mock-bars"><b></b><b></b><b></b><b></b><b></b></div></div>
+            <small>POWER BI · DAX · SQL</small><h2>Commercial Performance Command Center</h2><p>Sales, margin and operational signals in one executive decision surface.</p>
+          </article>
+          <article class="work-card cobalt"><span class="metric">94.2<sup>%</sup></span><small>RISK ANALYTICS</small><h2>Credit Risk Monitor</h2></article>
+          <article class="work-card dark"><span class="code">PY</span><small>AUTOMATION</small><h2>Pricing Intelligence</h2></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="rail" aria-label="Slide position">
+    <span class="rail-count"><b>01</b> / 03</span>
+    <div class="rail-dots"><button class="active" data-go="0" aria-label="About me"></button><button data-go="1" aria-label="Resume"></button><button data-go="2" aria-label="Work"></button></div>
+    <span class="scroll-hint">SCROLL<br />TO EXPLORE ↓</span>
+  </aside>
+  <script src="slider.js"></script>
+</body>
+</html>

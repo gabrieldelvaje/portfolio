@@ -1,0 +1,102 @@
+/* Native, continuous page scrolling with seamless loop clones. */
+.about-grid {
+  grid-template-columns: .9fr 1.1fr;
+  gap: clamp(42px, 6vw, 100px);
+  width: min(1240px, calc(100% - 120px));
+}
+
+.portrait-stage {
+  width: 100%;
+}
+
+.slider {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-snap-type: none;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+.slider.is-jumping {
+  scroll-behavior: auto;
+}
+
+.slide,
+.slide.active,
+.slide.exit-up,
+.slide.exit-down,
+.slide.enter-from-top {
+  position: relative;
+  inset: auto;
+  flex: 0 0 100%;
+  min-height: 100%;
+  width: 100%;
+  opacity: 1;
+  transform: none;
+  transition: none;
+  scroll-snap-align: none;
+}
+
+.reveal-target {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity .68s ease,
+    transform .82s cubic-bezier(.22, 1, .36, 1);
+}
+
+.slide.is-visible .reveal-target {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide.is-visible .portrait-stage,
+.slide.is-visible .experience-stack,
+.slide.is-visible .work-card.primary {
+  transition-delay: .06s;
+}
+
+.slide.is-visible .resume-side,
+.slide.is-visible .work-card.cobalt {
+  transition-delay: .12s;
+}
+
+.slide.is-visible .work-card.dark {
+  transition-delay: .18s;
+}
+
+@media (max-width: 950px) {
+  .about-grid {
+    width: calc(100% - 42px);
+  }
+
+  .slide-inner.about-grid,
+  .slide-inner.resume-grid,
+  .slide-inner.work-layout {
+    overflow: visible;
+  }
+
+  .slide {
+    height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider {
+    scroll-behavior: auto;
+  }
+
+  .reveal-target,
+  .slide.is-visible .reveal-target {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
