@@ -451,12 +451,17 @@
   text-decoration: none;
 }
 
-.music-farming-preview img {
+.music-farming-preview img,
+.sugar-cane-preview img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: contain;
   object-position: center;
+}
+
+.sugar-cane-preview {
+  background: #fff;
 }
 
 @media (max-width: 1100px) {
@@ -526,7 +531,78 @@
   text-transform: uppercase;
 }
 
-.powerbi-embed {
+.project-detail-actions {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+}
+
+.project-repo-link {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
+  overflow: hidden;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  background: var(--bg);
+  text-decoration: none;
+  transition: width .45s cubic-bezier(.22, 1, .36, 1), color .2s ease, border-color .2s ease, background-color .2s ease;
+}
+
+.project-repo-link img {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: block;
+  object-fit: contain;
+}
+
+[data-theme="light"] .project-repo-link img {
+  filter: invert(1);
+}
+
+.project-repo-link span {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 600;
+  transform: translateX(8px);
+  transition: max-width .45s cubic-bezier(.22, 1, .36, 1), opacity .2s ease, transform .35s ease;
+}
+
+.project-repo-link:hover,
+.project-repo-link:focus-visible {
+  width: 210px;
+  color: #fff;
+  border-color: var(--blue);
+  background: var(--blue);
+  outline: none;
+}
+
+.project-repo-link:hover img,
+.project-repo-link:focus-visible img {
+  filter: none;
+}
+
+.project-repo-link:hover span,
+.project-repo-link:focus-visible span {
+  max-width: 156px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.powerbi-embed,
+.project-embed {
   width: 100%;
   height: calc(100dvh - 138px);
   min-height: 520px;
@@ -612,7 +688,23 @@ body.project-open .footer {
     font-size: 20px;
   }
 
-  .powerbi-embed {
+  .project-detail-actions {
+    width: 100%;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .project-repo-link:hover,
+  .project-repo-link:focus-visible {
+    width: 42px;
+  }
+
+  .project-repo-link span {
+    display: none;
+  }
+
+  .powerbi-embed,
+  .project-embed {
     height: calc(100dvh - 150px);
     min-height: 430px;
   }

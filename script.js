@@ -82,7 +82,8 @@ inactiveMoon.addEventListener('pointerleave', () => {
 function showRoute() {
   const route = location.hash.slice(1) || 'about';
   const validRoute = pages.some(page => page.dataset.page === route) ? route : 'about';
-  const projectOpen = validRoute === 'music-farming-race';
+  const activePage = pages.find(page => page.dataset.page === validRoute);
+  const projectOpen = activePage?.classList.contains('project-detail-page') || false;
   pages.forEach(page => page.hidden = page.dataset.page !== validRoute);
   links.forEach(link => {
     const active = link.dataset.route === validRoute || (projectOpen && link.dataset.route === 'work');

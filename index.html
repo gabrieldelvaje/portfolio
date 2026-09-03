@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#f4f4f1" />
     <title>Gabriel Delvaje — Data Analytics</title>
     <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="about-fix.css?v=37" />
+  <link rel="stylesheet" href="about-fix.css?v=38" />
   </head>
   <body>
     <header class="site-header">
@@ -113,12 +113,16 @@
               <div class="project-tags"><span>Power BI</span><span>DAX</span><span>Figma</span></div>
             </a>
           </article>
-          <article class="project-card" data-category="dashboard analytics" tabindex="0">
-            <div class="project-visual dashboard-visual"><div class="dashboard-ui"><span class="dash-title"></span><div class="kpis"><i></i><i></i><i></i></div><div class="chart-line"></div><div class="chart-bars"><b></b><b></b><b></b><b></b><b></b><b></b></div></div></div>
-            <div class="project-meta"><span>02 / POWER BI</span><span>2026</span></div>
-            <h2>Commercial Performance<br />Command Center</h2>
-            <p>A unified executive view connecting sales, margin, and operational signals into one decision-ready dashboard.</p>
-            <div class="project-tags"><span>Power BI</span><span>DAX</span><span>Data Modeling</span></div>
+          <article class="project-card" data-category="analytics">
+            <a class="project-card-link" href="#sugar-cane-intelligence" aria-label="Open Sugar Cane Intelligence application">
+              <div class="project-visual sugar-cane-preview">
+                <img src="assets/sugar-cane-intelligence-preview.png" alt="Preview of the Sugar Cane Intelligence application" />
+              </div>
+              <div class="project-meta"><span>02 / DATA ANALYTICS</span><span>2026</span></div>
+              <h2>Sugar Cane Intelligence</h2>
+              <p>An interactive assistant for exploring sugar cane production, productivity, climate and municipalities.</p>
+              <div class="project-tags"><span>Python</span><span>Streamlit</span><span>Data Analytics</span></div>
+            </a>
           </article>
           <article class="project-card" data-category="analytics" tabindex="0">
             <div class="project-visual risk-visual"><span class="big-number">94.2</span><span class="unit">%</span><div class="risk-grid"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
@@ -151,9 +155,26 @@
         </div>
         <iframe class="powerbi-embed" title="Music Farming Race" src="https://app.powerbi.com/view?r=eyJrIjoiMzVkODllZDMtMWJjNS00MjU4LWJjNGMtMTIwNzcxZWFkZTU4IiwidCI6Ijg4OWIxOTFhLTc4NTAtNDFhMy05MTBjLWFkODMyZDcxZTVmOSJ9" frameborder="0" allowfullscreen="true"></iframe>
       </section>
+
+      <section class="page project-detail-page" data-page="sugar-cane-intelligence" aria-labelledby="sugar-cane-title" hidden>
+        <div class="project-detail-toolbar shell">
+          <a class="project-back" href="#work" aria-label="Back to Work"><span aria-hidden="true">←</span> Back to Work</a>
+          <div class="project-detail-actions">
+            <div class="project-detail-heading">
+              <h1 id="sugar-cane-title">Sugar Cane Intelligence</h1>
+              <span>Python · Streamlit · Data Analytics</span>
+            </div>
+            <a class="project-repo-link" href="https://github.com/gabrieldelvaje/sugar-cane-intelligence" target="_blank" rel="noreferrer" aria-label="Ir para repositório GitHub">
+              <img src="assets/github-icon.png" alt="" />
+              <span>Ir para repositório GitHub</span>
+            </a>
+          </div>
+        </div>
+        <iframe class="project-embed" title="Sugar Cane Intelligence" src="https://chatbotpy-fsz2nah8pp5z8zcgfpzrdm.streamlit.app/?embed=true" frameborder="0" allowfullscreen="true"></iframe>
+      </section>
     </main>
 
     <footer class="footer shell"><span>© <span id="year"></span> Gabriel Delvaje</span><span>São Paulo, Brazil · <span class="local-time"></span></span></footer>
-    <script src="script.js?v=8"></script>
+    <script src="script.js?v=9"></script>
   </body>
 </html>
