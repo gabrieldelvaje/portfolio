@@ -542,8 +542,8 @@
 
 .music-dashboard-tabs {
   position: absolute;
-  z-index: 4;
-  top: 4px;
+  z-index: auto;
+  top: 8px;
   left: 20px;
   right: auto;
   height: 20px;
@@ -554,6 +554,7 @@
 
 .music-dashboard-tabs i {
   position: relative;
+  z-index: 1;
   width: 44px;
   height: 16px;
   border-radius: 9px 9px 3px 3px;
@@ -562,6 +563,7 @@
 }
 
 .music-dashboard-tabs i:nth-child(2) {
+  z-index: 4;
   background: #f4f4f1;
 }
 
