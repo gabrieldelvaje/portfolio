@@ -1511,22 +1511,29 @@ main {
 
   .site-header {
     bottom: calc(20px + env(safe-area-inset-bottom));
+    overflow: visible;
+    transform: none;
+    filter: none;
   }
 
   .nav {
     width: min(330px, calc(100% - 56px));
     height: 52px;
     padding: 5px;
-    border-color: color-mix(in srgb, var(--ink) 24%, transparent);
+    overflow: hidden;
+    isolation: isolate;
+    border-color: color-mix(in srgb, #fff 48%, var(--ink) 18%);
     background:
-      linear-gradient(135deg, color-mix(in srgb, #fff 22%, transparent), transparent 46%),
-      color-mix(in srgb, var(--bg) 62%, transparent);
-    -webkit-backdrop-filter: blur(18px) saturate(165%);
-    backdrop-filter: blur(18px) saturate(165%);
+      radial-gradient(ellipse at 18% 0%, color-mix(in srgb, #fff 34%, transparent), transparent 43%),
+      linear-gradient(115deg, color-mix(in srgb, #fff 18%, transparent), transparent 34% 68%, color-mix(in srgb, #fff 12%, transparent)),
+      color-mix(in srgb, var(--bg) 38%, transparent);
+    -webkit-backdrop-filter: blur(22px) saturate(190%) contrast(112%);
+    backdrop-filter: blur(22px) saturate(190%) contrast(112%);
     box-shadow:
-      inset 0 1px 0 color-mix(in srgb, #fff 48%, transparent),
-      inset 0 -1px 0 color-mix(in srgb, var(--ink) 10%, transparent),
-      0 8px 26px color-mix(in srgb, #000 16%, transparent);
+      inset 0 1px 1px color-mix(in srgb, #fff 72%, transparent),
+      inset 0 -1px 1px color-mix(in srgb, var(--ink) 18%, transparent),
+      inset 1px 0 0 color-mix(in srgb, #fff 34%, transparent),
+      0 10px 30px color-mix(in srgb, #000 18%, transparent);
   }
 
   .nav-links,
@@ -1539,18 +1546,25 @@ main {
   }
 
   .theme-toggle {
+    position: fixed !important;
+    inset: calc(14px + env(safe-area-inset-top)) 14px auto auto !important;
+    z-index: 100;
+    margin: 0;
     width: 100px;
     height: 44px;
-    border-color: color-mix(in srgb, var(--ink) 24%, transparent);
+    isolation: isolate;
+    border-color: color-mix(in srgb, #fff 48%, var(--ink) 18%);
     background:
-      linear-gradient(135deg, color-mix(in srgb, #fff 24%, transparent), transparent 48%),
-      color-mix(in srgb, var(--bg) 62%, transparent);
-    -webkit-backdrop-filter: blur(18px) saturate(165%);
-    backdrop-filter: blur(18px) saturate(165%);
+      radial-gradient(ellipse at 18% 0%, color-mix(in srgb, #fff 38%, transparent), transparent 44%),
+      linear-gradient(115deg, color-mix(in srgb, #fff 20%, transparent), transparent 36% 70%, color-mix(in srgb, #fff 12%, transparent)),
+      color-mix(in srgb, var(--bg) 38%, transparent);
+    -webkit-backdrop-filter: blur(22px) saturate(190%) contrast(112%);
+    backdrop-filter: blur(22px) saturate(190%) contrast(112%);
     box-shadow:
-      inset 0 1px 0 color-mix(in srgb, #fff 52%, transparent),
-      inset 0 -1px 0 color-mix(in srgb, var(--ink) 10%, transparent),
-      0 7px 22px color-mix(in srgb, #000 14%, transparent);
+      inset 0 1px 1px color-mix(in srgb, #fff 76%, transparent),
+      inset 0 -1px 1px color-mix(in srgb, var(--ink) 18%, transparent),
+      inset 1px 0 0 color-mix(in srgb, #fff 38%, transparent),
+      0 9px 26px color-mix(in srgb, #000 17%, transparent);
   }
 
   .toggle-symbol img {
