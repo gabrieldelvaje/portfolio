@@ -586,6 +586,11 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   min-width: 0;
 }
 
+.work-page .project-card:not(.coming-soon) {
+  padding-top: 0;
+  border-top: 0;
+}
+
 .work-page .project-visual,
 .work-page .featured .project-visual {
   width: 100%;
