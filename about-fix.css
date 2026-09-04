@@ -723,8 +723,15 @@
 .revenue-growth-preview {
   display: grid;
   place-items: center;
-  padding: 18px;
+  padding: 28px 30px;
   background: #242021;
+  box-shadow: none !important;
+  transition: background-color .35s ease, border-color .35s ease, transform .42s cubic-bezier(.22,1,.36,1) !important;
+}
+
+[data-theme="dark"] .revenue-growth-preview {
+  border: 1px solid var(--line);
+  background: #f4f4f1;
 }
 
 .revenue-dashboard {
@@ -736,7 +743,12 @@
   border-radius: 24px;
   background: #f4f4f1;
   color: #242021;
-  transition: transform .55s cubic-bezier(.22,1,.36,1);
+  transition: transform .55s cubic-bezier(.22,1,.36,1), background-color .35s ease, color .35s ease;
+}
+
+[data-theme="dark"] .revenue-dashboard {
+  background: #242021;
+  color: #f4f4f1;
 }
 
 .revenue-sidebar {
@@ -745,7 +757,8 @@
   justify-items: center;
   gap: 14px;
   padding: 14px 10px;
-  background: #edbf00;
+  background: var(--blue);
+  color: #fff;
 }
 
 .revenue-sidebar b {
@@ -758,7 +771,7 @@
   width: 65%;
   height: 7px;
   border-radius: 999px;
-  background: #242021;
+  background: #fff;
   opacity: .28;
 }
 
@@ -786,14 +799,14 @@
   width: 48%;
   height: 10px;
   border-radius: 999px;
-  background: #242021;
+  background: currentColor;
 }
 
 .revenue-heading i {
   width: 24%;
   height: 5px;
   border-radius: 999px;
-  background: #242021;
+  background: currentColor;
   opacity: .25;
 }
 
@@ -810,7 +823,7 @@
 }
 
 .revenue-kpis span:first-child {
-  background: #edbf00;
+  background: var(--blue);
 }
 
 .revenue-kpis span::before,
@@ -819,7 +832,7 @@
   position: absolute;
   left: 12px;
   border-radius: 999px;
-  background: #242021;
+  background: currentColor;
 }
 
 .revenue-kpis span::before {
@@ -853,7 +866,7 @@
   content: "";
   width: 48px;
   aspect-ratio: 1;
-  border: 9px solid #edbf00;
+  border: 9px solid var(--blue);
   border-right-color: #242021;
   border-radius: 50%;
 }
@@ -871,7 +884,22 @@
   flex: 1;
   height: var(--revenue-height,44%);
   border-radius: 4px 4px 0 0;
-  background: #edbf00;
+  background: var(--blue);
+}
+
+[data-theme="dark"] .revenue-kpis span,
+[data-theme="dark"] .revenue-ring,
+[data-theme="dark"] .revenue-bars {
+  background: #2d292a;
+}
+
+[data-theme="dark"] .revenue-kpis span:first-child {
+  background: var(--blue);
+  color: #fff;
+}
+
+[data-theme="dark"] .revenue-ring::before {
+  border-right-color: #f4f4f1;
 }
 
 .revenue-bars i:nth-child(1) { --revenue-height: 24%; }
