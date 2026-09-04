@@ -946,9 +946,9 @@
   display: block;
   width: 88%;
   height: 47px;
-  border: 1px solid rgba(244,242,240,.72);
+  border: 1px solid #f4f2f0;
   border-radius: 18px;
-  background: rgba(244,242,240,.025);
+  background: #f4f2f0;
   transition: transform .45s cubic-bezier(.22,1,.36,1), background-color .25s ease;
 }
 
@@ -970,8 +970,8 @@
 }
 
 [data-theme="dark"] .chat-preview i {
-  border-color: rgba(36,32,33,.62);
-  background: rgba(36,32,33,.025);
+  border-color: #242021;
+  background: #242021;
 }
 
 [data-theme="dark"] .chat-preview i:nth-child(2) {
