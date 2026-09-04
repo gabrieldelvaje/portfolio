@@ -78,6 +78,7 @@ function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction
     if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
   });
   document.body.classList.toggle('project-open', projectOpen);
+  document.body.classList.toggle('work-active', validRoute === 'work');
   scrollTo({top: 0, behavior: 'smooth'});
 }
 
