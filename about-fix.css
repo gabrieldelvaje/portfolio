@@ -1455,3 +1455,78 @@ body.project-open .footer {
   }
 
 }
+
+/* Keep navigation overrides last so legacy portfolio rules cannot win. */
+main {
+  view-transition-name: none;
+}
+
+.nav-links a,
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  border-radius: 999px;
+  color: var(--ink);
+  background: transparent;
+  transform: none;
+}
+
+.nav-links a.active,
+.nav-links a.active:hover,
+.nav-links a.active:focus-visible,
+.nav-links.is-previewing a.nav-preview {
+  color: var(--bg);
+  background: transparent;
+}
+
+.nav-links.is-previewing a.active:not(.nav-preview) {
+  color: var(--ink);
+}
+
+@media (max-width: 600px) {
+  body {
+    padding-bottom: 72px;
+  }
+
+  main {
+    padding-top: 52px;
+  }
+
+  .site-header {
+    bottom: 8px;
+  }
+
+  .nav {
+    width: min(330px, calc(100% - 56px));
+    height: 52px;
+    padding: 5px;
+    box-shadow: none;
+  }
+
+  .nav-links,
+  .nav-links a {
+    height: 40px;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+  }
+
+  .theme-toggle {
+    width: 100px;
+    height: 44px;
+  }
+
+  .toggle-symbol img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .project-detail-page {
+    min-height: calc(100dvh - 72px);
+  }
+
+  .powerbi-embed,
+  .project-embed {
+    height: calc(100dvh - 164px);
+  }
+}

@@ -1,6 +1,7 @@
 const root = document.documentElement;
 const pages = [...document.querySelectorAll('[data-page]')];
 const links = [...document.querySelectorAll('[data-route]')];
+const navLinks = document.querySelector('.nav-links');
 const toggle = document.querySelector('.theme-toggle');
 const toggleSlider = toggle.querySelector('.toggle-slider');
 
@@ -94,7 +95,7 @@ function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction
     link.classList.toggle('active', active);
     if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
   });
-  document.querySelector('.nav-links').style.setProperty('--nav-offset', `${routeOrder.indexOf(primaryRoute) * 100}%`);
+  navLinks.style.setProperty('--nav-offset', `${routeOrder.indexOf(primaryRoute) * 100}%`);
   document.body.classList.toggle('project-open', projectOpen);
   scrollTo({top: 0, behavior: 'smooth'});
 }
@@ -108,17 +109,45 @@ function showRoute() {
   const nextIndex = routeOrder.indexOf(primaryRoute);
   const previousIndex = currentPrimaryRoute === null ? nextIndex : routeOrder.indexOf(currentPrimaryRoute);
   const direction = nextIndex < previousIndex ? 'backward' : 'forward';
-  const update = () => applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction);
+  const shouldAnimate = currentPrimaryRoute !== null && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction);
 
-  if (currentPrimaryRoute !== null && !matchMedia('(prefers-reduced-motion: reduce)').matches && document.startViewTransition) {
-    document.startViewTransition(update);
-  } else {
-    update();
+  if (shouldAnimate) {
+    activePage.getAnimations().forEach(animation => animation.cancel());
+    activePage.animate([
+      { opacity: 0, transform: `translateX(${direction === 'backward' ? '-32px' : '32px'})` },
+      { opacity: 1, transform: 'translateX(0)' }
+    ], {
+      duration: 460,
+      easing: 'cubic-bezier(.22, 1, .36, 1)',
+      iterations: 1
+    });
   }
   currentPrimaryRoute = primaryRoute;
 }
 addEventListener('hashchange', showRoute);
 showRoute();
+
+function previewNav(link) {
+  const index = links.indexOf(link);
+  if (index < 0) return;
+  links.forEach(item => item.classList.toggle('nav-preview', item === link));
+  navLinks.classList.add('is-previewing');
+  navLinks.style.setProperty('--nav-offset', `${index * 100}%`);
+}
+
+function restoreNav() {
+  links.forEach(item => item.classList.remove('nav-preview'));
+  navLinks.classList.remove('is-previewing');
+  navLinks.style.setProperty('--nav-offset', `${routeOrder.indexOf(currentPrimaryRoute) * 100}%`);
+}
+
+links.forEach(link => {
+  link.addEventListener('pointerenter', () => previewNav(link));
+  link.addEventListener('pointerleave', restoreNav);
+  link.addEventListener('focus', () => previewNav(link));
+  link.addEventListener('blur', restoreNav);
+});
 
 document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
   document.querySelectorAll('[data-filter]').forEach(item => item.classList.toggle('active', item === button));
