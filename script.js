@@ -79,19 +79,43 @@ inactiveMoon.addEventListener('pointerleave', () => {
   moonHasPulsedThisHover = false;
 });
 
-function showRoute() {
-  const route = location.hash.slice(1) || 'about';
-  const validRoute = pages.some(page => page.dataset.page === route) ? route : 'about';
-  const activePage = pages.find(page => page.dataset.page === validRoute);
-  const projectOpen = activePage?.classList.contains('project-detail-page') || false;
+const routeOrder = ['about', 'work', 'resume'];
+let currentPrimaryRoute = null;
+
+function primaryRouteFor(route, projectOpen) {
+  return projectOpen ? 'work' : route;
+}
+
+function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction) {
+  root.dataset.routeDirection = direction;
   pages.forEach(page => page.hidden = page.dataset.page !== validRoute);
   links.forEach(link => {
     const active = link.dataset.route === validRoute || (projectOpen && link.dataset.route === 'work');
     link.classList.toggle('active', active);
     if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
   });
+  document.querySelector('.nav-links').style.setProperty('--nav-offset', `${routeOrder.indexOf(primaryRoute) * 100}%`);
   document.body.classList.toggle('project-open', projectOpen);
   scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function showRoute() {
+  const route = location.hash.slice(1) || 'about';
+  const validRoute = pages.some(page => page.dataset.page === route) ? route : 'about';
+  const activePage = pages.find(page => page.dataset.page === validRoute);
+  const projectOpen = activePage?.classList.contains('project-detail-page') || false;
+  const primaryRoute = primaryRouteFor(validRoute, projectOpen);
+  const nextIndex = routeOrder.indexOf(primaryRoute);
+  const previousIndex = currentPrimaryRoute === null ? nextIndex : routeOrder.indexOf(currentPrimaryRoute);
+  const direction = nextIndex < previousIndex ? 'backward' : 'forward';
+  const update = () => applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction);
+
+  if (currentPrimaryRoute !== null && !matchMedia('(prefers-reduced-motion: reduce)').matches && document.startViewTransition) {
+    document.startViewTransition(update);
+  } else {
+    update();
+  }
+  currentPrimaryRoute = primaryRoute;
 }
 addEventListener('hashchange', showRoute);
 showRoute();
