@@ -517,7 +517,7 @@
 .music-farming-preview {
   display: grid;
   place-items: center;
-  padding: 10px 12px 8px;
+  padding: 10px 12px 12px;
   background: #242021;
   box-shadow: none !important;
   transition: background-color .35s ease, border-color .35s ease, transform .42s cubic-bezier(.22,1,.36,1) !important;
@@ -723,7 +723,7 @@
 .revenue-growth-preview {
   display: grid;
   place-items: center;
-  padding: 10px 12px 8px;
+  padding: 16px;
   background: #242021;
   box-shadow: none !important;
   transition: background-color .35s ease, border-color .35s ease, transform .42s cubic-bezier(.22,1,.36,1) !important;
@@ -738,7 +738,7 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 22% 1fr;
+  grid-template-columns: 18% 1fr;
   overflow: hidden;
   border-radius: 24px;
   background: #f4f4f1;
@@ -753,16 +753,16 @@
 
 .revenue-sidebar {
   display: grid;
-  align-content: center;
+  align-content: start;
   justify-items: center;
   gap: 16px;
-  padding: 18px 12px;
+  padding: 43px 10px 14px;
   background: var(--blue);
   color: #fff;
 }
 
 .revenue-sidebar b {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   font-size: 32px;
   line-height: 1;
 }
