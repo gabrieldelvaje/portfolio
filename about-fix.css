@@ -517,7 +517,7 @@
 .music-farming-preview {
   display: grid;
   place-items: center;
-  padding: 16px;
+  padding: 10px 12px 8px;
   background: #242021;
   box-shadow: none !important;
   transition: background-color .35s ease, border-color .35s ease, transform .42s cubic-bezier(.22,1,.36,1) !important;
@@ -542,25 +542,36 @@
 
 .music-dashboard-tabs {
   position: absolute;
-  z-index: 2;
-  top: 5px;
-  left: 21px;
+  z-index: 4;
+  top: 4px;
+  left: 20px;
   right: auto;
-  height: 25px;
+  height: 20px;
   display: flex;
   align-items: end;
-  gap: 5px;
+  gap: 4px;
 }
 
 .music-dashboard-tabs i {
-  width: 58px;
-  height: 21px;
-  border-radius: 12px 12px 4px 4px;
+  position: relative;
+  width: 44px;
+  height: 16px;
+  border-radius: 9px 9px 3px 3px;
   background: #d9d7d4;
   transition: background-color .35s ease, transform .4s cubic-bezier(.22,1,.36,1);
 }
 
 .music-dashboard-tabs i:nth-child(2) {
+  background: #f4f4f1;
+}
+
+.music-dashboard-tabs i:nth-child(2)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 6px;
   background: #f4f4f1;
 }
 
@@ -572,10 +583,14 @@
   background: #242021;
 }
 
+[data-theme="dark"] .music-dashboard-tabs i:nth-child(2)::after {
+  background: #242021;
+}
+
 .music-dashboard-grid {
   position: absolute;
   z-index: 3;
-  inset: 27px 0 0;
+  inset: 20px 0 0;
   display: grid;
   grid-template-columns: .72fr 1.55fr 1fr;
   gap: 12px;
@@ -607,8 +622,8 @@
 
 .music-kpi {
   display: grid;
-  align-content: center;
-  justify-items: center;
+  place-content: center;
+  place-items: center;
   gap: 14px;
   padding: 12px;
 }
@@ -624,7 +639,8 @@
   font-size: 26px;
   line-height: 1;
   text-align: center;
-  padding-right: 2px;
+  text-indent: -1px;
+  padding: 0;
   justify-self: center;
   align-self: center;
 }
@@ -635,6 +651,7 @@
 }
 
 .music-kpi i {
+  justify-self: center;
   width: 62%;
   height: 6px;
   border-radius: 999px;
