@@ -1528,9 +1528,9 @@ main {
     isolation: isolate;
     border-width: 1px;
     border-color: color-mix(in srgb, var(--ink) 16%, transparent);
-    background: color-mix(in srgb, var(--bg) 14%, transparent);
-    -webkit-backdrop-filter: blur(7px) saturate(185%) contrast(108%);
-    backdrop-filter: blur(7px) saturate(185%) contrast(108%);
+    background: color-mix(in srgb, var(--bg) 64%, transparent);
+    -webkit-backdrop-filter: blur(12px) saturate(155%) contrast(104%);
+    backdrop-filter: blur(12px) saturate(155%) contrast(104%);
     box-shadow:
       inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent),
       inset 0 -.5px 0 color-mix(in srgb, var(--ink) 12%, transparent),
@@ -1579,9 +1579,9 @@ main {
     isolation: isolate;
     border-width: 1px;
     border-color: color-mix(in srgb, var(--ink) 16%, transparent);
-    background: color-mix(in srgb, var(--bg) 14%, transparent);
-    -webkit-backdrop-filter: blur(7px) saturate(185%) contrast(108%);
-    backdrop-filter: blur(7px) saturate(185%) contrast(108%);
+    background: color-mix(in srgb, var(--bg) 64%, transparent);
+    -webkit-backdrop-filter: blur(12px) saturate(155%) contrast(104%);
+    backdrop-filter: blur(12px) saturate(155%) contrast(104%);
     box-shadow:
       inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent),
       inset 0 -.5px 0 color-mix(in srgb, var(--ink) 12%, transparent),
@@ -1591,7 +1591,7 @@ main {
   [data-theme="dark"] .nav,
   [data-theme="dark"] .theme-toggle-mobile {
     border-color: color-mix(in srgb, #fff 15%, transparent);
-    background: color-mix(in srgb, #141214 12%, transparent);
+    background: color-mix(in srgb, #211e1f 62%, transparent);
     box-shadow:
       inset 0 .5px 0 color-mix(in srgb, #fff 12%, transparent),
       inset 0 -.5px 0 color-mix(in srgb, #000 20%, transparent),
@@ -1604,21 +1604,15 @@ main {
     background: linear-gradient(180deg, color-mix(in srgb, #fff 5%, transparent), transparent 28% 78%, color-mix(in srgb, #000 8%, transparent));
   }
 
-  /* Keep inactive controls legible over either light or dark content. */
+  /* Safari-safe contrast: the glass tint guarantees a stable text backdrop. */
   .nav-links a:not(.active) {
-    color: #fff;
-    mix-blend-mode: difference;
-    text-shadow: 0 0 .5px currentColor;
+    color: var(--ink);
+    mix-blend-mode: normal;
+    text-shadow: none;
   }
 
   [data-theme="light"] .theme-toggle-mobile .moon,
   [data-theme="dark"] .theme-toggle-mobile .sun {
-    filter: brightness(0) invert(1);
-    mix-blend-mode: difference;
-  }
-
-  [data-theme="light"] .theme-toggle-mobile .sun,
-  [data-theme="dark"] .theme-toggle-mobile .moon {
     filter: none;
     mix-blend-mode: normal;
   }
