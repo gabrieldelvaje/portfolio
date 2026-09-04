@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#f4f4f1" />
     <title>Gabriel Delvaje — Data Analytics</title>
     <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="about-fix.css?v=67" />
+  <link rel="stylesheet" href="about-fix.css?v=68" />
   </head>
   <body>
     <header class="site-header">
@@ -18,7 +18,7 @@
           <a href="#work" data-route="work">Work</a>
           <a href="#resume" data-route="resume">Resume</a>
         </div>
-        <button class="theme-toggle" type="button" aria-label="Switch color theme">
+        <button class="theme-toggle theme-toggle-desktop" type="button" aria-label="Switch color theme">
           <span class="toggle-slider" aria-hidden="true"></span>
           <span class="toggle-symbol sun" aria-hidden="true">
             <img src="assets/theme-sun-white.png" alt="" />
@@ -29,6 +29,15 @@
         </button>
       </nav>
     </header>
+    <button class="theme-toggle theme-toggle-mobile" type="button" aria-label="Switch color theme">
+      <span class="toggle-slider" aria-hidden="true"></span>
+      <span class="toggle-symbol sun" aria-hidden="true">
+        <img src="assets/theme-sun-white.png" alt="" />
+      </span>
+      <span class="toggle-symbol moon" aria-hidden="true">
+        <img src="assets/theme-moon-black.png" alt="" />
+      </span>
+    </button>
 
     <main>
       <section class="page shell about-page" data-page="about" aria-labelledby="about-title">
@@ -209,6 +218,6 @@
     </main>
 
     <footer class="footer shell"><span>© <span id="year"></span> Gabriel Delvaje</span><span>São Paulo, Brazil · <span class="local-time"></span></span></footer>
-    <script src="script.js?v=14"></script>
+    <script src="script.js?v=15"></script>
   </body>
 </html>

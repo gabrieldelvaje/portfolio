@@ -21,6 +21,10 @@
   transition: background-color .45s ease, border-color .45s ease, transform .18s ease;
 }
 
+.theme-toggle-mobile {
+  display: none;
+}
+
 .theme-toggle:active {
   transform: scale(.96);
 }
@@ -1526,14 +1530,39 @@ main {
     background:
       radial-gradient(ellipse at 18% 0%, color-mix(in srgb, #fff 34%, transparent), transparent 43%),
       linear-gradient(115deg, color-mix(in srgb, #fff 18%, transparent), transparent 34% 68%, color-mix(in srgb, #fff 12%, transparent)),
-      color-mix(in srgb, var(--bg) 38%, transparent);
-    -webkit-backdrop-filter: blur(22px) saturate(190%) contrast(112%);
-    backdrop-filter: blur(22px) saturate(190%) contrast(112%);
+      color-mix(in srgb, var(--bg) 24%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(210%) contrast(118%) brightness(1.08);
+    backdrop-filter: blur(14px) saturate(210%) contrast(118%) brightness(1.08);
     box-shadow:
       inset 0 1px 1px color-mix(in srgb, #fff 72%, transparent),
       inset 0 -1px 1px color-mix(in srgb, var(--ink) 18%, transparent),
       inset 1px 0 0 color-mix(in srgb, #fff 34%, transparent),
       0 10px 30px color-mix(in srgb, #000 18%, transparent);
+  }
+
+  .nav::before,
+  .theme-toggle-mobile::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset: 1px;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 16% 18%, color-mix(in srgb, #fff 44%, transparent), transparent 24%),
+      radial-gradient(circle at 82% 78%, color-mix(in srgb, var(--blue) 18%, transparent), transparent 32%);
+    box-shadow:
+      inset 0 2px 2px color-mix(in srgb, #fff 48%, transparent),
+      inset 0 -3px 5px color-mix(in srgb, var(--ink) 13%, transparent);
+    mix-blend-mode: soft-light;
+  }
+
+  .nav-links {
+    z-index: 1;
+  }
+
+  .nav > .theme-toggle-desktop {
+    display: none;
   }
 
   .nav-links,
@@ -1545,7 +1574,8 @@ main {
     font-size: 14px;
   }
 
-  .theme-toggle {
+  .theme-toggle-mobile {
+    display: block;
     position: fixed !important;
     inset: calc(14px + env(safe-area-inset-top)) 14px auto auto !important;
     z-index: 100;
@@ -1557,9 +1587,9 @@ main {
     background:
       radial-gradient(ellipse at 18% 0%, color-mix(in srgb, #fff 38%, transparent), transparent 44%),
       linear-gradient(115deg, color-mix(in srgb, #fff 20%, transparent), transparent 36% 70%, color-mix(in srgb, #fff 12%, transparent)),
-      color-mix(in srgb, var(--bg) 38%, transparent);
-    -webkit-backdrop-filter: blur(22px) saturate(190%) contrast(112%);
-    backdrop-filter: blur(22px) saturate(190%) contrast(112%);
+      color-mix(in srgb, var(--bg) 24%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(210%) contrast(118%) brightness(1.08);
+    backdrop-filter: blur(14px) saturate(210%) contrast(118%) brightness(1.08);
     box-shadow:
       inset 0 1px 1px color-mix(in srgb, #fff 76%, transparent),
       inset 0 -1px 1px color-mix(in srgb, var(--ink) 18%, transparent),
