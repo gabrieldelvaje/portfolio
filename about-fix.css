@@ -200,8 +200,8 @@
 .nav-links {
   --nav-offset: 0%;
   position: relative;
-  width: 330px;
-  height: 44px;
+  width: 276px;
+  height: 38px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0;
@@ -222,7 +222,7 @@
 .nav-links a {
   z-index: 1;
   min-width: 0;
-  height: 44px;
+  height: 38px;
   border-radius: 999px;
   color: var(--ink);
   transition: color .3s ease;
@@ -1472,6 +1472,15 @@ main {
   color: var(--ink);
   background: transparent;
   transform: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+.nav-links a:active,
+.nav-links a:focus {
+  background: transparent;
+  outline: none;
 }
 
 .nav-links a:hover,
@@ -1488,7 +1497,7 @@ main {
 
 @media (max-width: 600px) {
   body {
-    padding-bottom: 72px;
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
   }
 
   main {
@@ -1496,7 +1505,7 @@ main {
   }
 
   .site-header {
-    bottom: 8px;
+    bottom: calc(20px + env(safe-area-inset-bottom));
   }
 
   .nav {
