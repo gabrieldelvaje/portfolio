@@ -1470,16 +1470,16 @@ main {
   transform: none;
 }
 
-.nav-links a.active,
-.nav-links a.active:hover,
-.nav-links a.active:focus-visible,
-.nav-links.is-previewing a.nav-preview {
-  color: var(--bg);
-  background: transparent;
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  font-weight: 700;
 }
 
-.nav-links.is-previewing a.active:not(.nav-preview) {
-  color: var(--ink);
+.nav-links a.active,
+.nav-links a.active:hover,
+.nav-links a.active:focus-visible {
+  color: var(--bg);
+  background: transparent;
 }
 
 @media (max-width: 600px) {

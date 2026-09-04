@@ -128,27 +128,6 @@ function showRoute() {
 addEventListener('hashchange', showRoute);
 showRoute();
 
-function previewNav(link) {
-  const index = links.indexOf(link);
-  if (index < 0) return;
-  links.forEach(item => item.classList.toggle('nav-preview', item === link));
-  navLinks.classList.add('is-previewing');
-  navLinks.style.setProperty('--nav-offset', `${index * 100}%`);
-}
-
-function restoreNav() {
-  links.forEach(item => item.classList.remove('nav-preview'));
-  navLinks.classList.remove('is-previewing');
-  navLinks.style.setProperty('--nav-offset', `${routeOrder.indexOf(currentPrimaryRoute) * 100}%`);
-}
-
-links.forEach(link => {
-  link.addEventListener('pointerenter', () => previewNav(link));
-  link.addEventListener('pointerleave', restoreNav);
-  link.addEventListener('focus', () => previewNav(link));
-  link.addEventListener('blur', restoreNav);
-});
-
 document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
   document.querySelectorAll('[data-filter]').forEach(item => item.classList.toggle('active', item === button));
   document.querySelectorAll('[data-category]').forEach(card => {
