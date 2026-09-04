@@ -1514,10 +1514,31 @@ main {
   }
 
   .nav {
+    position: relative;
     width: min(330px, calc(100% - 56px));
     height: 52px;
     padding: 5px;
-    box-shadow: none;
+    border-color: color-mix(in srgb, var(--blue) 48%, var(--line));
+    background: color-mix(in srgb, var(--surface) 92%, var(--blue) 8%);
+    box-shadow: 0 8px 24px color-mix(in srgb, #000 18%, transparent);
+  }
+
+  .nav::before {
+    content: "MENU";
+    position: absolute;
+    left: 50%;
+    top: -18px;
+    padding: 3px 10px;
+    border: 1px solid color-mix(in srgb, var(--blue) 38%, transparent);
+    border-radius: 999px 999px 0 0;
+    color: var(--blue);
+    background: var(--surface);
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 11px;
+    letter-spacing: .16em;
+    transform: translateX(-50%);
+    pointer-events: none;
   }
 
   .nav-links,
@@ -1532,6 +1553,9 @@ main {
   .theme-toggle {
     width: 100px;
     height: 44px;
+    border-color: color-mix(in srgb, var(--blue) 38%, var(--line));
+    background: var(--surface);
+    box-shadow: 0 6px 20px color-mix(in srgb, #000 16%, transparent);
   }
 
   .toggle-symbol img {
