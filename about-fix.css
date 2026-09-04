@@ -1461,6 +1461,10 @@ main {
   view-transition-name: none;
 }
 
+.nav-slider {
+  transition: background-color .35s ease;
+}
+
 .nav-links a,
 .nav-links a:hover,
 .nav-links a:focus-visible {

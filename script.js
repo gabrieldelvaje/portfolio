@@ -2,6 +2,7 @@ const root = document.documentElement;
 const pages = [...document.querySelectorAll('[data-page]')];
 const links = [...document.querySelectorAll('[data-route]')];
 const navLinks = document.querySelector('.nav-links');
+const navSlider = document.querySelector('.nav-slider');
 const toggle = document.querySelector('.theme-toggle');
 const toggleSlider = toggle.querySelector('.toggle-slider');
 
@@ -95,7 +96,6 @@ function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction
     link.classList.toggle('active', active);
     if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
   });
-  navLinks.style.setProperty('--nav-offset', `${routeOrder.indexOf(primaryRoute) * 100}%`);
   document.body.classList.toggle('project-open', projectOpen);
   scrollTo({top: 0, behavior: 'smooth'});
 }
@@ -111,6 +111,19 @@ function showRoute() {
   const direction = nextIndex < previousIndex ? 'backward' : 'forward';
   const shouldAnimate = currentPrimaryRoute !== null && !matchMedia('(prefers-reduced-motion: reduce)').matches;
   applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction);
+
+  navLinks.style.setProperty('--nav-offset', `${nextIndex * 100}%`);
+  navSlider.getAnimations().forEach(animation => animation.cancel());
+  if (currentPrimaryRoute !== null && nextIndex !== previousIndex) {
+    navSlider.animate([
+      { transform: `translateX(${previousIndex * 100}%)` },
+      { transform: `translateX(${nextIndex * 100}%)` }
+    ], {
+      duration: 650,
+      easing: 'cubic-bezier(.22, 1, .36, 1)',
+      iterations: 1
+    });
+  }
 
   if (shouldAnimate) {
     activePage.getAnimations().forEach(animation => animation.cancel());
