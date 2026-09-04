@@ -1526,18 +1526,15 @@ main {
     padding: 5px;
     overflow: hidden;
     isolation: isolate;
-    border-color: color-mix(in srgb, #fff 48%, var(--ink) 18%);
-    background:
-      radial-gradient(ellipse at 18% 0%, color-mix(in srgb, #fff 34%, transparent), transparent 43%),
-      linear-gradient(115deg, color-mix(in srgb, #fff 18%, transparent), transparent 34% 68%, color-mix(in srgb, #fff 12%, transparent)),
-      color-mix(in srgb, var(--bg) 24%, transparent);
-    -webkit-backdrop-filter: blur(14px) saturate(210%) contrast(118%) brightness(1.08);
-    backdrop-filter: blur(14px) saturate(210%) contrast(118%) brightness(1.08);
+    border-width: 1px;
+    border-color: color-mix(in srgb, var(--ink) 16%, transparent);
+    background: color-mix(in srgb, var(--bg) 14%, transparent);
+    -webkit-backdrop-filter: blur(7px) saturate(185%) contrast(108%);
+    backdrop-filter: blur(7px) saturate(185%) contrast(108%);
     box-shadow:
-      inset 0 1px 1px color-mix(in srgb, #fff 72%, transparent),
-      inset 0 -1px 1px color-mix(in srgb, var(--ink) 18%, transparent),
-      inset 1px 0 0 color-mix(in srgb, #fff 34%, transparent),
-      0 10px 30px color-mix(in srgb, #000 18%, transparent);
+      inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent),
+      inset 0 -.5px 0 color-mix(in srgb, var(--ink) 12%, transparent),
+      0 7px 22px color-mix(in srgb, #000 12%, transparent);
   }
 
   .nav::before,
@@ -1545,16 +1542,13 @@ main {
     content: "";
     position: absolute;
     z-index: 0;
-    inset: 1px;
+    inset: 0;
     border-radius: inherit;
     pointer-events: none;
-    background:
-      radial-gradient(circle at 16% 18%, color-mix(in srgb, #fff 44%, transparent), transparent 24%),
-      radial-gradient(circle at 82% 78%, color-mix(in srgb, var(--blue) 18%, transparent), transparent 32%);
+    background: linear-gradient(180deg, color-mix(in srgb, #fff 10%, transparent), transparent 24% 76%, color-mix(in srgb, var(--ink) 5%, transparent));
     box-shadow:
-      inset 0 2px 2px color-mix(in srgb, #fff 48%, transparent),
-      inset 0 -3px 5px color-mix(in srgb, var(--ink) 13%, transparent);
-    mix-blend-mode: soft-light;
+      inset 0 1px 0 color-mix(in srgb, #fff 22%, transparent),
+      inset 0 -1px 0 color-mix(in srgb, var(--ink) 8%, transparent);
   }
 
   .nav-links {
@@ -1583,18 +1577,31 @@ main {
     width: 100px;
     height: 44px;
     isolation: isolate;
-    border-color: color-mix(in srgb, #fff 48%, var(--ink) 18%);
-    background:
-      radial-gradient(ellipse at 18% 0%, color-mix(in srgb, #fff 38%, transparent), transparent 44%),
-      linear-gradient(115deg, color-mix(in srgb, #fff 20%, transparent), transparent 36% 70%, color-mix(in srgb, #fff 12%, transparent)),
-      color-mix(in srgb, var(--bg) 24%, transparent);
-    -webkit-backdrop-filter: blur(14px) saturate(210%) contrast(118%) brightness(1.08);
-    backdrop-filter: blur(14px) saturate(210%) contrast(118%) brightness(1.08);
+    border-width: 1px;
+    border-color: color-mix(in srgb, var(--ink) 16%, transparent);
+    background: color-mix(in srgb, var(--bg) 14%, transparent);
+    -webkit-backdrop-filter: blur(7px) saturate(185%) contrast(108%);
+    backdrop-filter: blur(7px) saturate(185%) contrast(108%);
     box-shadow:
-      inset 0 1px 1px color-mix(in srgb, #fff 76%, transparent),
-      inset 0 -1px 1px color-mix(in srgb, var(--ink) 18%, transparent),
-      inset 1px 0 0 color-mix(in srgb, #fff 38%, transparent),
-      0 9px 26px color-mix(in srgb, #000 17%, transparent);
+      inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent),
+      inset 0 -.5px 0 color-mix(in srgb, var(--ink) 12%, transparent),
+      0 7px 22px color-mix(in srgb, #000 12%, transparent);
+  }
+
+  [data-theme="dark"] .nav,
+  [data-theme="dark"] .theme-toggle-mobile {
+    border-color: color-mix(in srgb, #fff 15%, transparent);
+    background: color-mix(in srgb, #141214 12%, transparent);
+    box-shadow:
+      inset 0 .5px 0 color-mix(in srgb, #fff 12%, transparent),
+      inset 0 -.5px 0 color-mix(in srgb, #000 20%, transparent),
+      0 7px 22px color-mix(in srgb, #000 20%, transparent);
+  }
+
+  [data-theme="dark"] .nav::before,
+  [data-theme="dark"] .theme-toggle-mobile::before {
+    opacity: .42;
+    background: linear-gradient(180deg, color-mix(in srgb, #fff 5%, transparent), transparent 28% 78%, color-mix(in srgb, #000 8%, transparent));
   }
 
   .toggle-symbol img {
