@@ -591,20 +591,20 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
   border-radius: 32px;
 }
 
 .work-page .project-card h2 {
-  min-height: 2.24em;
-  margin: 7px 0 5px;
+  min-height: 0;
+  margin: 4px 0 2px;
   font-size: 20px;
   line-height: 1.12;
 }
 
 .work-page .project-card p {
   min-height: 2.8em;
-  margin-bottom: 8px;
+  margin: 0 0 8px;
   overflow: visible;
   color: var(--muted);
   font-size: 11px;
