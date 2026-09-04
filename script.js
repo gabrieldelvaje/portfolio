@@ -3,82 +3,63 @@ const pages = [...document.querySelectorAll('[data-page]')];
 const links = [...document.querySelectorAll('[data-route]')];
 const navLinks = document.querySelector('.nav-links');
 const navSlider = document.querySelector('.nav-slider');
-const toggle = document.querySelector('.theme-toggle');
-const toggleSlider = toggle.querySelector('.toggle-slider');
+const toggles = [...document.querySelectorAll('.theme-toggle')];
 
 function setTheme(theme) {
   root.dataset.theme = theme;
   localStorage.setItem('portfolio-theme', theme);
   document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#211e1f' : '#f4f4f1';
-  toggle.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
-  toggle.setAttribute('aria-pressed', String(theme === 'dark'));
+  toggles.forEach(toggle => {
+    toggle.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
+    toggle.setAttribute('aria-pressed', String(theme === 'dark'));
+  });
 }
 
 const savedTheme = localStorage.getItem('portfolio-theme');
 setTheme(savedTheme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
-toggle.addEventListener('click', () => {
-  const currentTheme = root.dataset.theme;
-  const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  const from = currentTheme === 'dark' ? 'translate(calc(100% + 4px), -50%)' : 'translate(0, -50%)';
-  const to = nextTheme === 'dark' ? 'translate(calc(100% + 4px), -50%)' : 'translate(0, -50%)';
+toggles.forEach(toggle => {
+  const toggleSlider = toggle.querySelector('.toggle-slider');
+  toggle.addEventListener('click', () => {
+    const currentTheme = root.dataset.theme;
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    const from = currentTheme === 'dark' ? 'translate(calc(100% + 4px), -50%)' : 'translate(0, -50%)';
+    const to = nextTheme === 'dark' ? 'translate(calc(100% + 4px), -50%)' : 'translate(0, -50%)';
 
-  setTheme(nextTheme);
-  toggleSlider.getAnimations().forEach(animation => animation.cancel());
-  toggleSlider.animate([
-    { transform: from },
-    { transform: to }
-  ], {
-    duration: 650,
-    easing: 'cubic-bezier(.22, 1, .36, 1)',
-    iterations: 1
+    setTheme(nextTheme);
+    toggleSlider.getAnimations().forEach(animation => animation.cancel());
+    toggleSlider.animate([{ transform: from }, { transform: to }], {
+      duration: 650,
+      easing: 'cubic-bezier(.22, 1, .36, 1)',
+      iterations: 1
+    });
   });
-});
 
-const inactiveSun = document.querySelector('.toggle-symbol.sun');
-const inactiveSunIcon = inactiveSun.querySelector('img');
-let sunHasSpunThisHover = false;
+  const inactiveSun = toggle.querySelector('.toggle-symbol.sun');
+  const inactiveMoon = toggle.querySelector('.toggle-symbol.moon');
+  let sunHasSpunThisHover = false;
+  let moonHasPulsedThisHover = false;
 
-inactiveSun.addEventListener('pointerenter', () => {
-  if (root.dataset.theme !== 'dark' || sunHasSpunThisHover) return;
-  sunHasSpunThisHover = true;
-
-  inactiveSunIcon.animate([
-    { transform: 'rotate(0deg)' },
-    { transform: 'rotate(25deg)', offset: .5 },
-    { transform: 'rotate(0deg)' }
-  ], {
-    duration: 650,
-    easing: 'ease-in-out',
-    iterations: 1,
-    fill: 'none'
+  inactiveSun.addEventListener('pointerenter', () => {
+    if (root.dataset.theme !== 'dark' || sunHasSpunThisHover) return;
+    sunHasSpunThisHover = true;
+    inactiveSun.querySelector('img').animate([
+      { transform: 'rotate(0deg)' },
+      { transform: 'rotate(25deg)', offset: .5 },
+      { transform: 'rotate(0deg)' }
+    ], { duration: 650, easing: 'ease-in-out', iterations: 1 });
   });
-});
+  inactiveSun.addEventListener('pointerleave', () => { sunHasSpunThisHover = false; });
 
-inactiveSun.addEventListener('pointerleave', () => {
-  sunHasSpunThisHover = false;
-});
-
-const inactiveMoon = document.querySelector('.toggle-symbol.moon');
-const inactiveMoonIcon = inactiveMoon.querySelector('img');
-let moonHasPulsedThisHover = false;
-
-inactiveMoon.addEventListener('pointerenter', () => {
-  if (root.dataset.theme !== 'light' || moonHasPulsedThisHover) return;
-  moonHasPulsedThisHover = true;
-
-  inactiveMoonIcon.animate([
-    { transform: 'scale(1)' },
-    { transform: 'scale(1.1)', offset: .5 },
-    { transform: 'scale(1)' }
-  ], {
-    duration: 700,
-    easing: 'ease-in-out',
-    iterations: 1
+  inactiveMoon.addEventListener('pointerenter', () => {
+    if (root.dataset.theme !== 'light' || moonHasPulsedThisHover) return;
+    moonHasPulsedThisHover = true;
+    inactiveMoon.querySelector('img').animate([
+      { transform: 'scale(1)' },
+      { transform: 'scale(1.1)', offset: .5 },
+      { transform: 'scale(1)' }
+    ], { duration: 700, easing: 'ease-in-out', iterations: 1 });
   });
-});
-
-inactiveMoon.addEventListener('pointerleave', () => {
-  moonHasPulsedThisHover = false;
+  inactiveMoon.addEventListener('pointerleave', () => { moonHasPulsedThisHover = false; });
 });
 
 const routeOrder = ['about', 'work', 'resume'];
