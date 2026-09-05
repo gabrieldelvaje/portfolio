@@ -8,7 +8,7 @@
     <title>Gabriel Delvaje — Data Analytics</title>
     <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="about-fix.css?v=92" />
-  <link rel="stylesheet" href="piracicaba.css?v=1" />
+  <link rel="stylesheet" href="piracicaba.css?v=2" />
   </head>
   <body>
     <header class="site-header">
@@ -230,16 +230,16 @@
             <a class="project-back" href="#work" aria-label="Back to Work"><span aria-hidden="true">←</span> Back to Work</a>
             <div class="project-detail-actions">
               <div class="project-detail-heading"><h1 id="piracicaba-title">Piracicaba Data Stories</h1><span>Data Analytics · Geospatial Analysis · Storytelling</span></div>
-              <a class="project-repo-link" href="https://github.com/gabrieldelvaje/distribuicao-renda-piracicaba" target="_blank" rel="noreferrer" aria-label="Open Income Distribution repository on GitHub"><img src="assets/github-icon.png" alt="" /><span>View on GitHub</span></a>
+              <a class="project-repo-link" id="story-repo-link" href="https://github.com/gabrieldelvaje/distribuicao-renda-piracicaba" target="_blank" rel="noreferrer" aria-label="Open Income Distribution repository on GitHub"><img src="assets/github-icon.png" alt="" /><span>View on GitHub</span></a>
             </div>
           </div>
           <div class="piracicaba-workspace"><div class="story-hub" aria-label="Choose a Piracicaba data story">
             <p class="story-hub-label">Choose a carousel</p>
-            <button class="story-choice active" type="button" aria-current="true"><span class="story-choice-number">01</span><span><strong>Income Distribution</strong><small>2000 · 2010 · 2022</small></span><b aria-hidden="true">→</b></button>
+            <button class="story-choice active" type="button" aria-current="true" data-story-choice data-repo="https://github.com/gabrieldelvaje/distribuicao-renda-piracicaba" data-story-name="Income Distribution"><span class="story-choice-number">01</span><span><strong>Income Distribution</strong><small>2000 · 2010 · 2022</small></span><b aria-hidden="true">→</b></button>
             <div class="story-choice story-choice-upcoming" aria-disabled="true"><span class="story-choice-number">02</span><span><strong>Next Piracicaba analysis</strong><small>Coming soon</small></span></div>
           </div>
           <section class="data-story" aria-labelledby="income-story-title">
-            <div class="data-story-heading"><div><span>Carousel 01</span><h2 id="income-story-title">Income Distribution in Piracicaba</h2></div><p>How the city’s socioeconomic map changed over two decades.</p></div>
+            <div class="data-story-heading"><h2 id="income-story-title">Income Distribution in Piracicaba</h2><p>How the city’s socioeconomic map changed over two decades.</p></div>
             <div class="story-carousel" data-carousel tabindex="0" aria-label="Income Distribution carousel">
               <div class="story-track">
                 <figure class="story-slide" aria-label="Slide 1 of 7"><img src="assets/piracicaba/01.png" alt="Original income distribution carousel cover" /><figcaption><span>1/7 · English</span><h3>Where is Piracicaba’s income going?</h3><p>Over 20 years, income concentration moved away from the center and spread toward outer neighborhoods.</p></figcaption></figure>
@@ -259,6 +259,6 @@
     </main>
 
     <footer class="footer shell"><span>© <span id="year"></span> Gabriel Delvaje</span><span>São Paulo, Brazil · <span class="local-time"></span></span></footer>
-    <script src="script.js?v=23"></script>
+    <script src="script.js?v=24"></script>
   </body>
 </html>

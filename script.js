@@ -232,6 +232,21 @@ document.querySelectorAll('[data-carousel]').forEach(carousel => {
   goTo(0);
 });
 
+const storyRepoLink = document.getElementById('story-repo-link');
+document.querySelectorAll('[data-story-choice]').forEach(choice => {
+  choice.addEventListener('click', () => {
+    document.querySelectorAll('[data-story-choice]').forEach(item => {
+      const active = item === choice;
+      item.classList.toggle('active', active);
+      if (active) item.setAttribute('aria-current', 'true');
+      else item.removeAttribute('aria-current');
+    });
+    if (!storyRepoLink) return;
+    storyRepoLink.href = choice.dataset.repo;
+    storyRepoLink.setAttribute('aria-label', `Open ${choice.dataset.storyName} repository on GitHub`);
+  });
+});
+
 document.getElementById('year').textContent = new Date().getFullYear();
 function updateTime(){document.querySelector('.local-time').textContent = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'}).format(new Date())}
 updateTime(); setInterval(updateTime, 60000);
