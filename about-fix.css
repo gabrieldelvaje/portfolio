@@ -1730,17 +1730,13 @@ main {
     box-shadow:
       inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent),
       0 7px 22px color-mix(in srgb, #000 12%, transparent);
-    opacity: 0;
-    transition:
-      width .65s cubic-bezier(.22, 1, .36, 1),
-      opacity .01s linear .65s;
+    opacity: 1;
+    transition: width .65s cubic-bezier(.22, 1, .36, 1);
     pointer-events: none;
   }
 
   body.work-active .work-page .project-filters.is-open::before {
     width: 100%;
-    opacity: 1;
-    transition-delay: 0s, 0s;
   }
 
   body.work-active .filter-menu-toggle {
@@ -1755,13 +1751,10 @@ main {
     border: 0;
     border-radius: 50%;
     color: var(--ink);
-    background: color-mix(in srgb, var(--bg) 64%, transparent);
-    -webkit-backdrop-filter: blur(12px) saturate(155%) contrast(104%);
-    backdrop-filter: blur(12px) saturate(155%) contrast(104%);
-    box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, var(--ink) 16%, transparent),
-      inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent),
-      0 7px 22px color-mix(in srgb, #000 12%, transparent);
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
     opacity: 1;
     pointer-events: auto;
     transform: scale(1);
@@ -1848,14 +1841,18 @@ main {
     box-shadow: none;
   }
 
-  [data-theme="dark"] body.work-active .work-page .project-filters::before,
-  [data-theme="dark"] body.work-active .filter-menu-toggle {
+  [data-theme="dark"] body.work-active .work-page .project-filters::before {
     border-color: color-mix(in srgb, #fff 15%, transparent);
     background: color-mix(in srgb, #211e1f 62%, transparent);
     box-shadow:
       inset 0 0 0 1px color-mix(in srgb, #fff 15%, transparent),
       inset 0 .5px 0 color-mix(in srgb, #fff 12%, transparent),
       0 7px 22px color-mix(in srgb, #000 20%, transparent);
+  }
+
+  [data-theme="dark"] body.work-active .filter-menu-toggle {
+    background: transparent;
+    box-shadow: none;
   }
 
   .toggle-symbol img {
