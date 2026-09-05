@@ -134,6 +134,7 @@ const filterBar = document.querySelector('.project-filters');
 const filterSlider = filterBar?.querySelector('.filter-slider');
 const filterButtons = [...document.querySelectorAll('[data-filter]')];
 const filterMenuToggle = filterBar?.querySelector('.filter-menu-toggle');
+const projectGrid = document.querySelector('.project-grid');
 
 function updateFilterSlider() {
   const activeFilter = filterButtons.find(button => button.classList.contains('active'));
@@ -178,6 +179,16 @@ filterButtons.forEach(button => button.addEventListener('click', () => {
       ];
   filterSlider.animate(frames, {
     duration: 650,
+    easing: 'cubic-bezier(.22, 1, .36, 1)',
+    iterations: 1
+  });
+
+  projectGrid?.getAnimations().forEach(animation => animation.cancel());
+  projectGrid?.animate([
+    { opacity: 0, transform: `translateX(${nextIndex > previousIndex ? '24px' : '-24px'})` },
+    { opacity: 1, transform: 'translateX(0)' }
+  ], {
+    duration: 460,
     easing: 'cubic-bezier(.22, 1, .36, 1)',
     iterations: 1
   });
