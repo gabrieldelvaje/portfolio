@@ -601,6 +601,14 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
     width: 92px;
   }
 
+  .work-page .project-filters button[data-filter] {
+    display: grid;
+    height: 38px;
+    padding: 0;
+    place-items: center;
+    text-align: center;
+  }
+
   .work-page .project-filters .filter-slider {
     left: 10px;
   }
