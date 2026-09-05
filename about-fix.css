@@ -600,6 +600,10 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   .work-page .project-filters button[data-filter] {
     width: 92px;
   }
+
+  .work-page .project-filters .filter-slider {
+    left: 10px;
+  }
 }
 
 .filter-menu-toggle {
