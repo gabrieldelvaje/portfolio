@@ -578,6 +578,16 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   flex-wrap: nowrap;
 }
 
+@media (min-width: 601px) {
+  .work-page .project-filters {
+    position: sticky;
+    top: 80px;
+    z-index: 19;
+    height: 62px;
+    background: var(--bg);
+  }
+}
+
 .filter-menu-toggle {
   display: none;
 }
