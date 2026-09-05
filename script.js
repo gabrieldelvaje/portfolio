@@ -138,8 +138,10 @@ const filterMenuToggle = filterBar?.querySelector('.filter-menu-toggle');
 function updateFilterSlider() {
   const activeFilter = filterButtons.find(button => button.classList.contains('active'));
   if (!filterBar || !activeFilter) return;
+  const activeIndex = filterButtons.indexOf(activeFilter);
   filterBar.style.setProperty('--filter-left', `${activeFilter.offsetLeft}px`);
   filterBar.style.setProperty('--filter-width', `${activeFilter.offsetWidth}px`);
+  filterBar.style.setProperty('--filter-offset', `${activeIndex * 100}%`);
 }
 
 filterMenuToggle?.addEventListener('click', () => {
