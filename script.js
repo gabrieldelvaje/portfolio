@@ -190,6 +190,48 @@ document.addEventListener('pointerdown', event => {
 addEventListener('resize', updateFilterSlider);
 requestAnimationFrame(updateFilterSlider);
 
+document.querySelectorAll('[data-carousel]').forEach(carousel => {
+  const track = carousel.querySelector('.story-track');
+  const slides = [...carousel.querySelectorAll('.story-slide')];
+  const footer = carousel.parentElement.querySelector('.carousel-footer');
+  const dots = footer.querySelector('.carousel-dots');
+  const status = footer.querySelector('.carousel-status');
+  let current = 0;
+
+  slides.forEach((_, index) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+    dot.addEventListener('click', () => goTo(index));
+    dots.append(dot);
+  });
+
+  function goTo(index) {
+    current = (index + slides.length) % slides.length;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    [...dots.children].forEach((dot, dotIndex) => {
+      dot.classList.toggle('active', dotIndex === current);
+      if (dotIndex === current) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
+    });
+    status.textContent = `${current + 1} / ${slides.length}`;
+  }
+
+  carousel.querySelector('.previous').addEventListener('click', () => goTo(current - 1));
+  carousel.querySelector('.next').addEventListener('click', () => goTo(current + 1));
+  carousel.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') goTo(current - 1);
+    if (event.key === 'ArrowRight') goTo(current + 1);
+  });
+  let startX = 0;
+  carousel.addEventListener('pointerdown', event => { startX = event.clientX; });
+  carousel.addEventListener('pointerup', event => {
+    const distance = event.clientX - startX;
+    if (Math.abs(distance) > 45) goTo(current + (distance < 0 ? 1 : -1));
+  });
+  goTo(0);
+});
+
 document.getElementById('year').textContent = new Date().getFullYear();
 function updateTime(){document.querySelector('.local-time').textContent = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'}).format(new Date())}
 updateTime(); setInterval(updateTime, 60000);
