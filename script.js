@@ -164,7 +164,7 @@ filterButtons.forEach(button => button.addEventListener('click', () => {
   });
   updateFilterSlider();
 
-  if (!filterSlider || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!filterSlider) return;
   filterSlider.getAnimations().forEach(animation => animation.cancel());
   const isMobile = matchMedia('(max-width: 600px)').matches;
   const verticalOffset = isMobile ? '' : ', -50%';
