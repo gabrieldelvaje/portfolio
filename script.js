@@ -152,12 +152,35 @@ filterMenuToggle?.addEventListener('click', () => {
 });
 
 filterButtons.forEach(button => button.addEventListener('click', () => {
+  const previousFilter = filterButtons.find(item => item.classList.contains('active'));
+  const previousIndex = filterButtons.indexOf(previousFilter);
+  const nextIndex = filterButtons.indexOf(button);
+  if (previousIndex === nextIndex) return;
+
   filterButtons.forEach(item => item.classList.toggle('active', item === button));
   document.querySelectorAll('[data-category]').forEach(card => {
     const filter = button.dataset.filter;
     card.classList.toggle('filtered', filter !== 'all' && !card.dataset.category.includes(filter));
   });
   updateFilterSlider();
+
+  if (!filterSlider || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  filterSlider.getAnimations().forEach(animation => animation.cancel());
+  const isMobile = matchMedia('(max-width: 600px)').matches;
+  const frames = isMobile
+    ? [
+        { transform: `translateX(${previousIndex * 100}%)` },
+        { transform: `translateX(${nextIndex * 100}%)` }
+      ]
+    : [
+        { left: `${previousFilter.offsetLeft}px`, width: `${previousFilter.offsetWidth}px` },
+        { left: `${button.offsetLeft}px`, width: `${button.offsetWidth}px` }
+      ];
+  filterSlider.animate(frames, {
+    duration: 650,
+    easing: 'cubic-bezier(.22, 1, .36, 1)',
+    iterations: 1
+  });
 }));
 
 document.addEventListener('pointerdown', event => {

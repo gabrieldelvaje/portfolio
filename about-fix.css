@@ -587,7 +587,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   border-radius: 999px;
   background: var(--blue);
   transform: translateY(-50%);
-  transition: left .5s cubic-bezier(.22, 1, .36, 1), width .5s cubic-bezier(.22, 1, .36, 1);
+  transition: background-color .35s ease;
   pointer-events: none;
 }
 
@@ -1796,7 +1796,7 @@ main {
     height: 34px;
     opacity: 0;
     transform: translateX(var(--filter-offset, 0%));
-    transition: transform .65s cubic-bezier(.22, 1, .36, 1), opacity .18s ease;
+    transition: opacity .18s ease;
   }
 
   body.work-active .project-filters.is-open .filter-slider {
