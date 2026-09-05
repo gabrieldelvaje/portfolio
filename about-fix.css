@@ -583,15 +583,17 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
     position: sticky;
     top: 68px;
     z-index: 19;
-    grid-template-columns: repeat(3, 130px);
+    grid-template-columns: repeat(3, 92px);
     width: 100%;
     height: 62px;
-    background: var(--bg);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
   }
 
   .work-page .project-filters .filter-slider,
   .work-page .project-filters button[data-filter] {
-    width: 130px;
+    width: 92px;
   }
 }
 
