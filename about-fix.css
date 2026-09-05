@@ -564,10 +564,45 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 }
 
 .work-page .project-filters {
+  --filter-left: 0px;
+  --filter-width: 0px;
+  position: relative;
   height: 80px;
   margin: 0;
   align-items: center;
   flex-wrap: nowrap;
+}
+
+.filter-menu-toggle {
+  display: none;
+}
+
+.filter-slider {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: var(--filter-left);
+  width: var(--filter-width);
+  height: 38px;
+  border-radius: 999px;
+  background: var(--blue);
+  transform: translateY(-50%);
+  transition: left .5s cubic-bezier(.22, 1, .36, 1), width .5s cubic-bezier(.22, 1, .36, 1);
+  pointer-events: none;
+}
+
+.work-page .project-filters button[data-filter] {
+  position: relative;
+  z-index: 1;
+  border-color: transparent;
+  background: transparent;
+}
+
+.work-page .project-filters button[data-filter].active,
+[data-theme="light"] .work-page .project-filters button[data-filter].active {
+  color: #fff;
+  border-color: transparent;
+  background: transparent;
 }
 
 .work-page .project-filters button:hover,
@@ -1617,6 +1652,15 @@ main {
     mix-blend-mode: normal;
   }
 
+  body.resume-active main,
+  body.work-active main {
+    padding-top: 0;
+  }
+
+  body.resume-active .resume-page {
+    padding-top: calc(22px + env(safe-area-inset-top));
+  }
+
   body.work-active .work-page {
     padding-top: calc(68px + env(safe-area-inset-top));
   }
@@ -1626,10 +1670,9 @@ main {
     z-index: 99;
     top: calc(14px + env(safe-area-inset-top));
     right: 124px;
-    left: 12px;
-    display: grid;
-    grid-template-columns: .85fr 1.2fr 1fr;
-    gap: 4px;
+    left: auto;
+    display: block;
+    width: 44px;
     height: 44px;
     margin: 0;
     padding: 4px;
@@ -1642,9 +1685,63 @@ main {
     box-shadow:
       inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent),
       0 7px 22px color-mix(in srgb, #000 12%, transparent);
+    transition: width .55s cubic-bezier(.22, 1, .36, 1);
   }
 
-  body.work-active .project-filters button {
+  body.work-active .work-page .project-filters.is-open {
+    width: calc(100% - 136px);
+  }
+
+  body.work-active .filter-menu-toggle {
+    position: absolute;
+    z-index: 3;
+    inset: 4px;
+    display: grid;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    color: var(--ink);
+    background: transparent;
+    opacity: 1;
+    transition: opacity .18s ease;
+  }
+
+  .filter-menu-toggle span,
+  .filter-menu-toggle span::before,
+  .filter-menu-toggle span::after {
+    display: block;
+    width: 16px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+  }
+
+  .filter-menu-toggle span {
+    position: relative;
+    width: 11px;
+  }
+
+  .filter-menu-toggle span::before,
+  .filter-menu-toggle span::after {
+    content: "";
+    position: absolute;
+    right: 0;
+  }
+
+  .filter-menu-toggle span::before { top: -5px; width: 16px; }
+  .filter-menu-toggle span::after { top: 5px; width: 6px; }
+
+  body.work-active .project-filters.is-open .filter-menu-toggle {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  body.work-active .project-filters button[data-filter] {
+    position: relative;
+    z-index: 2;
     min-width: 0;
     height: 34px;
     padding: 0 5px;
@@ -1652,10 +1749,32 @@ main {
     font-size: clamp(9px, 3vw, 12px);
     text-overflow: clip;
     white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease .04s, color .25s ease;
   }
 
-  body.work-active .project-filters button[data-filter="automation"] {
-    display: none;
+  body.work-active .project-filters.is-open {
+    display: grid;
+    grid-template-columns: .85fr 1.2fr 1fr;
+    gap: 4px;
+  }
+
+  body.work-active .project-filters.is-open button[data-filter] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  body.work-active .project-filters .filter-slider {
+    top: 4px;
+    height: 34px;
+    opacity: 0;
+    transform: none;
+    transition: left .5s cubic-bezier(.22, 1, .36, 1), width .5s cubic-bezier(.22, 1, .36, 1), opacity .18s ease;
+  }
+
+  body.work-active .project-filters.is-open .filter-slider {
+    opacity: 1;
   }
 
   [data-theme="dark"] body.work-active .work-page .project-filters {

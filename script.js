@@ -79,6 +79,13 @@ function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction
   });
   document.body.classList.toggle('project-open', projectOpen);
   document.body.classList.toggle('work-active', validRoute === 'work');
+  document.body.classList.toggle('resume-active', validRoute === 'resume');
+  if (validRoute !== 'work') {
+    document.querySelector('.project-filters')?.classList.remove('is-open');
+    const filterToggle = document.querySelector('.filter-menu-toggle');
+    filterToggle?.setAttribute('aria-expanded', 'false');
+    filterToggle?.setAttribute('aria-label', 'Open project filters');
+  }
   scrollTo({top: 0, behavior: 'smooth'});
 }
 
@@ -123,13 +130,43 @@ function showRoute() {
 addEventListener('hashchange', showRoute);
 showRoute();
 
-document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
-  document.querySelectorAll('[data-filter]').forEach(item => item.classList.toggle('active', item === button));
+const filterBar = document.querySelector('.project-filters');
+const filterSlider = filterBar?.querySelector('.filter-slider');
+const filterButtons = [...document.querySelectorAll('[data-filter]')];
+const filterMenuToggle = filterBar?.querySelector('.filter-menu-toggle');
+
+function updateFilterSlider() {
+  const activeFilter = filterButtons.find(button => button.classList.contains('active'));
+  if (!filterBar || !activeFilter) return;
+  filterBar.style.setProperty('--filter-left', `${activeFilter.offsetLeft}px`);
+  filterBar.style.setProperty('--filter-width', `${activeFilter.offsetWidth}px`);
+}
+
+filterMenuToggle?.addEventListener('click', () => {
+  const isOpen = filterBar.classList.toggle('is-open');
+  filterMenuToggle.setAttribute('aria-expanded', String(isOpen));
+  filterMenuToggle.setAttribute('aria-label', isOpen ? 'Close project filters' : 'Open project filters');
+  requestAnimationFrame(updateFilterSlider);
+});
+
+filterButtons.forEach(button => button.addEventListener('click', () => {
+  filterButtons.forEach(item => item.classList.toggle('active', item === button));
   document.querySelectorAll('[data-category]').forEach(card => {
     const filter = button.dataset.filter;
     card.classList.toggle('filtered', filter !== 'all' && !card.dataset.category.includes(filter));
   });
+  updateFilterSlider();
 }));
+
+document.addEventListener('pointerdown', event => {
+  if (!filterBar?.classList.contains('is-open') || filterBar.contains(event.target)) return;
+  filterBar.classList.remove('is-open');
+  filterMenuToggle?.setAttribute('aria-expanded', 'false');
+  filterMenuToggle?.setAttribute('aria-label', 'Open project filters');
+});
+
+addEventListener('resize', updateFilterSlider);
+requestAnimationFrame(updateFilterSlider);
 
 document.getElementById('year').textContent = new Date().getFullYear();
 function updateTime(){document.querySelector('.local-time').textContent = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'}).format(new Date())}
