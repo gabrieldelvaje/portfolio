@@ -566,7 +566,12 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 .work-page .project-filters {
   --filter-left: 0px;
   --filter-width: 0px;
+  --filter-offset: 0%;
   position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  width: 390px;
   height: 80px;
   margin: 0;
   align-items: center;
@@ -581,12 +586,12 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   position: absolute;
   z-index: 0;
   top: 50%;
-  left: var(--filter-left);
-  width: var(--filter-width);
+  left: 0;
+  width: calc(100% / 3);
   height: 38px;
   border-radius: 999px;
   background: var(--blue);
-  transform: translateY(-50%);
+  transform: translate(var(--filter-offset), -50%);
   transition: background-color .35s ease;
   pointer-events: none;
 }
@@ -1701,22 +1706,39 @@ main {
     height: 44px;
     margin: 0;
     padding: 4px;
-    overflow: hidden;
-    clip-path: inset(0 calc(100% - 44px) 0 0 round 999px);
-    border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    overflow: visible;
+    border: 0;
     border-radius: 999px;
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
+  body.work-active .work-page .project-filters::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    border-radius: inherit;
     background: color-mix(in srgb, var(--bg) 64%, transparent);
     -webkit-backdrop-filter: blur(12px) saturate(155%) contrast(104%);
     backdrop-filter: blur(12px) saturate(155%) contrast(104%);
     box-shadow:
       inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent),
       0 7px 22px color-mix(in srgb, #000 12%, transparent);
-    will-change: clip-path;
-    transition: clip-path .65s cubic-bezier(.22, 1, .36, 1);
+    opacity: 0;
+    transform: scaleX(.112);
+    transform-origin: left center;
+    transition: transform .65s cubic-bezier(.22, 1, .36, 1), opacity .18s ease;
+    pointer-events: none;
   }
 
-  body.work-active .work-page .project-filters.is-open {
-    clip-path: inset(0 0 0 0 round 999px);
+  body.work-active .work-page .project-filters.is-open::before {
+    opacity: 1;
+    transform: scaleX(1);
   }
 
   body.work-active .filter-menu-toggle {
@@ -1731,7 +1753,13 @@ main {
     border: 0;
     border-radius: 50%;
     color: var(--ink);
-    background: transparent;
+    background: color-mix(in srgb, var(--bg) 64%, transparent);
+    -webkit-backdrop-filter: blur(12px) saturate(155%) contrast(104%);
+    backdrop-filter: blur(12px) saturate(155%) contrast(104%);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--ink) 16%, transparent),
+      inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent),
+      0 7px 22px color-mix(in srgb, #000 12%, transparent);
     opacity: 1;
     transform: scale(1);
     transition: opacity .3s cubic-bezier(.22, 1, .36, 1), transform .3s cubic-bezier(.22, 1, .36, 1);
@@ -1809,9 +1837,16 @@ main {
   }
 
   [data-theme="dark"] body.work-active .work-page .project-filters {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  [data-theme="dark"] body.work-active .work-page .project-filters::before,
+  [data-theme="dark"] body.work-active .filter-menu-toggle {
     border-color: color-mix(in srgb, #fff 15%, transparent);
     background: color-mix(in srgb, #211e1f 62%, transparent);
     box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, #fff 15%, transparent),
       inset 0 .5px 0 color-mix(in srgb, #fff 12%, transparent),
       0 7px 22px color-mix(in srgb, #000 20%, transparent);
   }

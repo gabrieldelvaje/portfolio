@@ -134,7 +134,6 @@ const filterBar = document.querySelector('.project-filters');
 const filterSlider = filterBar?.querySelector('.filter-slider');
 const filterButtons = [...document.querySelectorAll('[data-filter]')];
 const filterMenuToggle = filterBar?.querySelector('.filter-menu-toggle');
-const projectGrid = document.querySelector('.project-grid');
 
 function updateFilterSlider() {
   const activeFilter = filterButtons.find(button => button.classList.contains('active'));
@@ -168,30 +167,17 @@ filterButtons.forEach(button => button.addEventListener('click', () => {
   if (!filterSlider || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   filterSlider.getAnimations().forEach(animation => animation.cancel());
   const isMobile = matchMedia('(max-width: 600px)').matches;
-  const frames = isMobile
-    ? [
-        { transform: `translateX(${previousIndex * 100}%)` },
-        { transform: `translateX(${nextIndex * 100}%)` }
-      ]
-    : [
-        { left: `${previousFilter.offsetLeft}px`, width: `${previousFilter.offsetWidth}px` },
-        { left: `${button.offsetLeft}px`, width: `${button.offsetWidth}px` }
-      ];
+  const verticalOffset = isMobile ? '' : ', -50%';
+  const frames = [
+    { transform: `translate(${previousIndex * 100}%${verticalOffset})` },
+    { transform: `translate(${nextIndex * 100}%${verticalOffset})` }
+  ];
   filterSlider.animate(frames, {
     duration: 650,
     easing: 'cubic-bezier(.22, 1, .36, 1)',
     iterations: 1
   });
 
-  projectGrid?.getAnimations().forEach(animation => animation.cancel());
-  projectGrid?.animate([
-    { opacity: 0, transform: `translateX(${nextIndex > previousIndex ? '24px' : '-24px'})` },
-    { opacity: 1, transform: 'translateX(0)' }
-  ], {
-    duration: 460,
-    easing: 'cubic-bezier(.22, 1, .36, 1)',
-    iterations: 1
-  });
 }));
 
 document.addEventListener('pointerdown', event => {
