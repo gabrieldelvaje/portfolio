@@ -1720,7 +1720,8 @@ main {
     content: "";
     position: absolute;
     z-index: 0;
-    inset: 0;
+    inset: 0 auto 0 0;
+    width: 44px;
     border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
     border-radius: inherit;
     background: color-mix(in srgb, var(--bg) 64%, transparent);
@@ -1730,14 +1731,12 @@ main {
       inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent),
       0 7px 22px color-mix(in srgb, #000 12%, transparent);
     opacity: 1;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform .65s cubic-bezier(.22, 1, .36, 1);
+    transition: width .65s cubic-bezier(.22, 1, .36, 1);
     pointer-events: none;
   }
 
   body.work-active .work-page .project-filters.is-open::before {
-    transform: scaleX(1);
+    width: 100%;
   }
 
   body.work-active .filter-menu-toggle {
