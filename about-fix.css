@@ -1744,10 +1744,10 @@ main {
   body.work-active .filter-menu-toggle {
     position: absolute;
     z-index: 3;
-    inset: 4px;
+    inset: 0;
     display: grid;
-    width: 34px;
-    height: 34px;
+    width: 44px;
+    height: 44px;
     padding: 0;
     place-items: center;
     border: 0;
@@ -1761,6 +1761,7 @@ main {
       inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent),
       0 7px 22px color-mix(in srgb, #000 12%, transparent);
     opacity: 1;
+    pointer-events: auto;
     transform: scale(1);
     transition: opacity .3s cubic-bezier(.22, 1, .36, 1), transform .3s cubic-bezier(.22, 1, .36, 1);
   }
