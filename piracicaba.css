@@ -1,0 +1,44 @@
+body.project-open:has(.piracicaba-page:not([hidden])){overflow:hidden}
+.piracicaba-page .piracicaba-shell{height:calc(100dvh - 64px);padding-top:0;display:grid;grid-template-rows:74px minmax(0,1fr)}
+.piracicaba-page .piracicaba-toolbar{min-height:74px;width:100%}
+.piracicaba-page .project-repo-link{width:154px;gap:9px;color:#fff;border-color:var(--blue);background:var(--blue)}
+.piracicaba-page .project-repo-link img{filter:none}.piracicaba-page .project-repo-link span{max-width:105px;opacity:1;transform:none}
+.piracicaba-preview{padding:0}.piracicaba-preview>img{width:100%;height:100%;object-fit:cover;object-position:center 18%}
+.piracicaba-workspace{min-height:0;display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;padding-bottom:18px}
+.piracicaba-workspace .story-hub{min-height:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.piracicaba-workspace .story-hub-label{padding:8px 4px 2px}
+.piracicaba-workspace .story-choice{min-height:68px;width:100%;flex:none}
+.piracicaba-workspace .story-choice-upcoming{margin-top:0}
+.piracicaba-workspace .data-story{min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto}
+.piracicaba-workspace .data-story-heading{margin:0 0 12px;align-items:center}
+.piracicaba-workspace .data-story-heading h2{font-size:clamp(23px,2.4vw,36px)}
+.piracicaba-workspace .data-story-heading p{font-size:13px}
+.piracicaba-workspace .story-carousel{width:100%;height:100%;min-height:0;border-radius:28px;margin:0;background:#ebe8e3}
+.piracicaba-workspace .story-track{height:100%}
+.piracicaba-workspace .story-slide{height:100%;aspect-ratio:auto;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,36%);background:#f5f2ed}
+.piracicaba-workspace .story-slide>img{width:100%;height:100%;min-height:0;object-fit:contain;background:#f5f2ed}
+.piracicaba-workspace .story-slide figcaption{padding:clamp(22px,3vw,44px);background:#171515;color:#fff;display:flex;flex-direction:column;justify-content:center}
+.piracicaba-workspace .story-slide figcaption>span{color:#6e8fff;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.piracicaba-workspace .story-slide figcaption h3{margin:18px 0 14px;font-size:clamp(23px,2.6vw,40px);line-height:1.02;color:#fff}
+.piracicaba-workspace .story-slide figcaption p{margin:0;color:#ddd;font-size:clamp(14px,1.25vw,18px);line-height:1.45}
+.piracicaba-workspace .carousel-footer{width:100%;margin:10px 0 0}
+.piracicaba-workspace .carousel-arrow{top:50%;bottom:auto;translate:0 -50%}
+@media(max-width:700px){
+  .piracicaba-page .piracicaba-shell{height:calc(100dvh - 64px);grid-template-rows:68px minmax(0,1fr)}
+  .piracicaba-page .project-repo-link{width:42px;gap:0}.piracicaba-page .project-repo-link span{max-width:0;opacity:0}
+  .piracicaba-page .project-detail-heading span{display:none}.piracicaba-page .project-detail-heading h1{font-size:18px}
+  .piracicaba-page .project-back{font-size:0;gap:0}.piracicaba-page .project-back span{font-size:25px}
+  .piracicaba-workspace{grid-template-columns:1fr;grid-template-rows:54px minmax(0,1fr);gap:8px;padding-bottom:10px}
+  .piracicaba-workspace .story-hub{display:grid;grid-template-columns:1fr 44px;gap:8px;margin:0}
+  .piracicaba-workspace .story-hub-label{display:none}
+  .piracicaba-workspace .story-choice{min-height:44px;height:44px;border-radius:16px;padding:6px 12px;grid-template-columns:22px 1fr auto}
+  .piracicaba-workspace .story-choice strong{font-size:13px}.piracicaba-workspace .story-choice small{display:none}
+  .piracicaba-workspace .story-choice-upcoming{display:flex;width:44px;padding:0;align-items:center;justify-content:center}.piracicaba-workspace .story-choice-upcoming>span:last-child{display:none}
+  .piracicaba-workspace .data-story{grid-template-rows:minmax(0,1fr) 22px}.piracicaba-workspace .data-story-heading{display:none}
+  .piracicaba-workspace .story-carousel{border-radius:22px}
+  .piracicaba-workspace .story-slide{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto}
+  .piracicaba-workspace .story-slide figcaption{padding:11px 54px 12px 14px;min-height:90px}
+  .piracicaba-workspace .story-slide figcaption>span{font-size:9px}.piracicaba-workspace .story-slide figcaption h3{font-size:16px;margin:4px 0}.piracicaba-workspace .story-slide figcaption p{font-size:11px;line-height:1.25}
+  .piracicaba-workspace .carousel-footer{margin:5px 0 0}.piracicaba-workspace .carousel-dots{gap:5px}.piracicaba-workspace .carousel-dots button{width:7px;height:7px}.piracicaba-workspace .carousel-dots button.active{width:22px}
+  .piracicaba-workspace .carousel-arrow{width:38px;height:38px;top:auto;bottom:26px;translate:none}
+}

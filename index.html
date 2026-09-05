@@ -7,7 +7,8 @@
     <meta name="theme-color" content="#f4f4f1" />
     <title>Gabriel Delvaje — Data Analytics</title>
     <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="about-fix.css?v=91" />
+  <link rel="stylesheet" href="about-fix.css?v=92" />
+  <link rel="stylesheet" href="piracicaba.css?v=1" />
   </head>
   <body>
     <header class="site-header">
@@ -151,9 +152,7 @@
           <article class="project-card" data-category="analytics">
             <a class="project-card-link" href="#piracicaba-data-stories" aria-label="Open Piracicaba Data Stories">
               <div class="project-visual piracicaba-preview" role="img" aria-label="Preview of a Piracicaba socioeconomic data carousel">
-                <span class="piracicaba-index">01 / 07</span>
-                <strong>Where is<br />Piracicaba’s<br /><em>income</em> going?</strong>
-                <span class="piracicaba-map" aria-hidden="true">P</span>
+                <img src="assets/piracicaba/01.png" alt="" />
                 <span class="project-open-cue">Explore series <b aria-hidden="true">↗</b></span>
               </div>
               <h2>Piracicaba Data Stories</h2>
@@ -234,7 +233,7 @@
               <a class="project-repo-link" href="https://github.com/gabrieldelvaje/distribuicao-renda-piracicaba" target="_blank" rel="noreferrer" aria-label="Open Income Distribution repository on GitHub"><img src="assets/github-icon.png" alt="" /><span>View on GitHub</span></a>
             </div>
           </div>
-          <div class="story-hub" aria-label="Choose a Piracicaba data story">
+          <div class="piracicaba-workspace"><div class="story-hub" aria-label="Choose a Piracicaba data story">
             <p class="story-hub-label">Choose a carousel</p>
             <button class="story-choice active" type="button" aria-current="true"><span class="story-choice-number">01</span><span><strong>Income Distribution</strong><small>2000 · 2010 · 2022</small></span><b aria-hidden="true">→</b></button>
             <div class="story-choice story-choice-upcoming" aria-disabled="true"><span class="story-choice-number">02</span><span><strong>Next Piracicaba analysis</strong><small>Coming soon</small></span></div>
@@ -243,18 +242,18 @@
             <div class="data-story-heading"><div><span>Carousel 01</span><h2 id="income-story-title">Income Distribution in Piracicaba</h2></div><p>How the city’s socioeconomic map changed over two decades.</p></div>
             <div class="story-carousel" data-carousel tabindex="0" aria-label="Income Distribution carousel">
               <div class="story-track">
-                <article class="story-slide story-cover" aria-label="Slide 1 of 7"><span class="slide-count">1/7</span><div class="slide-copy"><h3>Where is Piracicaba’s <em>income</em> going?</h3><p>Over 20 years, high-income concentration moved away from the center and spread toward outer neighborhoods.</p><strong>What changed in the city’s socioeconomic map?</strong></div><span class="story-map-mark" aria-hidden="true">P</span></article>
-                <article class="story-slide" aria-label="Slide 2 of 7"><span class="slide-count">2/7</span><h3>The 5 neighborhoods with the highest average income</h3><p class="slide-kicker">Piracicaba · 2000</p><p>In 2000, the highest-income neighborhoods were concentrated in the <b>central area</b>.</p><ol class="income-ranking"><li><b>Cidade Jardim</b><span>R$ 2,442</span></li><li><b>Nova Piracicaba</b><span>R$ 2,022</span></li><li><b>Jardim Elite</b><span>R$ 1,972</span></li><li><b>Centro</b><span>R$ 1,773</span></li><li><b>Clube de Campo</b><span>R$ 1,761</span></li></ol><small>Source: IBGE 2000 Census</small></article>
-                <article class="story-slide" aria-label="Slide 3 of 7"><span class="slide-count">3/7</span><h3>The 5 neighborhoods with the highest average income</h3><p class="slide-kicker">Piracicaba · 2022</p><p>By 2022, the concentration had shifted toward the city’s <b>outer areas</b>.</p><ol class="income-ranking"><li><b>Unileste</b><span>R$ 17,050</span></li><li><b>Morato</b><span>R$ 14,385</span></li><li><b>Monte Alegre</b><span>R$ 12,007</span></li><li><b>Santa Rosa</b><span>R$ 8,288</span></li><li><b>Cidade Jardim</b><span>R$ 8,248</span></li></ol><small>Source: IBGE 2022 Census</small></article>
-                <article class="story-slide" aria-label="Slide 4 of 7"><span class="slide-count">4/7</span><h3>Average income — largest percentage increases</h3><p class="slide-kicker">Piracicaba · 2000–2022</p><div class="growth-bars"><span style="--v:100%"><b>Morato</b><i></i><strong>+1,474%</strong></span><span style="--v:85%"><b>Monte Alegre</b><i></i><strong>+1,249%</strong></span><span style="--v:79%"><b>Unileste</b><i></i><strong>+1,162%</strong></span><span style="--v:69%"><b>Santa Rosa</b><i></i><strong>+1,015%</strong></span><span style="--v:40%"><b>Ondinhas</b><i></i><strong>+593%</strong></span></div><small>Nominal growth. Values include accumulated inflation. Source: IBGE Census.</small></article>
-                <article class="story-slide" aria-label="Slide 5 of 7"><span class="slide-count">5/7</span><h3>High-end gated communities expanded alongside rising average income</h3><p>What do the neighborhoods with the largest increases have in common?</p><div class="community-grid"><span><b>Morato</b>Terras de Piracicaba</span><span><b>Monte Alegre</b>Residencial Monte Alegre</span><span><b>Unileste</b>Residencial Jatobá</span><span><b>Santa Rosa</b>Alphaville</span><span><b>Ondinhas</b>Residencial Damha</span></div><small>This is a spatial and temporal association, not evidence of causality.</small></article>
-                <article class="story-slide" aria-label="Slide 6 of 7"><span class="slide-count">6/7</span><h3>Higher averages can hide unequal distributions</h3><p>The distance between the mean and median is large. A small number of very high-income households can pull the average upward.</p><div class="mean-median"><span><b>Unileste</b><i style="--m:73%;--a:100%"></i></span><span><b>Morato</b><i style="--m:64%;--a:84%"></i></span><span><b>Monte Alegre</b><i style="--m:26%;--a:70%"></i></span><span><b>Santa Rosa</b><i style="--m:20%;--a:49%"></i></span></div><div class="chart-key"><span>Median</span><span>Mean</span></div><small>Source: IBGE 2022 Census</small></article>
-                <article class="story-slide story-conclusion" aria-label="Slide 7 of 7"><span class="slide-count">7/7</span><h3>Piracicaba’s high-income population is moving away from the center and concentrating in outer neighborhoods.</h3><p>High-end residential developments expanded near the city’s edges, raising neighborhood averages while maintaining — and in some cases widening — inequality within them.</p><strong>Average income is rising.<br /><em>So is inequality.</em></strong></article>
+                <figure class="story-slide" aria-label="Slide 1 of 7"><img src="assets/piracicaba/01.png" alt="Original income distribution carousel cover" /><figcaption><span>1/7 · English</span><h3>Where is Piracicaba’s income going?</h3><p>Over 20 years, income concentration moved away from the center and spread toward outer neighborhoods.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 2 of 7"><img src="assets/piracicaba/02.png" alt="Map of the five Piracicaba neighborhoods with the highest average income in 2000" /><figcaption><span>2/7 · English</span><h3>Highest average income · 2000</h3><p>In 2000, the highest-income neighborhoods were concentrated in the central area.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 3 of 7"><img src="assets/piracicaba/03.png" alt="Map of the five Piracicaba neighborhoods with the highest average income in 2022" /><figcaption><span>3/7 · English</span><h3>Highest average income · 2022</h3><p>By 2022, the concentration had shifted toward the city’s outer areas.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 4 of 7"><img src="assets/piracicaba/04.png" alt="Chart showing the largest average income increases from 2000 to 2022" /><figcaption><span>4/7 · English</span><h3>Largest percentage increases</h3><p>Morato +1,474% · Monte Alegre +1,249% · Unileste +1,162%. Nominal growth includes inflation.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 5 of 7"><img src="assets/piracicaba/05.png" alt="Map relating high-end gated communities to rising average income" /><figcaption><span>5/7 · English</span><h3>Gated communities and income</h3><p>High-end residential developments expanded alongside rising neighborhood averages. This is an association, not proof of causality.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 6 of 7"><img src="assets/piracicaba/06.png" alt="Mean versus median income chart for selected neighborhoods" /><figcaption><span>6/7 · English</span><h3>Higher averages can hide inequality</h3><p>A small number of very high-income households can pull the average upward while the median remains much lower.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 7 of 7"><img src="assets/piracicaba/07.png" alt="Satellite comparison of residential expansion in Monte Alegre and Santa Rosa" /><figcaption><span>7/7 · English</span><h3>The city’s socioeconomic map changed</h3><p>Average income is rising in outer neighborhoods — and inequality is rising too.</p></figcaption></figure>
               </div>
               <button class="carousel-arrow previous" type="button" aria-label="Previous slide">←</button><button class="carousel-arrow next" type="button" aria-label="Next slide">→</button>
             </div>
             <div class="carousel-footer"><div class="carousel-dots" role="group" aria-label="Choose carousel slide"></div><span class="carousel-status" aria-live="polite">1 / 7</span></div>
-          </section>
+          </section></div>
         </div>
       </section>
     </main>
