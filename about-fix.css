@@ -616,6 +616,29 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   border-color: var(--blue);
 }
 
+.work-page .project-filters button[data-filter],
+.work-page .project-filters button[data-filter]:hover,
+.work-page .project-filters button[data-filter]:focus,
+.work-page .project-filters button[data-filter]:focus-visible,
+.work-page .project-filters button[data-filter]:active,
+[data-theme="light"] .work-page .project-filters button[data-filter].active {
+  border-color: transparent;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.filter-menu-toggle,
+.filter-menu-toggle:hover,
+.filter-menu-toggle:focus,
+.filter-menu-toggle:active {
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .work-page .project-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
