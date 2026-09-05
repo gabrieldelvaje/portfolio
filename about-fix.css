@@ -1730,7 +1730,7 @@ main {
       inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent),
       0 7px 22px color-mix(in srgb, #000 12%, transparent);
     opacity: 1;
-    transform: scaleX(.112);
+    transform: scaleX(0);
     transform-origin: left center;
     transition: transform .65s cubic-bezier(.22, 1, .36, 1);
     pointer-events: none;
