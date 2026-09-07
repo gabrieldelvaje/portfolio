@@ -1286,19 +1286,11 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 .sugar-chat-input {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 2px 3px 2px 12px;
   border: 1px solid color-mix(in srgb, #242021 24%, transparent);
   border-radius: 999px;
   background: color-mix(in srgb, #f4f2f0 82%, #242021);
-}
-
-.sugar-chat-input span {
-  width: 38%;
-  height: 4px;
-  border-radius: 999px;
-  background: #242021;
-  opacity: .35;
 }
 
 .sugar-chat-input b {
@@ -1316,10 +1308,6 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 [data-theme="dark"] .sugar-chat-input {
   border-color: color-mix(in srgb, #f4f2f0 24%, transparent);
   background: color-mix(in srgb, #242021 84%, #f4f2f0);
-}
-
-[data-theme="dark"] .sugar-chat-input span {
-  background: #f4f2f0;
 }
 
 .sugar-cane-preview:hover .sugar-chatbot-window {
