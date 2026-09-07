@@ -1146,7 +1146,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 .sugar-cane-preview {
   display: grid;
   place-items: center;
-  padding: 18px 22px;
+  padding: 16px;
   background: #242021;
   transition: background-color .35s ease, border-color .35s ease, transform .42s cubic-bezier(.22,1,.36,1), box-shadow .42s ease !important;
 }
@@ -1157,12 +1157,12 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 }
 
 .sugar-chatbot-window {
-  width: 94%;
-  height: 92%;
+  width: 100%;
+  height: 100%;
   display: grid;
-  grid-template-rows: 22px 1fr 38px;
-  gap: 12px;
-  padding: 17px 19px;
+  grid-template-rows: 24px minmax(0, 1fr) 34px;
+  gap: 8px;
+  padding: 14px 18px;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, #242021 15%, transparent);
   border-radius: 24px;
@@ -1182,10 +1182,16 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 }
 
 .sugar-chatbot-header span {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, #242021 16%, transparent);
   border-radius: 50%;
-  background: var(--blue);
+  background: #f4f2f0;
+  font-family: "Segoe UI Emoji","Apple Color Emoji",sans-serif;
+  font-size: 15px;
+  line-height: 1;
 }
 
 .sugar-chatbot-header i {
@@ -1200,18 +1206,23 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   background: #f4f2f0;
 }
 
+[data-theme="dark"] .sugar-chatbot-header span {
+  border-color: rgba(244,242,240,.16);
+  background: #242021;
+}
+
 .chat-preview {
   width: 100%;
   display: grid;
   align-content: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .chat-preview i {
   position: relative;
   display: block;
   width: 66%;
-  height: 30px;
+  height: 24px;
   border: 1px solid color-mix(in srgb, #242021 13%, transparent);
   border-radius: 11px;
   background: #e8e6e3;
@@ -1262,12 +1273,12 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 
 .chat-preview i::before {
   width: 48%;
-  top: 10px;
+  top: 8px;
 }
 
 .chat-preview i::after {
   width: 30%;
-  top: 19px;
+  top: 15px;
 }
 
 .sugar-chat-input {
@@ -1289,8 +1300,8 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 }
 
 .sugar-chat-input b {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   display: grid;
   place-items: center;
   border-radius: 50%;
