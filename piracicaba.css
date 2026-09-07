@@ -2,7 +2,8 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:hidden}
 .piracicaba-page .piracicaba-shell{height:calc(100dvh - 64px);padding-top:0;display:grid;grid-template-rows:74px minmax(0,1fr)}
 .piracicaba-page .piracicaba-toolbar{min-height:74px;width:100%}
 .piracicaba-preview{padding:0;background:var(--ink);display:grid;place-items:center;transition:background-color .35s ease}
-.piracicaba-deck{position:relative;width:91%;height:88%}
+.piracicaba-deck{position:relative;width:91%;height:88%;transition:transform .55s cubic-bezier(.22,1,.36,1)}
+.piracicaba-preview:hover .piracicaba-deck,.project-card-link:focus-visible .piracicaba-preview .piracicaba-deck{transform:scale(1.025) rotate(.35deg)}
 .piracicaba-deck .deck-card{position:absolute;display:block;border-radius:24px;border:1px solid color-mix(in srgb,var(--ink) 34%,var(--bg));transition:background-color .35s ease,border-color .35s ease}
 .deck-card-back{inset:7% 11% 2% 0;background:color-mix(in srgb,var(--bg) 72%,var(--ink));transform:translateX(-2%) rotate(-2.5deg)}
 .deck-card-middle{inset:2% 0 7% 11%;background:var(--blue);transform:translateX(2%) rotate(2.5deg)}
