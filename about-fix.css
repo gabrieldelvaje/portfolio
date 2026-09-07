@@ -1214,9 +1214,9 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 .chat-preview {
   width: 100%;
   display: grid;
-  grid-template-rows: 25px 32px 27px;
+  grid-template-rows: 32px 40px;
   align-content: center;
-  gap: 8px;
+  gap: 14px;
   min-height: 0;
 }
 
@@ -1233,7 +1233,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 
 .chat-preview i:nth-child(2) {
   justify-self: end;
-  width: 60%;
+  width: 64%;
   border-color: var(--blue);
   background: var(--blue);
 }
@@ -1274,14 +1274,17 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 }
 
 .chat-preview i::before {
-  width: 48%;
-  top: 9px;
+  width: 52%;
+  top: 31%;
 }
 
 .chat-preview i::after {
-  width: 30%;
-  top: 18px;
+  width: 34%;
+  top: 63%;
 }
+
+.chat-preview i:nth-child(2)::before { width: 46%; }
+.chat-preview i:nth-child(2)::after { width: 28%; }
 
 .sugar-chat-input {
   display: flex;
@@ -1320,10 +1323,6 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 
 .sugar-cane-preview:hover .chat-preview i:nth-child(2) {
   transform: translateX(-5px);
-}
-
-.sugar-cane-preview:hover .chat-preview i:last-child {
-  transform: translateX(3px);
 }
 
 @media (max-width: 1100px) {
