@@ -766,7 +766,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 .project-card-link .project-visual:hover,
 .project-card-link:focus-visible .project-visual {
   box-shadow: 0 18px 42px color-mix(in srgb, var(--ink) 18%, transparent);
-  transform: translateY(-7px);
+  transform: none;
 }
 
 .project-card-link .project-visual:hover img,
@@ -1474,6 +1474,17 @@ body.project-open .footer {
 
   .work-page .project-grid {
     grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .work-page .project-card:not(.filtered) ~ .project-card:not(.filtered) {
+    padding-top: 26px;
+    border-top: 1px solid color-mix(in srgb, var(--line) 52%, transparent);
+  }
+
+  .work-page .project-card .project-open-cue {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 
   .project-detail-page {
