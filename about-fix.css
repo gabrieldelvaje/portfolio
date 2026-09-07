@@ -1160,8 +1160,8 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: 26px minmax(0, 1fr) 28px;
-  gap: 8px;
+  grid-template-rows: 26px minmax(0, 1fr) 26px;
+  gap: 10px;
   padding: 14px 18px;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, #242021 15%, transparent);
@@ -1214,15 +1214,17 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 .chat-preview {
   width: 100%;
   display: grid;
+  grid-template-rows: repeat(3, 28px);
   align-content: center;
-  gap: 6px;
+  gap: 9px;
+  min-height: 0;
 }
 
 .chat-preview i {
   position: relative;
   display: block;
   width: 72%;
-  height: 31px;
+  height: 28px;
   border: 1px solid color-mix(in srgb, #242021 13%, transparent);
   border-radius: 11px;
   background: #e8e6e3;
@@ -1273,12 +1275,12 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 
 .chat-preview i::before {
   width: 48%;
-  top: 10px;
+  top: 9px;
 }
 
 .chat-preview i::after {
   width: 30%;
-  top: 20px;
+  top: 18px;
 }
 
 .sugar-chat-input {
@@ -1300,8 +1302,8 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 }
 
 .sugar-chat-input b {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   display: grid;
   place-items: center;
   border-radius: 50%;
