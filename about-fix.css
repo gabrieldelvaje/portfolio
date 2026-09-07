@@ -1020,24 +1020,24 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 .revenue-growth-preview {
   display: grid;
   place-items: center;
-  padding: 16px;
-  background: #242021;
+  padding: 22px 28px;
+  background: #fff;
   box-shadow: none !important;
   transition: background-color .35s ease, border-color .35s ease, transform .42s cubic-bezier(.22,1,.36,1) !important;
 }
 
 [data-theme="dark"] .revenue-growth-preview {
   border: 1px solid var(--line);
-  background: #f4f4f1;
+  background: #242021;
 }
 
 .revenue-dashboard {
-  width: 100%;
-  height: 100%;
+  width: 94%;
+  height: 94%;
   display: grid;
-  grid-template-columns: 18% 1fr;
+  grid-template-columns: 13% 1fr;
   overflow: hidden;
-  border-radius: 24px;
+  border-radius: 30px;
   background: #f4f4f1;
   color: #242021;
   transition: transform .55s cubic-bezier(.22,1,.36,1), background-color .35s ease, color .35s ease;
@@ -1050,99 +1050,51 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 
 .revenue-sidebar {
   display: grid;
-  align-content: start;
+  align-content: center;
   justify-items: center;
-  gap: 16px;
-  padding: 43px 10px 14px;
+  gap: 8px;
+  padding: 0 8px;
   background: var(--blue);
   color: #fff;
 }
 
-.revenue-sidebar b {
-  margin-bottom: 4px;
-  font-size: 32px;
-  line-height: 1;
-}
-
 .revenue-sidebar i {
-  width: 48%;
-  height: 6px;
+  width: 70%;
+  height: 7px;
   border-radius: 999px;
   background: #fff;
-  opacity: .28;
+  opacity: .42;
 }
 
 .revenue-sidebar i:first-of-type {
-  width: 68%;
-  height: 16px;
+  width: 88%;
+  height: 8px;
   opacity: 1;
 }
 
 .revenue-main {
   min-width: 0;
   display: grid;
-  grid-template-rows: 22% 30% 1fr;
-  gap: 12px;
-  padding: 20px 22px;
-}
-
-.revenue-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.revenue-heading strong {
-  width: 42%;
-  height: 9px;
-  border-radius: 999px;
-  background: currentColor;
-}
-
-.revenue-heading i {
-  width: 18%;
-  height: 4px;
-  border-radius: 999px;
-  background: currentColor;
-  opacity: .25;
+  grid-template-rows: 1fr 1.38fr;
+  gap: 15px;
+  padding: 22px 24px 20px;
 }
 
 .revenue-kpis {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 18px;
 }
 
 .revenue-kpis span {
-  position: relative;
-  border-radius: 11px;
+  border: 1px solid rgba(36, 32, 33, .14);
+  border-radius: 17px;
   background: #e8e6e3;
 }
 
 .revenue-kpis span:first-child {
+  border-color: transparent;
   background: var(--blue);
-}
-
-.revenue-kpis span::before,
-.revenue-kpis span::after {
-  content: "";
-  position: absolute;
-  left: 12px;
-  border-radius: 999px;
-  background: currentColor;
-}
-
-.revenue-kpis span::before {
-  top: 11px;
-  width: 40%;
-  height: 5px;
-}
-
-.revenue-kpis span::after {
-  bottom: 11px;
-  width: 62%;
-  height: 9px;
-  opacity: .72;
 }
 
 .revenue-analytics {
@@ -1155,21 +1107,23 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   height: 100%;
   display: flex;
   align-items: end;
-  gap: 7px;
-  padding: 18px 22px;
-  border-radius: 12px;
+  gap: 10px;
+  padding: 15px 20px 13px;
+  border: 1px solid rgba(36, 32, 33, .14);
+  border-radius: 17px;
   background: #e8e6e3;
 }
 
 .revenue-bars i {
   flex: 1;
   height: var(--revenue-height,44%);
-  border-radius: 4px 4px 0 0;
+  border-radius: 9px 9px 0 0;
   background: var(--blue);
 }
 
 [data-theme="dark"] .revenue-kpis span,
 [data-theme="dark"] .revenue-bars {
+  border-color: rgba(244, 244, 241, .14);
   background: #2d292a;
 }
 
@@ -1178,12 +1132,12 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   color: #fff;
 }
 
-.revenue-bars i:nth-child(1) { --revenue-height: 24%; }
-.revenue-bars i:nth-child(2) { --revenue-height: 46%; }
-.revenue-bars i:nth-child(3) { --revenue-height: 36%; }
-.revenue-bars i:nth-child(4) { --revenue-height: 65%; }
-.revenue-bars i:nth-child(5) { --revenue-height: 78%; }
-.revenue-bars i:nth-child(6) { --revenue-height: 92%; }
+.revenue-bars i:nth-child(1) { --revenue-height: 43%; }
+.revenue-bars i:nth-child(2) { --revenue-height: 53%; }
+.revenue-bars i:nth-child(3) { --revenue-height: 65%; }
+.revenue-bars i:nth-child(4) { --revenue-height: 76%; }
+.revenue-bars i:nth-child(5) { --revenue-height: 86%; }
+.revenue-bars i:nth-child(6) { --revenue-height: 96%; }
 
 .revenue-growth-preview:hover .revenue-dashboard {
   transform: scale(1.025) rotate(-.5deg);
