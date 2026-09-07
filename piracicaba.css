@@ -18,7 +18,7 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 .piracicaba-workspace .story-choice-upcoming{margin-top:0}
 .piracicaba-workspace .data-story{min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto}
 .piracicaba-workspace .story-carousel{width:100%;height:100%;min-height:0;border-radius:28px;margin:0;background:#ebe8e3}
-.piracicaba-workspace .story-track{height:100%}
+.piracicaba-workspace .story-track{height:100%;transition:transform .72s cubic-bezier(.22,1,.36,1)}
 .piracicaba-workspace .story-slide{height:100%;aspect-ratio:auto;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,36%);background:#f5f2ed}
 .piracicaba-workspace .story-slide>img{width:100%;height:100%;min-height:0;object-fit:contain;background:#f5f2ed}
 .piracicaba-workspace .story-slide figcaption{padding:clamp(22px,3vw,44px);background:#171515;color:#fff;display:flex;flex-direction:column;justify-content:center}
@@ -27,7 +27,12 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 .piracicaba-workspace .story-slide figcaption p{margin:0;color:#ddd;font-size:clamp(14px,1.25vw,18px);line-height:1.45}
 .piracicaba-workspace .carousel-footer{width:100%;margin:10px 0 0}
 .piracicaba-workspace .carousel-arrow{display:grid;width:34px;height:34px;top:50%;bottom:auto;place-items:center;translate:0 -50%;font-size:16px}
-.piracicaba-workspace .carousel-arrow.previous{left:12px}.piracicaba-workspace .carousel-arrow.next{right:12px}
+.piracicaba-workspace .carousel-arrow.previous{left:12px}.piracicaba-workspace .carousel-arrow.next{right:calc(36% + 12px)}
+@media(min-width:701px){
+  .piracicaba-workspace .carousel-dots{gap:14px}
+  .piracicaba-workspace .carousel-dots button{width:9px;transition:transform .55s cubic-bezier(.22,1,.36,1),background-color .32s ease,opacity .32s ease;transform:scaleX(1)}
+  .piracicaba-workspace .carousel-dots button.active{width:9px;transform:scaleX(3.2)}
+}
 @media(max-width:700px){
   .piracicaba-page .piracicaba-shell{height:auto;min-height:calc(100dvh - 64px);grid-template-rows:auto auto}
   .piracicaba-workspace{height:auto;min-height:0;grid-template-columns:1fr;grid-template-rows:48px auto;gap:12px;padding-bottom:110px}
