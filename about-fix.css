@@ -1053,7 +1053,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   align-content: start;
   justify-items: center;
   gap: 8px;
-  padding: 59px 8px 0;
+  padding: 30px 8px 0;
   background: var(--blue);
   color: #fff;
 }
