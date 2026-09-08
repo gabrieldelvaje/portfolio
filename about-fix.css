@@ -1214,11 +1214,9 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 .chat-preview {
   position: relative;
   width: 100%;
-  display: grid;
-  grid-template-rows: 32px 40px;
-  align-content: center;
-  gap: 14px;
-  min-height: 0;
+  height: 88px;
+  align-self: center;
+  overflow: hidden;
 }
 
 .chat-preview i {
@@ -1232,16 +1230,25 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   transition: transform .45s cubic-bezier(.22,1,.36,1), background-color .25s ease;
 }
 
-.chat-preview .chat-user-message {
-  grid-row: 2;
-  justify-self: end;
+.chat-preview .chat-user-message,
+.chat-preview .chat-new-user-message {
+  position: absolute;
+  right: 0;
   width: 64%;
+  height: 32px;
   border-color: var(--blue);
   background: var(--blue);
 }
 
+.chat-preview .chat-user-message { top: 0; }
+.chat-preview .chat-new-user-message { top: 96px; opacity: 0; }
+
 .chat-preview .chat-ai-message {
-  grid-row: 1;
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 72%;
+  height: 40px;
 }
 
 .chat-preview i::before,
@@ -1255,7 +1262,9 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 }
 
 .chat-preview .chat-user-message::before,
-.chat-preview .chat-user-message::after {
+.chat-preview .chat-user-message::after,
+.chat-preview .chat-new-user-message::before,
+.chat-preview .chat-new-user-message::after {
   background: rgba(255,255,255,.82);
 }
 
@@ -1264,7 +1273,8 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   background: #343031;
 }
 
-[data-theme="dark"] .chat-preview .chat-user-message {
+[data-theme="dark"] .chat-preview .chat-user-message,
+[data-theme="dark"] .chat-preview .chat-new-user-message {
   border-color: var(--blue);
   background: var(--blue);
 }
@@ -1275,7 +1285,9 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 }
 
 [data-theme="dark"] .chat-preview .chat-user-message::before,
-[data-theme="dark"] .chat-preview .chat-user-message::after {
+[data-theme="dark"] .chat-preview .chat-user-message::after,
+[data-theme="dark"] .chat-preview .chat-new-user-message::before,
+[data-theme="dark"] .chat-preview .chat-new-user-message::after {
   background: rgba(255,255,255,.82);
 }
 
@@ -1291,12 +1303,14 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 
 .chat-preview .chat-user-message::before { width: 46%; }
 .chat-preview .chat-user-message::after { width: 28%; }
+.chat-preview .chat-new-user-message::before { width: 46%; }
+.chat-preview .chat-new-user-message::after { width: 28%; }
 
 .chat-typing {
   position: absolute;
   z-index: 2;
   left: 18px;
-  bottom: 17px;
+  top: 101px;
   display: flex;
   gap: 5px;
   opacity: 0;

@@ -192,29 +192,37 @@ requestAnimationFrame(updateFilterSlider);
 
 document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
   const userMessage = preview.querySelector('.chat-user-message');
+  const newUserMessage = preview.querySelector('.chat-new-user-message');
   const aiMessage = preview.querySelector('.chat-ai-message');
   const typing = preview.querySelector('.chat-typing');
   const typingDots = [...preview.querySelectorAll('.chat-typing b')];
-  const animatedParts = [userMessage, aiMessage, typing, ...typingDots].filter(Boolean);
+  const animatedParts = [userMessage, newUserMessage, aiMessage, typing, ...typingDots].filter(Boolean);
 
   function playChatSequence() {
     animatedParts.forEach(part => part.getAnimations().forEach(animation => animation.cancel()));
 
     userMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
-      { opacity: 1, transform: 'translateY(-46px)', offset: .26 },
-      { opacity: 1, transform: 'translateY(-46px)', offset: .58 },
-      { opacity: 0, transform: 'translateY(-94px)', offset: .82 },
-      { opacity: 0, transform: 'translateY(-94px)', offset: 1 }
+      { opacity: 0, transform: 'translateY(-48px)', offset: .28 },
+      { opacity: 0, transform: 'translateY(-48px)', offset: 1 }
+    ], { duration: 2400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+
+    newUserMessage.animate([
+      { opacity: 0, transform: 'translateY(0)', offset: 0 },
+      { opacity: 0, transform: 'translateY(0)', offset: .08 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .3 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .43 },
+      { opacity: 1, transform: 'translateY(-96px)', offset: .61 },
+      { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
     ], { duration: 2400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     typing.animate([
       { opacity: 0, transform: 'translateY(18px)', offset: 0 },
-      { opacity: 0, transform: 'translateY(18px)', offset: .27 },
-      { opacity: 1, transform: 'translateY(0)', offset: .42 },
-      { opacity: 1, transform: 'translateY(0)', offset: .6 },
-      { opacity: 1, transform: 'translateY(-47px)', offset: .82 },
-      { opacity: 1, transform: 'translateY(-47px)', offset: 1 }
+      { opacity: 0, transform: 'translateY(18px)', offset: .42 },
+      { opacity: 1, transform: 'translateY(-53px)', offset: .57 },
+      { opacity: 1, transform: 'translateY(-53px)', offset: .72 },
+      { opacity: 0, transform: 'translateY(-53px)', offset: .8 },
+      { opacity: 0, transform: 'translateY(-53px)', offset: 1 }
     ], { duration: 2400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     typingDots.forEach((dot, index) => dot.animate([
@@ -223,17 +231,18 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { transform: 'translateY(0)', opacity: .42 }
     ], {
       duration: 420,
-      delay: 900 + (index * 100),
+      delay: 1280 + (index * 100),
       easing: 'ease-in-out',
       iterations: 2
     }));
 
     aiMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
-      { opacity: 0, transform: 'translateY(-46px)', offset: .26 },
-      { opacity: 0, transform: 'translateY(94px)', offset: .6 },
-      { opacity: 1, transform: 'translateY(47px)', offset: .84 },
-      { opacity: 1, transform: 'translateY(47px)', offset: 1 }
+      { opacity: 1, transform: 'translateY(-48px)', offset: .28 },
+      { opacity: 0, transform: 'translateY(-96px)', offset: .58 },
+      { opacity: 0, transform: 'translateY(48px)', offset: .7 },
+      { opacity: 1, transform: 'translateY(0)', offset: .9 },
+      { opacity: 1, transform: 'translateY(0)', offset: 1 }
     ], { duration: 2400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
   }
 
