@@ -268,10 +268,10 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
       bar.getAnimations().forEach(animation => animation.cancel());
       const sequence = [
         [patterns[0], 0],
-        [patterns[1], .14], [patterns[1], .215],
-        [patterns[2], .355], [patterns[2], .43],
-        [patterns[3], .57], [patterns[3], .645],
-        [patterns[4], .785], [patterns[4], .86],
+        [patterns[1], .168], [patterns[1], .208],
+        [patterns[2], .376], [patterns[2], .416],
+        [patterns[3], .584], [patterns[3], .624],
+        [patterns[4], .792], [patterns[4], .832],
         [patterns[0], 1]
       ];
       bar.animate(sequence.map(([pattern, offset]) => ({
