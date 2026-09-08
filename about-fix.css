@@ -1008,8 +1008,6 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
-  stroke-dasharray: var(--race-length);
-  stroke-dashoffset: var(--race-length);
 }
 
 .music-line-chart .music-line-secondary {

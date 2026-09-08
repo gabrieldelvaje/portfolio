@@ -355,18 +355,14 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
   const tabs = [...preview.querySelectorAll('.music-dashboard-tabs i')];
   const chart = preview.querySelector('.music-chart');
   const raceLines = [...preview.querySelectorAll('.music-line-chart path')];
-  let raceLengths = [];
   let playing = false;
 
   const wait = duration => new Promise(resolve => setTimeout(resolve, duration));
 
   function resetMusicRace() {
-    raceLengths = raceLines.map(line => line.getTotalLength());
-    raceLines.forEach((line, index) => {
-      const length = raceLengths[index];
-      line.style.setProperty('--race-length', `${length}px`);
-      line.style.strokeDasharray = `${length}px`;
-      line.style.strokeDashoffset = `${length}px`;
+    raceLines.forEach(line => {
+      line.setAttribute('stroke-dasharray', '1');
+      line.setAttribute('stroke-dashoffset', '1');
     });
   }
 
@@ -376,8 +372,8 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
       const startedAt = performance.now();
       function drawFrame(now) {
         const progress = Math.min((now - startedAt) / duration, 1);
-        raceLines.forEach((line, index) => {
-          line.style.strokeDashoffset = `${raceLengths[index] * (1 - progress)}px`;
+        raceLines.forEach(line => {
+          line.setAttribute('stroke-dashoffset', String(1 - progress));
         });
         if (progress < 1) requestAnimationFrame(drawFrame);
         else resolve();
