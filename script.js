@@ -205,7 +205,7 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
       { opacity: 0, transform: 'translateY(-48px)', offset: .28 },
       { opacity: 0, transform: 'translateY(-48px)', offset: 1 }
-    ], { duration: 2400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+    ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     newUserMessage.animate([
       { opacity: 0, transform: 'translateY(0)', offset: 0 },
@@ -214,7 +214,7 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 1, transform: 'translateY(-48px)', offset: .43 },
       { opacity: 1, transform: 'translateY(-96px)', offset: .61 },
       { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
-    ], { duration: 2400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+    ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     typing.animate([
       { opacity: 0, transform: 'translateY(18px)', offset: 0 },
@@ -223,15 +223,15 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 1, transform: 'translateY(-53px)', offset: .72 },
       { opacity: 0, transform: 'translateY(-53px)', offset: .8 },
       { opacity: 0, transform: 'translateY(-53px)', offset: 1 }
-    ], { duration: 2400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+    ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     typingDots.forEach((dot, index) => dot.animate([
       { transform: 'translateY(0)', opacity: .42 },
       { transform: 'translateY(-5px)', opacity: 1 },
       { transform: 'translateY(0)', opacity: .42 }
     ], {
-      duration: 420,
-      delay: 1280 + (index * 100),
+      duration: 480,
+      delay: 1800 + (index * 120),
       easing: 'ease-in-out',
       iterations: 2
     }));
@@ -243,7 +243,7 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 0, transform: 'translateY(48px)', offset: .7 },
       { opacity: 1, transform: 'translateY(0)', offset: .9 },
       { opacity: 1, transform: 'translateY(0)', offset: 1 }
-    ], { duration: 2400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+    ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
   }
 
   preview.addEventListener('pointerenter', playChatSequence);
