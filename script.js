@@ -202,28 +202,28 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
     animatedParts.forEach(part => part.getAnimations().forEach(animation => animation.cancel()));
 
     userMessage.animate([
-      { opacity: 1, transform: 'translateY(0)', offset: 0 },
+      { opacity: 1, transform: 'translateY(0)', offset: 0, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 0, transform: 'translateY(-48px)', offset: .34 },
       { opacity: 0, transform: 'translateY(-48px)', offset: 1 }
-    ], { duration: 4200, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' });
 
     newUserMessage.animate([
       { opacity: 0, transform: 'translateY(0)', offset: 0 },
-      { opacity: 0, transform: 'translateY(0)', offset: .08 },
+      { opacity: 0, transform: 'translateY(0)', offset: .08, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 1, transform: 'translateY(-48px)', offset: .34 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .58, easing: 'cubic-bezier(.45, 0, .25, 1)' },
-      { opacity: 1, transform: 'translateY(-96px)', offset: .72 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .56, easing: 'cubic-bezier(.4, 0, .2, 1)' },
+      { opacity: 1, transform: 'translateY(-96px)', offset: .78 },
       { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
-    ], { duration: 4200, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' });
 
     typing.animate([
       { opacity: 0, transform: 'translateY(18px)', offset: 0 },
-      { opacity: 0, transform: 'translateY(18px)', offset: .6 },
+      { opacity: 0, transform: 'translateY(18px)', offset: .6, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 1, transform: 'translateY(-53px)', offset: .64 },
       { opacity: 1, transform: 'translateY(-53px)', offset: .91 },
       { opacity: 0, transform: 'translateY(-53px)', offset: .94 },
       { opacity: 0, transform: 'translateY(-53px)', offset: 1 }
-    ], { duration: 4200, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' });
 
     typingDots.forEach((dot, index) => dot.animate([
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: 0 },
@@ -234,7 +234,8 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       duration: 420,
       delay: 2840 + (index * 140),
       easing: 'ease-in-out',
-      iterations: 2
+      iterations: 2,
+      fill: 'both'
     }));
 
     aiMessage.animate([
@@ -242,10 +243,10 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 1, transform: 'translateY(-48px)', offset: .34 },
       { opacity: 0, transform: 'translateY(-96px)', offset: .6 },
       { opacity: 0, transform: 'translateY(48px)', offset: .7 },
-      { opacity: 0, transform: 'translateY(48px)', offset: .935 },
+      { opacity: 0, transform: 'translateY(48px)', offset: .935, easing: 'cubic-bezier(.22, 1, .36, 1)' },
       { opacity: 1, transform: 'translateY(0)', offset: .965 },
       { opacity: 1, transform: 'translateY(0)', offset: 1 }
-    ], { duration: 4200, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' });
   }
 
   preview.addEventListener('pointerenter', playChatSequence);
