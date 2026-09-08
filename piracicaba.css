@@ -35,10 +35,10 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
   .piracicaba-workspace .carousel-dots{position:relative;gap:7px;padding:0 11px}
   .piracicaba-workspace .carousel-dots button{position:relative;z-index:1;width:9px;transition:background-color .28s ease,opacity .28s ease}
   .piracicaba-workspace .carousel-dots button.active{width:9px;background:transparent}
-  .piracicaba-workspace .carousel-dot-slider{position:absolute;z-index:0;top:0;left:0;width:30px;height:9px;border-radius:999px;background:var(--blue);will-change:transform}
+  .piracicaba-workspace .carousel-dot-slider{position:absolute;z-index:2;top:0;left:0;width:30px;height:9px;border-radius:999px;background:var(--blue);will-change:transform;pointer-events:none}
 }
 @media(max-width:700px){
-  .piracicaba-workspace .carousel-dot-slider{position:absolute;z-index:0;top:0;left:0;display:block;width:22px;height:7px;border-radius:999px;background:var(--blue);will-change:transform}
+  .piracicaba-workspace .carousel-dot-slider{position:absolute;z-index:2;top:0;left:0;display:block;width:22px;height:7px;border-radius:999px;background:var(--blue);will-change:transform;pointer-events:none}
   .piracicaba-page .piracicaba-shell{height:auto;min-height:calc(100dvh - 64px);grid-template-rows:auto auto}
   .piracicaba-workspace{height:auto;min-height:0;grid-template-columns:1fr;grid-template-rows:48px auto;gap:12px;padding-bottom:110px}
   .piracicaba-workspace .story-hub{display:grid;grid-template-columns:1fr 44px;gap:8px;margin:0}
