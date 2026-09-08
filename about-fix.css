@@ -2077,15 +2077,31 @@ main {
   height: 36px;
   display: grid;
   place-items: center;
-  padding: 0 0 2px;
+  padding: 0;
   border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
   border-radius: 50%;
   color: var(--ink);
   background: transparent;
-  font: 300 24px/1 Arial, sans-serif;
+  font-size: 0;
   cursor: pointer;
   transition: color .2s ease, border-color .2s ease, background-color .2s ease;
 }
+
+.project-info-close::before,
+.project-info-close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 13px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transform-origin: center;
+}
+
+.project-info-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+.project-info-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
 
 .project-info-close:hover,
 .project-info-close:focus-visible {
