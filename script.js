@@ -206,14 +206,43 @@ document.querySelectorAll('[data-carousel]').forEach(carousel => {
     dots.append(dot);
   });
 
+  const dotSlider = document.createElement('span');
+  dotSlider.className = 'carousel-dot-slider';
+  dotSlider.setAttribute('aria-hidden', 'true');
+  dots.prepend(dotSlider);
+  const dotButtons = [...dots.querySelectorAll('button')];
+
+  function dotSliderOffset(index) {
+    const dot = dotButtons[index];
+    return dot ? dot.offsetLeft + (dot.offsetWidth / 2) - 15 : 0;
+  }
+
   function goTo(index) {
+    const previous = current;
     current = (index + slides.length) % slides.length;
     track.style.transform = `translateX(-${current * 100}%)`;
-    [...dots.children].forEach((dot, dotIndex) => {
+    dotButtons.forEach((dot, dotIndex) => {
       dot.classList.toggle('active', dotIndex === current);
       if (dotIndex === current) dot.setAttribute('aria-current', 'true');
       else dot.removeAttribute('aria-current');
     });
+
+    if (matchMedia('(min-width: 701px)').matches) {
+      const from = dotSliderOffset(previous);
+      const to = dotSliderOffset(current);
+      dotSlider.style.transform = `translateX(${to}px)`;
+      dotSlider.getAnimations().forEach(animation => animation.cancel());
+      if (previous !== current) {
+        dotSlider.animate([
+          { transform: `translateX(${from}px)` },
+          { transform: `translateX(${to}px)` }
+        ], {
+          duration: 650,
+          easing: 'cubic-bezier(.22, 1, .36, 1)',
+          iterations: 1
+        });
+      }
+    }
     status.textContent = `${current + 1} / ${slides.length}`;
   }
 

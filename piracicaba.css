@@ -29,11 +29,13 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 .piracicaba-workspace .carousel-arrow{display:grid;width:34px;height:34px;top:50%;bottom:auto;place-items:center;translate:0 -50%;font-size:16px}
 .piracicaba-workspace .carousel-arrow.previous{left:12px}.piracicaba-workspace .carousel-arrow.next{right:calc(36% + 12px)}
 @media(min-width:701px){
-  .piracicaba-workspace .carousel-dots{gap:14px}
-  .piracicaba-workspace .carousel-dots button{width:9px;transition:transform .55s cubic-bezier(.22,1,.36,1),background-color .32s ease,opacity .32s ease;transform:scaleX(1)}
-  .piracicaba-workspace .carousel-dots button.active{width:9px;transform:scaleX(3.2)}
+  .piracicaba-workspace .carousel-dots{position:relative;gap:7px;padding:0 11px}
+  .piracicaba-workspace .carousel-dots button{position:relative;z-index:1;width:9px;transition:background-color .28s ease,opacity .28s ease}
+  .piracicaba-workspace .carousel-dots button.active{width:9px;background:transparent}
+  .piracicaba-workspace .carousel-dot-slider{position:absolute;z-index:0;top:0;left:0;width:30px;height:9px;border-radius:999px;background:var(--blue);will-change:transform}
 }
 @media(max-width:700px){
+  .piracicaba-workspace .carousel-dot-slider{display:none}
   .piracicaba-page .piracicaba-shell{height:auto;min-height:calc(100dvh - 64px);grid-template-rows:auto auto}
   .piracicaba-workspace{height:auto;min-height:0;grid-template-columns:1fr;grid-template-rows:48px auto;gap:12px;padding-bottom:110px}
   .piracicaba-workspace .story-hub{display:grid;grid-template-columns:1fr 44px;gap:8px;margin:0}
