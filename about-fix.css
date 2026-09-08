@@ -1233,10 +1233,15 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 }
 
 .chat-preview .chat-user-message {
+  grid-row: 2;
   justify-self: end;
   width: 64%;
   border-color: var(--blue);
   background: var(--blue);
+}
+
+.chat-preview .chat-ai-message {
+  grid-row: 1;
 }
 
 .chat-preview i::before,
@@ -1291,7 +1296,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   position: absolute;
   z-index: 2;
   left: 18px;
-  bottom: 14px;
+  bottom: 17px;
   display: flex;
   gap: 5px;
   opacity: 0;
