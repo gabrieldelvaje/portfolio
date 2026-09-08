@@ -153,6 +153,10 @@
 }
 
 @media (max-width: 600px) {
+  body.project-open main {
+    padding-top: 0;
+  }
+
   .nav { height: 58px; }
   .theme-toggle { width: 82px; height: 36px; }
   .toggle-symbol img { width: 21px; height: 21px; }
@@ -2106,7 +2110,7 @@ main {
     cursor: pointer;
   }
   body.project-open .project-detail-toolbar {
-    min-height: 132px;
+    min-height: 122px;
     justify-content: flex-end;
     padding-top: 48px;
     padding-bottom: 18px;
