@@ -351,6 +351,40 @@ document.querySelectorAll('.piracicaba-preview').forEach(preview => {
   preview.addEventListener('focusin', playPiracicabaCarousel);
 });
 
+document.querySelectorAll('.music-farming-preview').forEach(preview => {
+  const bars = [...preview.querySelectorAll('.music-chart i')];
+  const initial = [28, 58, 42, 76, 53, 88];
+  const pulses = [
+    [66, 32, 82, 44, 91, 38],
+    [38, 86, 51, 93, 34, 70],
+    [79, 46, 90, 31, 72, 49]
+  ];
+  let playing = false;
+
+  async function playMusicBars() {
+    if (playing) return;
+    playing = true;
+    const animations = bars.map((bar, index) => bar.animate([
+      { height: `${initial[index]}%`, offset: 0 },
+      { height: `${pulses[0][index]}%`, offset: .22 },
+      { height: `${pulses[1][index]}%`, offset: .45 },
+      { height: `${pulses[2][index]}%`, offset: .68 },
+      { height: `${pulses[0][index]}%`, offset: .84 },
+      { height: `${initial[index]}%`, offset: 1 }
+    ], {
+      duration: 2200,
+      easing: 'cubic-bezier(.45, 0, .25, 1)',
+      fill: 'forwards'
+    }));
+    await Promise.all(animations.map(animation => animation.finished.catch(() => {})));
+    animations.forEach(animation => animation.cancel());
+    playing = false;
+  }
+
+  preview.addEventListener('pointerenter', playMusicBars);
+  preview.addEventListener('focusin', playMusicBars);
+});
+
 document.querySelectorAll('[data-carousel]').forEach(carousel => {
   const track = carousel.querySelector('.story-track');
   const slides = [...carousel.querySelectorAll('.story-slide')];
