@@ -258,8 +258,7 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
   const patterns = [
     [43, 53, 65, 76, 86, 96],
     [0, 0, 42, 68, 82, 52],
-    [28, 62, 38, 88, 56, 74],
-    [70, 34, 82, 48, 94, 64]
+    [28, 62, 38, 88, 56, 74]
   ];
 
   function playRevenueBars() {
@@ -267,9 +266,8 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
       bar.getAnimations().forEach(animation => animation.cancel());
       const sequence = [
         [patterns[0], 0],
-        [patterns[1], .24], [patterns[1], .255],
-        [patterns[2], .495], [patterns[2], .51],
-        [patterns[3], .75], [patterns[3], .765],
+        [patterns[1], .32], [patterns[1], .335],
+        [patterns[2], .66], [patterns[2], .675],
         [patterns[0], 1]
       ];
       bar.animate(sequence.map(([pattern, offset]) => ({
@@ -278,7 +276,7 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
         offset,
         easing: 'cubic-bezier(.22, 1, .36, 1)'
       })), {
-        duration: 3000,
+        duration: 2100,
         easing: 'linear',
         iterations: 1,
         fill: 'forwards'
@@ -295,13 +293,18 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
 
 document.querySelectorAll('.piracicaba-preview').forEach(preview => {
   const cards = [...preview.querySelectorAll('.deck-map i')];
-  const pageSlider = preview.querySelector('.deck-page-slider');
+  const pageDots = [...preview.querySelectorAll('.deck-pagination i')];
   let playing = false;
 
   const slots = [
     { left: '0%', top: '15%', width: '25%', height: '70%', background: 'color-mix(in srgb, var(--ink) 16%, var(--bg))', borderColor: 'color-mix(in srgb, var(--ink) 12%, var(--bg))', opacity: 1 },
     { left: '31%', top: '4%', width: '38%', height: '92%', background: 'var(--blue)', borderColor: 'var(--blue)', opacity: 1 },
     { left: '75%', top: '15%', width: '25%', height: '70%', background: 'color-mix(in srgb, var(--ink) 16%, var(--bg))', borderColor: 'color-mix(in srgb, var(--ink) 12%, var(--bg))', opacity: 1 }
+  ];
+  const dotSlots = [
+    { left: '0px', top: '1px', width: '7px', height: '7px', background: 'color-mix(in srgb, var(--ink) 24%, var(--bg))', borderRadius: '50%', opacity: 1 },
+    { left: '13px', top: '0px', width: '19px', height: '8px', background: 'var(--blue)', borderRadius: '999px', opacity: 1 },
+    { left: '38px', top: '1px', width: '7px', height: '7px', background: 'color-mix(in srgb, var(--ink) 24%, var(--bg))', borderRadius: '50%', opacity: 1 }
   ];
 
   function applySlot(card, slot) {
@@ -317,18 +320,19 @@ document.querySelectorAll('.piracicaba-preview').forEach(preview => {
         : [slots[from], slots[to]];
       return card.animate(keyframes, { duration: 520, easing: 'cubic-bezier(.22, 1, .36, 1)', fill: 'forwards' });
     });
-    const sliderPositions = ['13px', '26px', '0px', '13px'];
-    const sliderAnimation = pageSlider?.animate(
-      [{ transform: `translateX(${sliderPositions[step]})` }, { transform: `translateX(${sliderPositions[step + 1]})` }],
-      { duration: 520, easing: 'cubic-bezier(.22, 1, .36, 1)', fill: 'forwards' }
-    );
-    await Promise.all([...animations, sliderAnimation].filter(Boolean).map(animation => animation.finished.catch(() => {})));
+    const dotAnimations = pageDots.map((dot, index) => {
+      const from = (index - step + 3) % 3;
+      const to = (from + 2) % 3;
+      const keyframes = from === 0
+        ? [dotSlots[0], { ...dotSlots[0], left: '-9px', opacity: 0, offset: .72 }, { ...dotSlots[2], left: '47px', opacity: 0, offset: .73 }, dotSlots[2]]
+        : [dotSlots[from], dotSlots[to]];
+      return dot.animate(keyframes, { duration: 520, easing: 'cubic-bezier(.22, 1, .36, 1)', fill: 'forwards' });
+    });
+    await Promise.all([...animations, ...dotAnimations].map(animation => animation.finished.catch(() => {})));
     cards.forEach((card, index) => applySlot(card, slots[(index - step - 1 + 3) % 3]));
+    pageDots.forEach((dot, index) => applySlot(dot, dotSlots[(index - step - 1 + 3) % 3]));
     animations.forEach(animation => animation.cancel());
-    if (sliderAnimation) {
-      pageSlider.style.transform = `translateX(${sliderPositions[step + 1]})`;
-      sliderAnimation.cancel();
-    }
+    dotAnimations.forEach(animation => animation.cancel());
   }
 
   async function playPiracicabaCarousel() {
@@ -339,7 +343,7 @@ document.querySelectorAll('.piracicaba-preview').forEach(preview => {
       await new Promise(resolve => setTimeout(resolve, 120));
     }
     cards.forEach((card, index) => applySlot(card, slots[index]));
-    if (pageSlider) pageSlider.style.transform = 'translateX(13px)';
+    pageDots.forEach((dot, index) => applySlot(dot, dotSlots[index]));
     playing = false;
   }
 
