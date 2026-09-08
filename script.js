@@ -190,6 +190,24 @@ document.addEventListener('pointerdown', event => {
 addEventListener('resize', updateFilterSlider);
 requestAnimationFrame(updateFilterSlider);
 
+const projectInfoDialog = document.querySelector('#project-info-dialog');
+const projectInfoTitle = document.querySelector('#project-info-title');
+const projectInfoDescription = document.querySelector('#project-info-description');
+
+document.querySelectorAll('[data-project-info]').forEach(button => {
+  button.addEventListener('click', () => {
+    if (!projectInfoDialog) return;
+    projectInfoTitle.textContent = button.dataset.infoTitle || '';
+    projectInfoDescription.textContent = button.dataset.infoDescription || '';
+    projectInfoDialog.showModal();
+  });
+});
+
+projectInfoDialog?.querySelector('.project-info-close')?.addEventListener('click', () => projectInfoDialog.close());
+projectInfoDialog?.addEventListener('click', event => {
+  if (event.target === projectInfoDialog) projectInfoDialog.close();
+});
+
 document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
   const userMessage = preview.querySelector('.chat-user-message');
   const newUserMessage = preview.querySelector('.chat-new-user-message');

@@ -2014,3 +2014,87 @@ main {
     height: calc(100dvh - 164px);
   }
 }
+
+/* Mobile project navigation and information */
+.project-mobile-controls { display: contents; }
+.project-info-button { display: none; }
+
+.project-info-dialog {
+  width: min(430px, calc(100% - 32px));
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  border-radius: 30px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  box-shadow: 0 22px 70px color-mix(in srgb, #000 24%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(145%);
+  backdrop-filter: blur(20px) saturate(145%);
+}
+
+.project-info-dialog::backdrop {
+  background: color-mix(in srgb, #000 38%, transparent);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.project-info-dialog-inner { position: relative; padding: 30px 28px 28px; }
+.project-info-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  border-radius: 50%;
+  color: var(--ink);
+  background: transparent;
+  font: 300 24px/1 Inter, Arial, sans-serif;
+  cursor: pointer;
+}
+.project-info-kicker { color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.project-info-dialog h2 { margin: 18px 42px 12px 0; font-size: 27px; font-weight: 500; }
+.project-info-dialog p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+
+@media (max-width: 600px) {
+  .project-mobile-controls {
+    position: fixed;
+    z-index: 99;
+    top: calc(14px + env(safe-area-inset-top));
+    left: 14px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .project-mobile-controls .project-back {
+    height: 44px;
+    padding: 0 15px;
+    gap: 7px;
+    border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--bg) 64%, transparent);
+    box-shadow: inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent);
+    -webkit-backdrop-filter: blur(12px) saturate(155%);
+    backdrop-filter: blur(12px) saturate(155%);
+    font-size: 13px;
+  }
+  .project-mobile-controls .project-back span { font-size: 19px; }
+  .project-mobile-controls .project-back:hover,
+  .project-mobile-controls .project-back:focus-visible { color: var(--ink); transform: none; }
+  .project-info-button {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    border-radius: 50%;
+    color: var(--ink);
+    background: color-mix(in srgb, var(--bg) 64%, transparent);
+    box-shadow: inset 0 .5px 0 color-mix(in srgb, #fff 34%, transparent);
+    -webkit-backdrop-filter: blur(12px) saturate(155%);
+    backdrop-filter: blur(12px) saturate(155%);
+    font: 600 17px/1 Georgia, serif;
+    cursor: pointer;
+  }
+  body.project-open .project-detail-toolbar { padding-top: 48px; }
+}
