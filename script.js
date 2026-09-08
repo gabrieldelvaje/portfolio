@@ -212,8 +212,8 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 0, transform: 'translateY(0)', offset: .08 },
       { opacity: 1, transform: 'translateY(-48px)', offset: .34 },
       { opacity: 1, transform: 'translateY(-48px)', offset: .5 },
-      { opacity: 1, transform: 'translateY(-76px)', offset: .6 },
-      { opacity: 1, transform: 'translateY(-76px)', offset: 1 }
+      { opacity: 1, transform: 'translateY(-96px)', offset: .6 },
+      { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
     ], { duration: 4200, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     typing.animate([
