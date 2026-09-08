@@ -4,7 +4,7 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 .piracicaba-preview{padding:0;background:color-mix(in srgb,var(--ink) 10%,var(--bg));border-color:color-mix(in srgb,var(--ink) 18%,var(--bg));display:grid;place-items:center;transition:background-color .35s ease,border-color .35s ease}
 [data-theme="dark"] .piracicaba-preview{background:color-mix(in srgb,var(--ink) 18%,var(--bg));border-color:color-mix(in srgb,var(--ink) 26%,var(--bg))}
 .piracicaba-deck{position:relative;width:91%;height:88%;transition:transform .55s cubic-bezier(.22,1,.36,1)}
-.piracicaba-preview:hover .piracicaba-deck,.project-card-link:focus-visible .piracicaba-preview .piracicaba-deck{transform:scale(1.025) rotate(.35deg)}
+.piracicaba-preview:hover .piracicaba-deck,.project-card-link:focus-visible .piracicaba-preview .piracicaba-deck{transform:none}
 .piracicaba-deck .deck-card{position:absolute;display:block;border-radius:24px;border:1px solid color-mix(in srgb,var(--ink) 34%,var(--bg));transition:background-color .35s ease,border-color .35s ease}
 .deck-card-back{inset:7% 11% 2% 0;background:color-mix(in srgb,var(--bg) 72%,var(--ink));transform:translateX(-2%) rotate(-2.5deg)}
 .deck-card-middle{inset:2% 0 7% 11%;background:color-mix(in srgb,var(--bg) 84%,var(--ink));transform:translateX(2%) rotate(2.5deg)}
