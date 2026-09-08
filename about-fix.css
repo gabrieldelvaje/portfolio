@@ -1004,18 +1004,23 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 .music-line-chart path {
   fill: none;
   stroke: var(--blue);
-  stroke-width: 6;
+  stroke-width: 3;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   vector-effect: non-scaling-stroke;
-  transition: stroke-dashoffset .9s cubic-bezier(.22,1,.36,1) .1s;
+  transition: stroke-dashoffset .9s linear .68s;
 }
 
 .music-line-chart .music-line-secondary {
-  stroke: color-mix(in srgb,currentColor 40%,transparent);
-  transition-delay: .13s;
+  stroke: color-mix(in srgb,currentColor 58%,var(--bg));
+  transition-duration: 1s;
+}
+
+.music-line-chart .music-line-tertiary {
+  stroke: color-mix(in srgb,currentColor 34%,var(--bg));
+  transition-duration: 1.08s;
 }
 
 .music-chart.show-line .music-bars {

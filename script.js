@@ -372,7 +372,7 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
     playing = true;
     await wait(180);
     await selectMusicTab(2, true);
-    await wait(720);
+    await wait(1400);
     await selectMusicTab(1, false);
     await wait(520);
     playing = false;
