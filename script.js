@@ -190,6 +190,55 @@ document.addEventListener('pointerdown', event => {
 addEventListener('resize', updateFilterSlider);
 requestAnimationFrame(updateFilterSlider);
 
+document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
+  const userMessage = preview.querySelector('.chat-user-message');
+  const aiMessage = preview.querySelector('.chat-ai-message');
+  const typing = preview.querySelector('.chat-typing');
+  const typingDots = [...preview.querySelectorAll('.chat-typing b')];
+  const animatedParts = [userMessage, aiMessage, typing, ...typingDots].filter(Boolean);
+
+  function playChatSequence() {
+    animatedParts.forEach(part => part.getAnimations().forEach(animation => animation.cancel()));
+
+    userMessage.animate([
+      { opacity: 0, transform: 'translateY(16px) scale(.97)', offset: 0 },
+      { opacity: 0, transform: 'translateY(16px) scale(.97)', offset: .06 },
+      { opacity: 1, transform: 'translateY(0) scale(1)', offset: .28 },
+      { opacity: 1, transform: 'translateY(0) scale(1)', offset: 1 }
+    ], { duration: 1900, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1 });
+
+    typing.animate([
+      { opacity: 0, transform: 'translateY(9px)', offset: 0 },
+      { opacity: 0, transform: 'translateY(9px)', offset: .3 },
+      { opacity: 1, transform: 'translateY(0)', offset: .4 },
+      { opacity: 1, transform: 'translateY(0)', offset: .68 },
+      { opacity: 0, transform: 'translateY(-3px)', offset: .76 },
+      { opacity: 0, transform: 'translateY(-3px)', offset: 1 }
+    ], { duration: 1900, easing: 'ease', iterations: 1 });
+
+    typingDots.forEach((dot, index) => dot.animate([
+      { transform: 'translateY(0)', opacity: .42 },
+      { transform: 'translateY(-5px)', opacity: 1 },
+      { transform: 'translateY(0)', opacity: .42 }
+    ], {
+      duration: 430,
+      delay: 720 + (index * 110),
+      easing: 'ease-in-out',
+      iterations: 2
+    }));
+
+    aiMessage.animate([
+      { opacity: 0, transform: 'translateY(16px) scale(.97)', offset: 0 },
+      { opacity: 0, transform: 'translateY(16px) scale(.97)', offset: .66 },
+      { opacity: 1, transform: 'translateY(0) scale(1)', offset: .88 },
+      { opacity: 1, transform: 'translateY(0) scale(1)', offset: 1 }
+    ], { duration: 1900, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1 });
+  }
+
+  preview.addEventListener('pointerenter', playChatSequence);
+  preview.addEventListener('focusin', playChatSequence);
+});
+
 document.querySelectorAll('[data-carousel]').forEach(carousel => {
   const track = carousel.querySelector('.story-track');
   const slides = [...carousel.querySelectorAll('.story-slide')];

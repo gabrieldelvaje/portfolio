@@ -1340,46 +1340,6 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   transform: scale(1.025) rotate(-.35deg);
 }
 
-.sugar-cane-preview:hover .chat-user-message {
-  animation: sugar-user-message 1.8s cubic-bezier(.22,1,.36,1) both;
-}
-
-.sugar-cane-preview:hover .chat-ai-message {
-  animation: sugar-ai-message 1.8s cubic-bezier(.22,1,.36,1) both;
-}
-
-.sugar-cane-preview:hover .chat-typing {
-  animation: sugar-typing 1.8s ease both;
-}
-
-.sugar-cane-preview:hover .chat-typing b {
-  animation: sugar-typing-dot .46s ease-in-out .56s 3 alternate;
-}
-
-.sugar-cane-preview:hover .chat-typing b:nth-child(2) { animation-delay: .66s; }
-.sugar-cane-preview:hover .chat-typing b:nth-child(3) { animation-delay: .76s; }
-
-@keyframes sugar-user-message {
-  0% { opacity: 0; transform: translateY(14px) scale(.97); }
-  28%, 100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes sugar-typing {
-  0%, 28% { opacity: 0; transform: translateY(9px); }
-  38%, 68% { opacity: 1; transform: translateY(0); }
-  76%, 100% { opacity: 0; transform: translateY(-3px); }
-}
-
-@keyframes sugar-typing-dot {
-  from { transform: translateY(0); opacity: .42; }
-  to { transform: translateY(-5px); opacity: 1; }
-}
-
-@keyframes sugar-ai-message {
-  0%, 66% { opacity: 0; transform: translateY(14px) scale(.97); }
-  86%, 100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-
 @media (max-width: 1100px) {
   .work-page .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
