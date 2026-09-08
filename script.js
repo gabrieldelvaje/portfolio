@@ -211,17 +211,17 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 0, transform: 'translateY(0)', offset: 0 },
       { opacity: 0, transform: 'translateY(0)', offset: .08 },
       { opacity: 1, transform: 'translateY(-48px)', offset: .4 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .43 },
-      { opacity: 1, transform: 'translateY(-96px)', offset: .61 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .48 },
+      { opacity: 1, transform: 'translateY(-96px)', offset: .66 },
       { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
     ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     typing.animate([
       { opacity: 0, transform: 'translateY(18px)', offset: 0 },
       { opacity: 0, transform: 'translateY(18px)', offset: .42 },
-      { opacity: 1, transform: 'translateY(-53px)', offset: .57 },
-      { opacity: 1, transform: 'translateY(-53px)', offset: .72 },
-      { opacity: 0, transform: 'translateY(-53px)', offset: .8 },
+      { opacity: 1, transform: 'translateY(-53px)', offset: .64 },
+      { opacity: 1, transform: 'translateY(-53px)', offset: .82 },
+      { opacity: 0, transform: 'translateY(-53px)', offset: .92 },
       { opacity: 0, transform: 'translateY(-53px)', offset: 1 }
     ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
@@ -231,7 +231,7 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { transform: 'translateY(0)', opacity: .42 }
     ], {
       duration: 480,
-      delay: 1800 + (index * 120),
+      delay: 2100 + (index * 120),
       easing: 'ease-in-out',
       iterations: 2
     }));
@@ -239,9 +239,9 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
     aiMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
       { opacity: 1, transform: 'translateY(-48px)', offset: .4 },
-      { opacity: 0, transform: 'translateY(-96px)', offset: .58 },
-      { opacity: 0, transform: 'translateY(48px)', offset: .7 },
-      { opacity: 1, transform: 'translateY(0)', offset: .9 },
+      { opacity: 0, transform: 'translateY(-96px)', offset: .66 },
+      { opacity: 0, transform: 'translateY(48px)', offset: .74 },
+      { opacity: 1, transform: 'translateY(0)', offset: .95 },
       { opacity: 1, transform: 'translateY(0)', offset: 1 }
     ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
   }
@@ -267,18 +267,19 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
       bar.getAnimations().forEach(animation => animation.cancel());
       const sequence = [
         [patterns[0], 0],
-        [patterns[1], .18], [patterns[1], .3],
-        [patterns[2], .48], [patterns[2], .6],
-        [patterns[3], .78], [patterns[3], .88],
+        [patterns[1], .16], [patterns[1], .28],
+        [patterns[2], .44], [patterns[2], .56],
+        [patterns[3], .72], [patterns[3], .84],
         [patterns[0], 1]
       ];
       bar.animate(sequence.map(([pattern, offset]) => ({
         height: `${pattern[index]}%`,
         opacity: pattern[index] === 0 ? 0 : 1,
-        offset
+        offset,
+        easing: 'cubic-bezier(.22, 1, .36, 1)'
       })), {
-        duration: 5200,
-        easing: 'cubic-bezier(.22, 1, .36, 1)',
+        duration: 5600,
+        easing: 'linear',
         iterations: 1,
         fill: 'forwards'
       });
