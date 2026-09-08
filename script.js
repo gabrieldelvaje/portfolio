@@ -203,14 +203,14 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
 
     userMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
-      { opacity: 0, transform: 'translateY(-48px)', offset: .28 },
+      { opacity: 0, transform: 'translateY(-48px)', offset: .34 },
       { opacity: 0, transform: 'translateY(-48px)', offset: 1 }
     ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     newUserMessage.animate([
       { opacity: 0, transform: 'translateY(0)', offset: 0 },
       { opacity: 0, transform: 'translateY(0)', offset: .08 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .3 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .34 },
       { opacity: 1, transform: 'translateY(-48px)', offset: .43 },
       { opacity: 1, transform: 'translateY(-96px)', offset: .61 },
       { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
@@ -238,7 +238,7 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
 
     aiMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .28 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .34 },
       { opacity: 0, transform: 'translateY(-96px)', offset: .58 },
       { opacity: 0, transform: 'translateY(48px)', offset: .7 },
       { opacity: 1, transform: 'translateY(0)', offset: .9 },
@@ -250,6 +250,38 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
   preview.addEventListener('focusin', playChatSequence);
   preview.addEventListener('pointerleave', () => {
     animatedParts.forEach(part => part.getAnimations().forEach(animation => animation.cancel()));
+  });
+});
+
+document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
+  const bars = [...preview.querySelectorAll('.revenue-bars i')];
+  const patterns = [
+    [43, 53, 65, 76, 86, 96],
+    [0, 0, 42, 68, 82, 52],
+    [28, 62, 38, 88, 56, 74],
+    [70, 34, 82, 48, 94, 64]
+  ];
+
+  function playRevenueBars() {
+    bars.forEach((bar, index) => {
+      bar.getAnimations().forEach(animation => animation.cancel());
+      bar.animate(patterns.map((pattern, patternIndex) => ({
+        height: `${pattern[index]}%`,
+        opacity: pattern[index] === 0 ? 0 : 1,
+        offset: [0, .3, .65, 1][patternIndex]
+      })), {
+        duration: 3000,
+        easing: 'cubic-bezier(.22, 1, .36, 1)',
+        iterations: 1,
+        fill: 'forwards'
+      });
+    });
+  }
+
+  preview.addEventListener('pointerenter', playRevenueBars);
+  preview.addEventListener('focusin', playRevenueBars);
+  preview.addEventListener('pointerleave', () => {
+    bars.forEach(bar => bar.getAnimations().forEach(animation => animation.cancel()));
   });
 });
 
