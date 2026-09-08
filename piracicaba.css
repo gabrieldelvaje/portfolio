@@ -26,7 +26,9 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 .piracicaba-workspace .story-slide figcaption>span{color:#6e8fff;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 .piracicaba-workspace .story-slide figcaption h3{margin:18px 0 14px;font-size:clamp(23px,2.6vw,40px);line-height:1.02;color:#fff}
 .piracicaba-workspace .story-slide figcaption p{margin:0;color:#ddd;font-size:clamp(14px,1.25vw,18px);line-height:1.45}
-.piracicaba-workspace .carousel-footer{width:100%;margin:10px 0 0}
+.piracicaba-workspace .carousel-footer{position:relative;width:100%;margin:10px 0 0;display:grid;grid-template-columns:minmax(0,64%) minmax(0,36%);align-items:center}
+.piracicaba-workspace .carousel-dots{justify-self:center}
+.piracicaba-workspace .carousel-status{justify-self:end}
 .piracicaba-workspace .carousel-arrow{display:grid;width:34px;height:34px;top:50%;bottom:auto;place-items:center;translate:0 -50%;font-size:16px}
 .piracicaba-workspace .carousel-arrow.previous{left:12px}.piracicaba-workspace .carousel-arrow.next{right:calc(36% + 12px)}
 @media(min-width:701px){
@@ -36,7 +38,7 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
   .piracicaba-workspace .carousel-dot-slider{position:absolute;z-index:0;top:0;left:0;width:30px;height:9px;border-radius:999px;background:var(--blue);will-change:transform}
 }
 @media(max-width:700px){
-  .piracicaba-workspace .carousel-dot-slider{display:none}
+  .piracicaba-workspace .carousel-dot-slider{position:absolute;z-index:0;top:0;left:0;display:block;width:22px;height:7px;border-radius:999px;background:var(--blue);will-change:transform}
   .piracicaba-page .piracicaba-shell{height:auto;min-height:calc(100dvh - 64px);grid-template-rows:auto auto}
   .piracicaba-workspace{height:auto;min-height:0;grid-template-columns:1fr;grid-template-rows:48px auto;gap:12px;padding-bottom:110px}
   .piracicaba-workspace .story-hub{display:grid;grid-template-columns:1fr 44px;gap:8px;margin:0}
@@ -51,6 +53,6 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
   .piracicaba-workspace .story-slide>img{height:auto;aspect-ratio:1;object-fit:contain}
   .piracicaba-workspace .story-slide figcaption{padding:12px 54px 14px 16px;min-height:104px}
   .piracicaba-workspace .story-slide figcaption>span{font-size:9px}.piracicaba-workspace .story-slide figcaption h3{font-size:16px;margin:4px 0}.piracicaba-workspace .story-slide figcaption p{font-size:11px;line-height:1.25}
-  .piracicaba-workspace .carousel-footer{margin:7px 0 0}.piracicaba-workspace .carousel-dots{gap:5px}.piracicaba-workspace .carousel-dots button{width:7px;height:7px}.piracicaba-workspace .carousel-dots button.active{width:22px}
+  .piracicaba-workspace .carousel-footer{margin:7px 0 0;display:flex;justify-content:center}.piracicaba-workspace .carousel-dots{position:relative;justify-self:auto;gap:5px;padding:0 8px}.piracicaba-workspace .carousel-dots button{position:relative;z-index:1;width:7px;height:7px;transition:background-color .28s ease,opacity .28s ease}.piracicaba-workspace .carousel-dots button.active{width:7px;background:transparent}.piracicaba-workspace .carousel-status{position:absolute;right:0;justify-self:auto}
   .piracicaba-workspace .carousel-arrow{display:none}
 }

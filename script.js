@@ -467,7 +467,7 @@ document.querySelectorAll('[data-carousel]').forEach(carousel => {
 
   function dotSliderOffset(index) {
     const dot = dotButtons[index];
-    return dot ? dot.offsetLeft + (dot.offsetWidth / 2) - 15 : 0;
+    return dot ? dot.offsetLeft + (dot.offsetWidth / 2) - (dotSlider.offsetWidth / 2) : 0;
   }
 
   function goTo(index) {
@@ -480,21 +480,19 @@ document.querySelectorAll('[data-carousel]').forEach(carousel => {
       else dot.removeAttribute('aria-current');
     });
 
-    if (matchMedia('(min-width: 701px)').matches) {
-      const from = dotSliderOffset(previous);
-      const to = dotSliderOffset(current);
-      dotSlider.style.transform = `translateX(${to}px)`;
-      dotSlider.getAnimations().forEach(animation => animation.cancel());
-      if (previous !== current) {
-        dotSlider.animate([
-          { transform: `translateX(${from}px)` },
-          { transform: `translateX(${to}px)` }
-        ], {
-          duration: 650,
-          easing: 'cubic-bezier(.22, 1, .36, 1)',
-          iterations: 1
-        });
-      }
+    const from = dotSliderOffset(previous);
+    const to = dotSliderOffset(current);
+    dotSlider.getAnimations().forEach(animation => animation.cancel());
+    dotSlider.style.transform = `translateX(${to}px)`;
+    if (previous !== current) {
+      dotSlider.animate([
+        { transform: `translateX(${from}px)` },
+        { transform: `translateX(${to}px)` }
+      ], {
+        duration: 650,
+        easing: 'cubic-bezier(.22, 1, .36, 1)',
+        iterations: 1
+      });
     }
     status.textContent = `${current + 1} / ${slides.length}`;
   }
