@@ -2110,9 +2110,9 @@ main {
     cursor: pointer;
   }
   body.project-open .project-detail-toolbar {
-    min-height: 122px;
+    min-height: 142px;
     justify-content: flex-end;
-    padding-top: 48px;
-    padding-bottom: 18px;
+    padding-top: 58px;
+    padding-bottom: 28px;
   }
 }
