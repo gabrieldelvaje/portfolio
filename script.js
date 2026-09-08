@@ -367,7 +367,7 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
   }
 
   async function drawMusicRace() {
-    const duration = 1450;
+    const duration = 900;
     await new Promise(resolve => {
       const startedAt = performance.now();
       function drawFrame(now) {
@@ -387,7 +387,7 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
     await wait(130);
     tabs.forEach((tab, tabIndex) => tab.classList.toggle('is-active', tabIndex === index));
     chart.classList.toggle('show-line', showLine);
-    await wait(420);
+    await wait(180);
     tabs[index].classList.remove('tab-click');
   }
 
@@ -397,11 +397,11 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
     resetMusicRace();
     await wait(180);
     await selectMusicTab(2, true);
-    await wait(300);
+    await wait(70);
     await drawMusicRace();
-    await wait(260);
+    await wait(160);
     await selectMusicTab(1, false);
-    await wait(520);
+    await wait(350);
     resetMusicRace();
     playing = false;
   }
