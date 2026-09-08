@@ -355,23 +355,35 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
   const tabs = [...preview.querySelectorAll('.music-dashboard-tabs i')];
   const chart = preview.querySelector('.music-chart');
   const raceLines = [...preview.querySelectorAll('.music-line-chart path')];
+  let raceLengths = [];
   let playing = false;
 
   const wait = duration => new Promise(resolve => setTimeout(resolve, duration));
 
   function resetMusicRace() {
-    chart.classList.remove('race-running');
-    raceLines.forEach(line => {
-      const length = line.getTotalLength();
+    raceLengths = raceLines.map(line => line.getTotalLength());
+    raceLines.forEach((line, index) => {
+      const length = raceLengths[index];
       line.style.setProperty('--race-length', `${length}px`);
+      line.style.strokeDasharray = `${length}px`;
+      line.style.strokeDashoffset = `${length}px`;
     });
   }
 
   async function drawMusicRace() {
-    chart.classList.remove('race-running');
-    void chart.offsetWidth;
-    chart.classList.add('race-running');
-    await wait(1450);
+    const duration = 1450;
+    await new Promise(resolve => {
+      const startedAt = performance.now();
+      function drawFrame(now) {
+        const progress = Math.min((now - startedAt) / duration, 1);
+        raceLines.forEach((line, index) => {
+          line.style.strokeDashoffset = `${raceLengths[index] * (1 - progress)}px`;
+        });
+        if (progress < 1) requestAnimationFrame(drawFrame);
+        else resolve();
+      }
+      requestAnimationFrame(drawFrame);
+    });
   }
 
   async function selectMusicTab(index, showLine) {

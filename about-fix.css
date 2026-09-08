@@ -1020,15 +1020,6 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   stroke: color-mix(in srgb,currentColor 34%,var(--bg));
 }
 
-.music-chart.race-running .music-line-chart path {
-  animation: music-race-draw 1450ms linear forwards;
-}
-
-@keyframes music-race-draw {
-  from { stroke-dashoffset: var(--race-length); }
-  to { stroke-dashoffset: 0; }
-}
-
 .music-chart.show-line .music-bars {
   opacity: 0;
   transform: translateY(8px) scale(.97);
