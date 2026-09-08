@@ -219,10 +219,10 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
 
     typing.animate([
       { opacity: 0, transform: 'translateY(18px)', offset: 0 },
-      { opacity: 0, transform: 'translateY(18px)', offset: .48, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(-53px)', offset: .54 },
-      { opacity: 1, transform: 'translateY(-53px)', offset: .8 },
-      { opacity: 0, transform: 'translateY(-53px)', offset: .82 },
+      { opacity: 0, transform: 'translateY(18px)', offset: .5, easing: 'cubic-bezier(.4, 0, .2, 1)' },
+      { opacity: 1, transform: 'translateY(-53px)', offset: .53 },
+      { opacity: 1, transform: 'translateY(-53px)', offset: .7 },
+      { opacity: 0, transform: 'translateY(-53px)', offset: .72 },
       { opacity: 0, transform: 'translateY(-53px)', offset: 1 }
     ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' });
 
@@ -232,8 +232,8 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: .62 },
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: 1 }
     ], {
-      duration: 360,
-      delay: 2550 + (index * 120),
+      duration: 240,
+      delay: 2350 + (index * 80),
       easing: 'ease-in-out',
       iterations: 2,
       fill: 'both'
@@ -246,8 +246,8 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 1, transform: 'translateY(-48px)', offset: .46, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 0, transform: 'translateY(-96px)', offset: .6 },
       { opacity: 0, transform: 'translateY(48px)', offset: .68 },
-      { opacity: 0, transform: 'translateY(48px)', offset: .82, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(0)', offset: .96 },
+      { opacity: 0, transform: 'translateY(48px)', offset: .72, easing: 'cubic-bezier(.4, 0, .2, 1)' },
+      { opacity: 1, transform: 'translateY(0)', offset: .86 },
       { opacity: 1, transform: 'translateY(0)', offset: 1 }
     ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' });
   }
