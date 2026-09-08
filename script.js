@@ -354,9 +354,32 @@ document.querySelectorAll('.piracicaba-preview').forEach(preview => {
 document.querySelectorAll('.music-farming-preview').forEach(preview => {
   const tabs = [...preview.querySelectorAll('.music-dashboard-tabs i')];
   const chart = preview.querySelector('.music-chart');
+  const raceLines = [...preview.querySelectorAll('.music-line-chart path')];
+  let lineAnimations = [];
   let playing = false;
 
   const wait = duration => new Promise(resolve => setTimeout(resolve, duration));
+
+  function resetMusicRace() {
+    lineAnimations.forEach(animation => animation.cancel());
+    lineAnimations = [];
+    raceLines.forEach(line => {
+      const length = line.getTotalLength();
+      line.style.strokeDasharray = `${length}`;
+      line.style.strokeDashoffset = `${length}`;
+    });
+  }
+
+  async function drawMusicRace() {
+    lineAnimations = raceLines.map(line => {
+      const length = line.getTotalLength();
+      return line.animate(
+        [{ strokeDashoffset: `${length}px` }, { strokeDashoffset: '0px' }],
+        { duration: 1450, easing: 'linear', fill: 'forwards' }
+      );
+    });
+    await Promise.all(lineAnimations.map(animation => animation.finished.catch(() => {})));
+  }
 
   async function selectMusicTab(index, showLine) {
     tabs[index].classList.add('tab-click');
@@ -370,16 +393,21 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
   async function playMusicTabs() {
     if (playing) return;
     playing = true;
+    resetMusicRace();
     await wait(180);
     await selectMusicTab(2, true);
-    await wait(1400);
+    await wait(300);
+    await drawMusicRace();
+    await wait(260);
     await selectMusicTab(1, false);
     await wait(520);
+    resetMusicRace();
     playing = false;
   }
 
   preview.addEventListener('pointerenter', playMusicTabs);
   preview.addEventListener('focusin', playMusicTabs);
+  resetMusicRace();
 });
 
 document.querySelectorAll('[data-carousel]').forEach(carousel => {
