@@ -268,10 +268,10 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
       bar.getAnimations().forEach(animation => animation.cancel());
       const sequence = [
         [patterns[0], 0],
-        [patterns[1], .168], [patterns[1], .208],
-        [patterns[2], .376], [patterns[2], .416],
-        [patterns[3], .584], [patterns[3], .624],
-        [patterns[4], .792], [patterns[4], .832],
+        [patterns[1], .184], [patterns[1], .204],
+        [patterns[2], .388], [patterns[2], .408],
+        [patterns[3], .592], [patterns[3], .612],
+        [patterns[4], .796], [patterns[4], .816],
         [patterns[0], 1]
       ];
       bar.animate(sequence.map(([pattern, offset]) => ({
@@ -280,7 +280,7 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
         offset,
         easing: 'cubic-bezier(.22, 1, .36, 1)'
       })), {
-        duration: 5600,
+        duration: 4300,
         easing: 'linear',
         iterations: 1,
         fill: 'forwards'
