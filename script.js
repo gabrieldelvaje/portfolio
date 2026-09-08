@@ -203,14 +203,14 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
 
     userMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
-      { opacity: 0, transform: 'translateY(-48px)', offset: .34 },
+      { opacity: 0, transform: 'translateY(-48px)', offset: .4 },
       { opacity: 0, transform: 'translateY(-48px)', offset: 1 }
     ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     newUserMessage.animate([
       { opacity: 0, transform: 'translateY(0)', offset: 0 },
       { opacity: 0, transform: 'translateY(0)', offset: .08 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .34 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .4 },
       { opacity: 1, transform: 'translateY(-48px)', offset: .43 },
       { opacity: 1, transform: 'translateY(-96px)', offset: .61 },
       { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
@@ -238,7 +238,7 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
 
     aiMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .34 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .4 },
       { opacity: 0, transform: 'translateY(-96px)', offset: .58 },
       { opacity: 0, transform: 'translateY(48px)', offset: .7 },
       { opacity: 1, transform: 'translateY(0)', offset: .9 },
@@ -265,12 +265,19 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
   function playRevenueBars() {
     bars.forEach((bar, index) => {
       bar.getAnimations().forEach(animation => animation.cancel());
-      bar.animate(patterns.map((pattern, patternIndex) => ({
+      const sequence = [
+        [patterns[0], 0],
+        [patterns[1], .18], [patterns[1], .3],
+        [patterns[2], .48], [patterns[2], .6],
+        [patterns[3], .78], [patterns[3], .88],
+        [patterns[0], 1]
+      ];
+      bar.animate(sequence.map(([pattern, offset]) => ({
         height: `${pattern[index]}%`,
         opacity: pattern[index] === 0 ? 0 : 1,
-        offset: [0, .3, .65, 1][patternIndex]
+        offset
       })), {
-        duration: 3000,
+        duration: 5200,
         easing: 'cubic-bezier(.22, 1, .36, 1)',
         iterations: 1,
         fill: 'forwards'
