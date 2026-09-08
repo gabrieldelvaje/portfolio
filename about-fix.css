@@ -2020,8 +2020,33 @@ main {
 }
 
 /* Mobile project navigation and information */
-.project-mobile-controls { display: contents; }
-.project-info-button { display: none; }
+.project-mobile-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.project-info-button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
+  border-radius: 50%;
+  color: var(--ink);
+  background: transparent;
+  font: 600 16px/1 Georgia, serif;
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease;
+}
+
+.project-info-button:hover,
+.project-info-button:focus-visible {
+  color: var(--blue);
+  border-color: color-mix(in srgb, var(--blue) 60%, transparent);
+}
 
 .project-info-dialog {
   width: min(430px, calc(100% - 32px));
@@ -2058,6 +2083,32 @@ main {
 .project-info-kicker { color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .project-info-dialog h2 { margin: 18px 42px 12px 0; font-size: 27px; font-weight: 500; }
 .project-info-dialog p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+
+@media (min-width: 901px) {
+  .about-page,
+  .resume-page {
+    min-height: calc(100dvh - 80px);
+    padding-top: clamp(36px, 5vh, 64px);
+    padding-bottom: clamp(36px, 5vh, 64px);
+  }
+
+  .about-page {
+    align-items: center;
+  }
+
+  .about-page .portrait-card {
+    align-self: center;
+  }
+
+  .resume-page {
+    display: flex;
+    align-items: center;
+  }
+
+  .resume-page .resume-layout {
+    width: 100%;
+  }
+}
 
 @media (max-width: 600px) {
   body.project-open .project-detail-page {
