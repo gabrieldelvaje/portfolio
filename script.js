@@ -212,8 +212,8 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 0, transform: 'translateY(0)', offset: 0 },
       { opacity: 0, transform: 'translateY(0)', offset: .08, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 1, transform: 'translateY(-48px)', offset: .22 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .56, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(-96px)', offset: .78 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .6, easing: 'cubic-bezier(.4, 0, .2, 1)' },
+      { opacity: 1, transform: 'translateY(-96px)', offset: .72 },
       { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
     ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' });
 
@@ -243,8 +243,8 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
       { opacity: 1, transform: 'translateY(0)', offset: .08, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 1, transform: 'translateY(-48px)', offset: .22 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .56, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 0, transform: 'translateY(-96px)', offset: .78 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .6, easing: 'cubic-bezier(.4, 0, .2, 1)' },
+      { opacity: 0, transform: 'translateY(-96px)', offset: .72 },
       { opacity: 0, transform: 'translateY(48px)', offset: .84 },
       { opacity: 0, transform: 'translateY(48px)', offset: .935, easing: 'cubic-bezier(.22, 1, .36, 1)' },
       { opacity: 1, transform: 'translateY(0)', offset: .965 },
