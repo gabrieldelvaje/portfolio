@@ -197,66 +197,71 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
   const typing = preview.querySelector('.chat-typing');
   const typingDots = [...preview.querySelectorAll('.chat-typing b')];
   const animatedParts = [userMessage, newUserMessage, aiMessage, typing, ...typingDots].filter(Boolean);
+  let playing = false;
 
   function playChatSequence() {
+    if (playing) return;
+    playing = true;
     animatedParts.forEach(part => part.getAnimations().forEach(animation => animation.cancel()));
 
-    userMessage.animate([
+    const sequenceAnimations = [];
+
+    sequenceAnimations.push(userMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
       { opacity: 1, transform: 'translateY(0)', offset: .08, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 0, transform: 'translateY(-48px)', offset: .22 },
       { opacity: 0, transform: 'translateY(-48px)', offset: 1 }
-    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' });
+    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' }));
 
-    newUserMessage.animate([
+    sequenceAnimations.push(newUserMessage.animate([
       { opacity: 0, transform: 'translateY(0)', offset: 0 },
       { opacity: 0, transform: 'translateY(0)', offset: .08, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 1, transform: 'translateY(-48px)', offset: .22 },
       { opacity: 1, transform: 'translateY(-48px)', offset: .46, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 1, transform: 'translateY(-96px)', offset: .6 },
       { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
-    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' });
+    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' }));
 
-    typing.animate([
+    sequenceAnimations.push(typing.animate([
       { opacity: 0, transform: 'translateY(18px)', offset: 0 },
-      { opacity: 0, transform: 'translateY(18px)', offset: .5, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(-53px)', offset: .53 },
-      { opacity: 1, transform: 'translateY(-53px)', offset: .7 },
-      { opacity: 0, transform: 'translateY(-53px)', offset: .72 },
+      { opacity: 0, transform: 'translateY(18px)', offset: .43, easing: 'cubic-bezier(.4, 0, .2, 1)' },
+      { opacity: 1, transform: 'translateY(-53px)', offset: .46 },
+      { opacity: 1, transform: 'translateY(-53px)', offset: .61 },
+      { opacity: 0, transform: 'translateY(-53px)', offset: .63 },
       { opacity: 0, transform: 'translateY(-53px)', offset: 1 }
-    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' });
+    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' }));
 
-    typingDots.forEach((dot, index) => dot.animate([
+    typingDots.forEach((dot, index) => sequenceAnimations.push(dot.animate([
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: 0 },
       { transform: 'translateY(-9px) scale(1.18)', opacity: 1, offset: .28 },
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: .62 },
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: 1 }
     ], {
       duration: 240,
-      delay: 2350 + (index * 80),
+      delay: 2020 + (index * 80),
       easing: 'ease-in-out',
       iterations: 2,
       fill: 'both'
-    }));
+    })));
 
-    aiMessage.animate([
+    sequenceAnimations.push(aiMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
       { opacity: 1, transform: 'translateY(0)', offset: .08, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 1, transform: 'translateY(-48px)', offset: .22 },
       { opacity: 1, transform: 'translateY(-48px)', offset: .46, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 0, transform: 'translateY(-96px)', offset: .6 },
-      { opacity: 0, transform: 'translateY(48px)', offset: .68 },
-      { opacity: 0, transform: 'translateY(48px)', offset: .72, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(0)', offset: .86 },
+      { opacity: 0, transform: 'translateY(48px)', offset: .61 },
+      { opacity: 0, transform: 'translateY(48px)', offset: .63, easing: 'cubic-bezier(.4, 0, .2, 1)' },
+      { opacity: 1, transform: 'translateY(0)', offset: .77 },
       { opacity: 1, transform: 'translateY(0)', offset: 1 }
-    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' });
+    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' }));
+
+    Promise.all(sequenceAnimations.map(animation => animation.finished.catch(() => {})))
+      .then(() => { playing = false; });
   }
 
   preview.addEventListener('pointerenter', playChatSequence);
   preview.addEventListener('focusin', playChatSequence);
-  preview.addEventListener('pointerleave', () => {
-    animatedParts.forEach(part => part.getAnimations().forEach(animation => animation.cancel()));
-  });
 });
 
 document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
@@ -266,9 +271,12 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
     [0, 0, 42, 68, 82, 52],
     [28, 62, 38, 88, 56, 74]
   ];
+  let playing = false;
 
   function playRevenueBars() {
-    bars.forEach((bar, index) => {
+    if (playing) return;
+    playing = true;
+    const animations = bars.map((bar, index) => {
       bar.getAnimations().forEach(animation => animation.cancel());
       const sequence = [
         [patterns[0], 0],
@@ -276,7 +284,7 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
         [patterns[2], .66], [patterns[2], .675],
         [patterns[0], 1]
       ];
-      bar.animate(sequence.map(([pattern, offset]) => ({
+      return bar.animate(sequence.map(([pattern, offset]) => ({
         height: `${pattern[index]}%`,
         opacity: pattern[index] === 0 ? 0 : 1,
         offset,
@@ -288,13 +296,13 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
         fill: 'forwards'
       });
     });
+
+    Promise.all(animations.map(animation => animation.finished.catch(() => {})))
+      .then(() => { playing = false; });
   }
 
   preview.addEventListener('pointerenter', playRevenueBars);
   preview.addEventListener('focusin', playRevenueBars);
-  preview.addEventListener('pointerleave', () => {
-    bars.forEach(bar => bar.getAnimations().forEach(animation => animation.cancel()));
-  });
 });
 
 document.querySelectorAll('.piracicaba-preview').forEach(preview => {
