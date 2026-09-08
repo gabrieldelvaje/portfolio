@@ -259,8 +259,7 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
     [43, 53, 65, 76, 86, 96],
     [0, 0, 42, 68, 82, 52],
     [28, 62, 38, 88, 56, 74],
-    [70, 34, 82, 48, 94, 64],
-    [18, 78, 54, 32, 70, 90]
+    [70, 34, 82, 48, 94, 64]
   ];
 
   function playRevenueBars() {
@@ -268,10 +267,9 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
       bar.getAnimations().forEach(animation => animation.cancel());
       const sequence = [
         [patterns[0], 0],
-        [patterns[1], .184], [patterns[1], .204],
-        [patterns[2], .388], [patterns[2], .408],
-        [patterns[3], .592], [patterns[3], .612],
-        [patterns[4], .796], [patterns[4], .816],
+        [patterns[1], .24], [patterns[1], .255],
+        [patterns[2], .495], [patterns[2], .51],
+        [patterns[3], .75], [patterns[3], .765],
         [patterns[0], 1]
       ];
       bar.animate(sequence.map(([pattern, offset]) => ({
@@ -280,7 +278,7 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
         offset,
         easing: 'cubic-bezier(.22, 1, .36, 1)'
       })), {
-        duration: 4300,
+        duration: 3000,
         easing: 'linear',
         iterations: 1,
         fill: 'forwards'
@@ -293,6 +291,60 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
   preview.addEventListener('pointerleave', () => {
     bars.forEach(bar => bar.getAnimations().forEach(animation => animation.cancel()));
   });
+});
+
+document.querySelectorAll('.piracicaba-preview').forEach(preview => {
+  const cards = [...preview.querySelectorAll('.deck-map i')];
+  const pageSlider = preview.querySelector('.deck-page-slider');
+  let playing = false;
+
+  const slots = [
+    { left: '0%', top: '15%', width: '25%', height: '70%', background: 'color-mix(in srgb, var(--ink) 16%, var(--bg))', borderColor: 'color-mix(in srgb, var(--ink) 12%, var(--bg))', opacity: 1 },
+    { left: '31%', top: '4%', width: '38%', height: '92%', background: 'var(--blue)', borderColor: 'var(--blue)', opacity: 1 },
+    { left: '75%', top: '15%', width: '25%', height: '70%', background: 'color-mix(in srgb, var(--ink) 16%, var(--bg))', borderColor: 'color-mix(in srgb, var(--ink) 12%, var(--bg))', opacity: 1 }
+  ];
+
+  function applySlot(card, slot) {
+    Object.assign(card.style, slot);
+  }
+
+  async function shiftCards(step) {
+    const animations = cards.map((card, index) => {
+      const from = (index - step + 3) % 3;
+      const to = (from + 2) % 3;
+      const keyframes = from === 0
+        ? [slots[0], { ...slots[0], left: '-30%', opacity: 0, offset: .72 }, { ...slots[2], left: '105%', opacity: 0, offset: .73 }, slots[2]]
+        : [slots[from], slots[to]];
+      return card.animate(keyframes, { duration: 520, easing: 'cubic-bezier(.22, 1, .36, 1)', fill: 'forwards' });
+    });
+    const sliderPositions = ['13px', '26px', '0px', '13px'];
+    const sliderAnimation = pageSlider?.animate(
+      [{ transform: `translateX(${sliderPositions[step]})` }, { transform: `translateX(${sliderPositions[step + 1]})` }],
+      { duration: 520, easing: 'cubic-bezier(.22, 1, .36, 1)', fill: 'forwards' }
+    );
+    await Promise.all([...animations, sliderAnimation].filter(Boolean).map(animation => animation.finished.catch(() => {})));
+    cards.forEach((card, index) => applySlot(card, slots[(index - step - 1 + 3) % 3]));
+    animations.forEach(animation => animation.cancel());
+    if (sliderAnimation) {
+      pageSlider.style.transform = `translateX(${sliderPositions[step + 1]})`;
+      sliderAnimation.cancel();
+    }
+  }
+
+  async function playPiracicabaCarousel() {
+    if (playing) return;
+    playing = true;
+    for (let step = 0; step < 3; step += 1) {
+      await shiftCards(step);
+      await new Promise(resolve => setTimeout(resolve, 120));
+    }
+    cards.forEach((card, index) => applySlot(card, slots[index]));
+    if (pageSlider) pageSlider.style.transform = 'translateX(13px)';
+    playing = false;
+  }
+
+  preview.addEventListener('pointerenter', playPiracicabaCarousel);
+  preview.addEventListener('focusin', playPiracicabaCarousel);
 });
 
 document.querySelectorAll('[data-carousel]').forEach(carousel => {
