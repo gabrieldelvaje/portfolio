@@ -357,7 +357,9 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
   const pulses = [
     [66, 32, 82, 44, 91, 38],
     [38, 86, 51, 93, 34, 70],
-    [79, 46, 90, 31, 72, 49]
+    [79, 46, 90, 31, 72, 49],
+    [47, 74, 29, 81, 58, 94],
+    [88, 39, 68, 55, 96, 35]
   ];
   let playing = false;
 
@@ -366,14 +368,16 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
     playing = true;
     const animations = bars.map((bar, index) => bar.animate([
       { height: `${initial[index]}%`, offset: 0 },
-      { height: `${pulses[0][index]}%`, offset: .22 },
-      { height: `${pulses[1][index]}%`, offset: .45 },
-      { height: `${pulses[2][index]}%`, offset: .68 },
-      { height: `${pulses[0][index]}%`, offset: .84 },
+      { height: `${pulses[0][index]}%`, offset: .14 },
+      { height: `${pulses[1][index]}%`, offset: .29 },
+      { height: `${pulses[2][index]}%`, offset: .44 },
+      { height: `${pulses[3][index]}%`, offset: .59 },
+      { height: `${pulses[4][index]}%`, offset: .74 },
+      { height: `${pulses[1][index]}%`, offset: .87 },
       { height: `${initial[index]}%`, offset: 1 }
     ], {
-      duration: 2200,
-      easing: 'cubic-bezier(.45, 0, .25, 1)',
+      duration: 1150,
+      easing: 'ease-in-out',
       fill: 'forwards'
     }));
     await Promise.all(animations.map(animation => animation.finished.catch(() => {})));
