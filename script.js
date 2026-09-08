@@ -212,8 +212,8 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 0, transform: 'translateY(0)', offset: .08 },
       { opacity: 1, transform: 'translateY(-48px)', offset: .34 },
       { opacity: 1, transform: 'translateY(-48px)', offset: .5 },
-      { opacity: 1, transform: 'translateY(-96px)', offset: .6 },
-      { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
+      { opacity: 1, transform: 'translateY(-76px)', offset: .6 },
+      { opacity: 1, transform: 'translateY(-76px)', offset: 1 }
     ], { duration: 4200, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     typing.animate([
@@ -226,12 +226,13 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
     ], { duration: 4200, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     typingDots.forEach((dot, index) => dot.animate([
-      { transform: 'translateY(0)', opacity: .42 },
-      { transform: 'translateY(-5px)', opacity: 1 },
-      { transform: 'translateY(0)', opacity: .42 }
+      { transform: 'translateY(0) scale(1)', opacity: .38, offset: 0 },
+      { transform: 'translateY(-9px) scale(1.18)', opacity: 1, offset: .28 },
+      { transform: 'translateY(0) scale(1)', opacity: .38, offset: .62 },
+      { transform: 'translateY(0) scale(1)', opacity: .38, offset: 1 }
     ], {
-      duration: 360,
-      delay: 2820 + (index * 120),
+      duration: 420,
+      delay: 2840 + (index * 140),
       easing: 'ease-in-out',
       iterations: 2
     }));
@@ -241,8 +242,8 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 1, transform: 'translateY(-48px)', offset: .34 },
       { opacity: 0, transform: 'translateY(-96px)', offset: .6 },
       { opacity: 0, transform: 'translateY(48px)', offset: .7 },
-      { opacity: 0, transform: 'translateY(48px)', offset: .93 },
-      { opacity: 1, transform: 'translateY(0)', offset: .99 },
+      { opacity: 0, transform: 'translateY(48px)', offset: .955 },
+      { opacity: 1, transform: 'translateY(0)', offset: .985 },
       { opacity: 1, transform: 'translateY(0)', offset: 1 }
     ], { duration: 4200, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
   }
