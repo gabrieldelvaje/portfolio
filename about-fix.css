@@ -2075,12 +2075,24 @@ main {
   right: 14px;
   width: 36px;
   height: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0 0 2px;
   border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
   border-radius: 50%;
   color: var(--ink);
   background: transparent;
-  font: 300 24px/1 Inter, Arial, sans-serif;
+  font: 300 24px/1 Arial, sans-serif;
   cursor: pointer;
+  transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+}
+
+.project-info-close:hover,
+.project-info-close:focus-visible {
+  color: #e02b2b;
+  border-color: #e02b2b;
+  background: color-mix(in srgb, #e02b2b 8%, transparent);
+  outline: none;
 }
 .project-info-kicker { color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .project-info-dialog h2 { margin: 18px 42px 12px 0; font-size: 27px; font-weight: 500; }
