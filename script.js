@@ -354,13 +354,9 @@ document.querySelectorAll('.piracicaba-preview').forEach(preview => {
 document.querySelectorAll('.music-farming-preview').forEach(preview => {
   const bars = [...preview.querySelectorAll('.music-chart i')];
   const initial = [28, 58, 42, 76, 53, 88];
-  const pulses = [
-    [66, 32, 82, 44, 91, 38],
-    [38, 86, 51, 93, 34, 70],
-    [79, 46, 90, 31, 72, 49],
-    [47, 74, 29, 81, 58, 94],
-    [88, 39, 68, 55, 96, 35]
-  ];
+  const strongBeat = [78, 90, 84, 98, 88, 100];
+  const softBeat = [55, 68, 61, 78, 66, 84];
+  const release = [18, 29, 23, 38, 27, 44];
   let playing = false;
 
   async function playMusicBars() {
@@ -368,15 +364,17 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
     playing = true;
     const animations = bars.map((bar, index) => bar.animate([
       { height: `${initial[index]}%`, offset: 0 },
-      { height: `${pulses[0][index]}%`, offset: .14 },
-      { height: `${pulses[1][index]}%`, offset: .29 },
-      { height: `${pulses[2][index]}%`, offset: .44 },
-      { height: `${pulses[3][index]}%`, offset: .59 },
-      { height: `${pulses[4][index]}%`, offset: .74 },
-      { height: `${pulses[1][index]}%`, offset: .87 },
+      { height: `${strongBeat[index]}%`, offset: .10 },
+      { height: `${release[index]}%`, offset: .23 },
+      { height: `${softBeat[index]}%`, offset: .34 },
+      { height: `${release[index]}%`, offset: .48 },
+      { height: `${strongBeat[index]}%`, offset: .59 },
+      { height: `${release[index]}%`, offset: .72 },
+      { height: `${softBeat[index]}%`, offset: .83 },
+      { height: `${release[index]}%`, offset: .92 },
       { height: `${initial[index]}%`, offset: 1 }
     ], {
-      duration: 1150,
+      duration: 1350,
       easing: 'ease-in-out',
       fill: 'forwards'
     }));
