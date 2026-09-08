@@ -1008,6 +1008,8 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
+  stroke-dasharray: var(--race-length);
+  stroke-dashoffset: var(--race-length);
 }
 
 .music-line-chart .music-line-secondary {
@@ -1016,6 +1018,15 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 
 .music-line-chart .music-line-tertiary {
   stroke: color-mix(in srgb,currentColor 34%,var(--bg));
+}
+
+.music-chart.race-running .music-line-chart path {
+  animation: music-race-draw 1450ms linear forwards;
+}
+
+@keyframes music-race-draw {
+  from { stroke-dashoffset: var(--race-length); }
+  to { stroke-dashoffset: 0; }
 }
 
 .music-chart.show-line .music-bars {

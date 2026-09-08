@@ -355,30 +355,23 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
   const tabs = [...preview.querySelectorAll('.music-dashboard-tabs i')];
   const chart = preview.querySelector('.music-chart');
   const raceLines = [...preview.querySelectorAll('.music-line-chart path')];
-  let lineAnimations = [];
   let playing = false;
 
   const wait = duration => new Promise(resolve => setTimeout(resolve, duration));
 
   function resetMusicRace() {
-    lineAnimations.forEach(animation => animation.cancel());
-    lineAnimations = [];
+    chart.classList.remove('race-running');
     raceLines.forEach(line => {
       const length = line.getTotalLength();
-      line.style.strokeDasharray = `${length}`;
-      line.style.strokeDashoffset = `${length}`;
+      line.style.setProperty('--race-length', `${length}px`);
     });
   }
 
   async function drawMusicRace() {
-    lineAnimations = raceLines.map(line => {
-      const length = line.getTotalLength();
-      return line.animate(
-        [{ strokeDashoffset: `${length}px` }, { strokeDashoffset: '0px' }],
-        { duration: 1450, easing: 'linear', fill: 'forwards' }
-      );
-    });
-    await Promise.all(lineAnimations.map(animation => animation.finished.catch(() => {})));
+    chart.classList.remove('race-running');
+    void chart.offsetWidth;
+    chart.classList.add('race-running');
+    await wait(1450);
   }
 
   async function selectMusicTab(index, showLine) {
