@@ -217,30 +217,30 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 0, transform: 'translateY(0)', offset: 0 },
       { opacity: 0, transform: 'translateY(0)', offset: .08, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 1, transform: 'translateY(-48px)', offset: .22 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .46, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(-96px)', offset: .6 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .26, easing: 'cubic-bezier(.4, 0, .2, 1)' },
+      { opacity: 1, transform: 'translateY(-96px)', offset: .4 },
       { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
     ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' }));
 
     sequenceAnimations.push(typing.animate([
       { opacity: 0, transform: 'translateY(18px)', offset: 0 },
-      { opacity: 0, transform: 'translateY(18px)', offset: .43, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(-53px)', offset: .46 },
-      { opacity: 1, transform: 'translateY(-53px)', offset: .61 },
-      { opacity: 0, transform: 'translateY(-53px)', offset: .63 },
+      { opacity: 0, transform: 'translateY(18px)', offset: .41, easing: 'cubic-bezier(.4, 0, .2, 1)' },
+      { opacity: 1, transform: 'translateY(-53px)', offset: .44 },
+      { opacity: 1, transform: 'translateY(-53px)', offset: .6 },
+      { opacity: 0, transform: 'translateY(-53px)', offset: .62 },
       { opacity: 0, transform: 'translateY(-53px)', offset: 1 }
     ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' }));
 
     typingDots.forEach((dot, index) => sequenceAnimations.push(dot.animate([
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: 0 },
-      { transform: 'translateY(-9px) scale(1.18)', opacity: 1, offset: .28 },
-      { transform: 'translateY(0) scale(1)', opacity: .38, offset: .62 },
+      { transform: 'translateY(-9px) scale(1.18)', opacity: 1, offset: .42 },
+      { transform: 'translateY(0) scale(1)', opacity: .38, offset: .84 },
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: 1 }
     ], {
-      duration: 240,
-      delay: 2020 + (index * 80),
+      duration: 200,
+      delay: 1880 + (index * 200),
       easing: 'ease-in-out',
-      iterations: 2,
+      iterations: 1,
       fill: 'both'
     })));
 
@@ -248,11 +248,11 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
       { opacity: 1, transform: 'translateY(0)', offset: .08, easing: 'cubic-bezier(.4, 0, .2, 1)' },
       { opacity: 1, transform: 'translateY(-48px)', offset: .22 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .46, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 0, transform: 'translateY(-96px)', offset: .6 },
-      { opacity: 0, transform: 'translateY(48px)', offset: .61 },
-      { opacity: 0, transform: 'translateY(48px)', offset: .63, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(0)', offset: .77 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .26, easing: 'cubic-bezier(.4, 0, .2, 1)' },
+      { opacity: 0, transform: 'translateY(-96px)', offset: .4 },
+      { opacity: 0, transform: 'translateY(48px)', offset: .41 },
+      { opacity: 0, transform: 'translateY(48px)', offset: .62, easing: 'cubic-bezier(.4, 0, .2, 1)' },
+      { opacity: 1, transform: 'translateY(0)', offset: .76 },
       { opacity: 1, transform: 'translateY(0)', offset: 1 }
     ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' }));
 
