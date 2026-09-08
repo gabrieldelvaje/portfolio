@@ -2056,6 +2056,15 @@ main {
 .project-info-dialog p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
 
 @media (max-width: 600px) {
+  body.project-open .project-detail-page {
+    animation: project-mobile-fade-in .32s ease both;
+  }
+
+  @keyframes project-mobile-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
   .project-mobile-controls {
     position: fixed;
     z-index: 99;
@@ -2096,5 +2105,10 @@ main {
     font: 600 17px/1 Georgia, serif;
     cursor: pointer;
   }
-  body.project-open .project-detail-toolbar { padding-top: 48px; }
+  body.project-open .project-detail-toolbar {
+    min-height: 132px;
+    justify-content: flex-end;
+    padding-top: 48px;
+    padding-bottom: 18px;
+  }
 }
