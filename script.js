@@ -233,12 +233,12 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
 
     typingDots.forEach((dot, index) => sequenceAnimations.push(dot.animate([
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: 0 },
-      { transform: 'translateY(-9px) scale(1.18)', opacity: 1, offset: .42 },
-      { transform: 'translateY(0) scale(1)', opacity: .38, offset: .84 },
+      { transform: 'translateY(-4px) scale(1.08)', opacity: 1, offset: .4 },
+      { transform: 'translateY(0) scale(1)', opacity: .38, offset: .8 },
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: 1 }
     ], {
-      duration: 200,
-      delay: 1980 + (index * 200),
+      duration: 360,
+      delay: 1980 + (index * 100),
       easing: 'ease-in-out',
       iterations: 1,
       fill: 'both'
