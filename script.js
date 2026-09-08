@@ -363,7 +363,7 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
     await wait(130);
     tabs.forEach((tab, tabIndex) => tab.classList.toggle('is-active', tabIndex === index));
     chart.classList.toggle('show-line', showLine);
-    await wait(180);
+    await wait(420);
     tabs[index].classList.remove('tab-click');
   }
 
@@ -372,9 +372,9 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
     playing = true;
     await wait(180);
     await selectMusicTab(2, true);
-    await wait(780);
+    await wait(720);
     await selectMusicTab(1, false);
-    await wait(420);
+    await wait(520);
     playing = false;
   }
 

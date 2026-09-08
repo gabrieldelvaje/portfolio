@@ -960,6 +960,10 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 
 .music-chart {
   position: relative;
+  z-index: 1;
+  width: 100%;
+  transform-origin: left center;
+  transition: width .68s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1), background-color .35s ease, border-color .35s ease !important;
 }
 
 .music-bars {
@@ -997,13 +1001,6 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   transition: opacity .3s ease, transform .48s cubic-bezier(.22,1,.36,1);
 }
 
-.music-line-chart path {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1;
-  opacity: .14;
-}
-
 .music-line-chart polyline {
   fill: none;
   stroke: var(--blue);
@@ -1015,9 +1012,23 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   transition: stroke-dashoffset .72s cubic-bezier(.22,1,.36,1) .08s;
 }
 
+.music-line-chart polyline:nth-of-type(2) {
+  stroke: color-mix(in srgb,currentColor 40%,transparent);
+  stroke-width: 5;
+  stroke-dasharray: 360;
+  stroke-dashoffset: 360;
+  transition-delay: .16s;
+}
+
 .music-chart.show-line .music-bars {
   opacity: 0;
   transform: translateY(8px) scale(.97);
+}
+
+.music-chart.show-line {
+  z-index: 5;
+  width: 171%;
+  transform: translateY(-3px);
 }
 
 .music-chart.show-line .music-line-chart {
@@ -1038,6 +1049,12 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   align-content: center;
   gap: 16px;
   padding: 18px;
+  transition: opacity .3s ease, transform .5s cubic-bezier(.22,1,.36,1), background-color .35s ease, border-color .35s ease !important;
+}
+
+.music-chart.show-line + .music-ranking {
+  opacity: 0;
+  transform: translateX(12px) scale(.96);
 }
 
 .music-ranking i {
@@ -1066,7 +1083,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   transform: translateY(-3px);
 }
 
-.music-farming-preview:hover .music-dashboard-grid > div:nth-child(2) {
+.music-farming-preview:hover .music-chart:not(.show-line) {
   transform: translateY(-3px);
 }
 
