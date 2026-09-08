@@ -203,47 +203,48 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
 
     userMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
-      { opacity: 0, transform: 'translateY(-48px)', offset: .4 },
+      { opacity: 0, transform: 'translateY(-48px)', offset: .34 },
       { opacity: 0, transform: 'translateY(-48px)', offset: 1 }
-    ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+    ], { duration: 4200, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     newUserMessage.animate([
       { opacity: 0, transform: 'translateY(0)', offset: 0 },
       { opacity: 0, transform: 'translateY(0)', offset: .08 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .4 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .48 },
-      { opacity: 1, transform: 'translateY(-96px)', offset: .66 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .34 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .5 },
+      { opacity: 1, transform: 'translateY(-96px)', offset: .6 },
       { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
-    ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+    ], { duration: 4200, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     typing.animate([
       { opacity: 0, transform: 'translateY(18px)', offset: 0 },
-      { opacity: 0, transform: 'translateY(18px)', offset: .42 },
+      { opacity: 0, transform: 'translateY(18px)', offset: .6 },
       { opacity: 1, transform: 'translateY(-53px)', offset: .64 },
-      { opacity: 1, transform: 'translateY(-53px)', offset: .82 },
-      { opacity: 0, transform: 'translateY(-53px)', offset: .92 },
+      { opacity: 1, transform: 'translateY(-53px)', offset: .91 },
+      { opacity: 0, transform: 'translateY(-53px)', offset: .94 },
       { opacity: 0, transform: 'translateY(-53px)', offset: 1 }
-    ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+    ], { duration: 4200, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
 
     typingDots.forEach((dot, index) => dot.animate([
       { transform: 'translateY(0)', opacity: .42 },
       { transform: 'translateY(-5px)', opacity: 1 },
       { transform: 'translateY(0)', opacity: .42 }
     ], {
-      duration: 480,
-      delay: 2100 + (index * 120),
+      duration: 360,
+      delay: 2820 + (index * 120),
       easing: 'ease-in-out',
       iterations: 2
     }));
 
     aiMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .4 },
-      { opacity: 0, transform: 'translateY(-96px)', offset: .66 },
-      { opacity: 0, transform: 'translateY(48px)', offset: .74 },
-      { opacity: 1, transform: 'translateY(0)', offset: .95 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .34 },
+      { opacity: 0, transform: 'translateY(-96px)', offset: .6 },
+      { opacity: 0, transform: 'translateY(48px)', offset: .7 },
+      { opacity: 0, transform: 'translateY(48px)', offset: .93 },
+      { opacity: 1, transform: 'translateY(0)', offset: .99 },
       { opacity: 1, transform: 'translateY(0)', offset: 1 }
-    ], { duration: 3400, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
+    ], { duration: 4200, easing: 'cubic-bezier(.22, 1, .36, 1)', iterations: 1, fill: 'forwards' });
   }
 
   preview.addEventListener('pointerenter', playChatSequence);

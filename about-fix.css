@@ -855,7 +855,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   width: 44px;
   height: 16px;
   border-radius: 9px 9px 3px 3px;
-  background: color-mix(in srgb,var(--ink) 16%,var(--bg));
+  background: color-mix(in srgb,var(--ink) 24%,var(--bg));
   border: 1px solid color-mix(in srgb,var(--ink) 10%,var(--bg));
   transition: background-color .35s ease, transform .4s cubic-bezier(.22,1,.36,1);
 }
