@@ -259,7 +259,8 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
     [43, 53, 65, 76, 86, 96],
     [0, 0, 42, 68, 82, 52],
     [28, 62, 38, 88, 56, 74],
-    [70, 34, 82, 48, 94, 64]
+    [70, 34, 82, 48, 94, 64],
+    [18, 78, 54, 32, 70, 90]
   ];
 
   function playRevenueBars() {
@@ -267,9 +268,10 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
       bar.getAnimations().forEach(animation => animation.cancel());
       const sequence = [
         [patterns[0], 0],
-        [patterns[1], .16], [patterns[1], .28],
-        [patterns[2], .44], [patterns[2], .56],
-        [patterns[3], .72], [patterns[3], .84],
+        [patterns[1], .14], [patterns[1], .215],
+        [patterns[2], .355], [patterns[2], .43],
+        [patterns[3], .57], [patterns[3], .645],
+        [patterns[4], .785], [patterns[4], .86],
         [patterns[0], 1]
       ];
       bar.animate(sequence.map(([pattern, offset]) => ({
