@@ -352,39 +352,34 @@ document.querySelectorAll('.piracicaba-preview').forEach(preview => {
 });
 
 document.querySelectorAll('.music-farming-preview').forEach(preview => {
-  const bars = [...preview.querySelectorAll('.music-chart i')];
-  const initial = [28, 58, 42, 76, 53, 88];
-  const strongBeat = [78, 90, 84, 98, 88, 100];
-  const softBeat = [55, 68, 61, 78, 66, 84];
-  const release = [18, 29, 23, 38, 27, 44];
+  const tabs = [...preview.querySelectorAll('.music-dashboard-tabs i')];
+  const chart = preview.querySelector('.music-chart');
   let playing = false;
 
-  async function playMusicBars() {
+  const wait = duration => new Promise(resolve => setTimeout(resolve, duration));
+
+  async function selectMusicTab(index, showLine) {
+    tabs[index].classList.add('tab-click');
+    await wait(130);
+    tabs.forEach((tab, tabIndex) => tab.classList.toggle('is-active', tabIndex === index));
+    chart.classList.toggle('show-line', showLine);
+    await wait(180);
+    tabs[index].classList.remove('tab-click');
+  }
+
+  async function playMusicTabs() {
     if (playing) return;
     playing = true;
-    const animations = bars.map((bar, index) => bar.animate([
-      { height: `${initial[index]}%`, offset: 0 },
-      { height: `${strongBeat[index]}%`, offset: .10 },
-      { height: `${release[index]}%`, offset: .23 },
-      { height: `${softBeat[index]}%`, offset: .34 },
-      { height: `${release[index]}%`, offset: .48 },
-      { height: `${strongBeat[index]}%`, offset: .59 },
-      { height: `${release[index]}%`, offset: .72 },
-      { height: `${softBeat[index]}%`, offset: .83 },
-      { height: `${release[index]}%`, offset: .92 },
-      { height: `${initial[index]}%`, offset: 1 }
-    ], {
-      duration: 1350,
-      easing: 'ease-in-out',
-      fill: 'forwards'
-    }));
-    await Promise.all(animations.map(animation => animation.finished.catch(() => {})));
-    animations.forEach(animation => animation.cancel());
+    await wait(180);
+    await selectMusicTab(2, true);
+    await wait(780);
+    await selectMusicTab(1, false);
+    await wait(420);
     playing = false;
   }
 
-  preview.addEventListener('pointerenter', playMusicBars);
-  preview.addEventListener('focusin', playMusicBars);
+  preview.addEventListener('pointerenter', playMusicTabs);
+  preview.addEventListener('focusin', playMusicTabs);
 });
 
 document.querySelectorAll('[data-carousel]').forEach(carousel => {

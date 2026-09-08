@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#f4f4f1" />
     <title>Gabriel Delvaje — Data Analytics</title>
     <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="about-fix.css?v=110" />
+  <link rel="stylesheet" href="about-fix.css?v=111" />
   <link rel="stylesheet" href="piracicaba.css?v=16" />
   </head>
   <body>
@@ -176,10 +176,13 @@
             <a class="project-card-link" href="#music-farming-race" aria-label="Open Music Farming Race dashboard">
               <div class="project-visual music-farming-preview" role="img" aria-label="Stylized music analytics dashboard">
                 <div class="music-dashboard" aria-hidden="true">
-                  <div class="music-dashboard-tabs"><i></i><i></i><i></i></div>
+                  <div class="music-dashboard-tabs"><i></i><i class="is-active"></i><i></i></div>
                   <div class="music-dashboard-grid">
                     <div class="music-kpi"><span>♫</span><i></i></div>
-                    <div class="music-chart"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    <div class="music-chart">
+                      <div class="music-bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                      <svg class="music-line-chart" viewBox="0 0 240 120" preserveAspectRatio="none" aria-hidden="true"><path d="M8 104H232M8 74H232M8 44H232M8 14H232"/><polyline points="8,94 43,70 78,82 113,35 148,57 183,23 232,42"/></svg>
+                    </div>
                     <div class="music-ranking"><i><b></b></i><i><b></b></i><i><b></b></i></div>
                   </div>
                 </div>
@@ -265,6 +268,6 @@
     </main>
 
     <footer class="footer shell"><span>© <span id="year"></span> Gabriel Delvaje</span><span>São Paulo, Brazil · <span class="local-time"></span></span></footer>
-    <script src="script.js?v=40"></script>
+    <script src="script.js?v=41"></script>
   </body>
 </html>
