@@ -2029,23 +2029,25 @@ main {
 .project-info-button {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   flex: 0 0 auto;
   padding: 0;
-  border: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
-  border-radius: 50%;
+  border: 1px solid var(--line);
+  border-radius: 999px;
   color: var(--ink);
-  background: transparent;
-  font: 600 16px/1 Georgia, serif;
+  background: var(--bg);
+  font: 600 18px/1 Georgia, serif;
   cursor: pointer;
-  transition: border-color .2s ease, color .2s ease;
+  transition: border-color .2s ease, color .2s ease, background-color .2s ease;
 }
 
 .project-info-button:hover,
 .project-info-button:focus-visible {
-  color: var(--blue);
-  border-color: color-mix(in srgb, var(--blue) 60%, transparent);
+  color: #fff;
+  border-color: var(--blue);
+  background: var(--blue);
+  outline: none;
 }
 
 .project-info-dialog {
