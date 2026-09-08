@@ -855,13 +855,15 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   width: 44px;
   height: 16px;
   border-radius: 9px 9px 3px 3px;
-  background: #d9d7d4;
+  background: color-mix(in srgb,var(--ink) 16%,var(--bg));
+  border: 1px solid color-mix(in srgb,var(--ink) 10%,var(--bg));
   transition: background-color .35s ease, transform .4s cubic-bezier(.22,1,.36,1);
 }
 
 .music-dashboard-tabs i.is-active {
   z-index: 4;
   background: #f4f4f1;
+  border-color: transparent;
 }
 
 .music-dashboard-tabs i.is-active::after {
@@ -875,7 +877,8 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
 }
 
 [data-theme="dark"] .music-dashboard-tabs i:not(.is-active) {
-  background: #4a4546;
+  background: color-mix(in srgb,var(--ink) 32%,var(--bg));
+  border-color: color-mix(in srgb,var(--ink) 20%,var(--bg));
 }
 
 [data-theme="dark"] .music-dashboard-tabs i.is-active {
