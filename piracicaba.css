@@ -8,6 +8,7 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 .piracicaba-deck .deck-card{position:absolute;display:block;border-radius:24px;border:1px solid color-mix(in srgb,var(--ink) 34%,var(--bg));transition:background-color .35s ease,border-color .35s ease}
 .deck-card-back{inset:7% 11% 2% 0;background:color-mix(in srgb,var(--bg) 72%,var(--ink));transform:translateX(-2%) rotate(-2.5deg)}
 .deck-card-middle{inset:2% 0 7% 11%;background:color-mix(in srgb,var(--bg) 84%,var(--ink));transform:translateX(2%) rotate(2.5deg)}
+.deck-card-back,.deck-card-middle{border:0!important}
 .piracicaba-deck .deck-card-front{inset:4% 5%;background:var(--bg);color:var(--ink);overflow:hidden;box-shadow:0 18px 40px color-mix(in srgb,#000 30%,transparent)}
 .deck-map{position:absolute;inset:13% 7% 20%;overflow:hidden}
 .deck-map i{position:absolute;top:15%;left:0;display:block;width:25%;height:70%;background:color-mix(in srgb,var(--ink) 16%,var(--bg));border:1px solid color-mix(in srgb,var(--ink) 12%,var(--bg));border-radius:18px;will-change:left,width,height,opacity,background-color}.deck-map i:nth-child(2){top:4%;left:31%;width:38%;height:92%;background:var(--blue);border-color:var(--blue)}.deck-map i:nth-child(3){left:75%}

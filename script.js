@@ -222,32 +222,35 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
     playing = true;
     animatedParts.forEach(part => part.getAnimations().forEach(animation => animation.cancel()));
 
+    const FLOW_DURATION = 3200;
+    const MOTION_EASING = 'cubic-bezier(.22, 1, .36, 1)';
+    const animationOptions = { duration: FLOW_DURATION, easing: 'linear', iterations: 1, fill: 'forwards' };
     const sequenceAnimations = [];
 
     sequenceAnimations.push(userMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
-      { opacity: 1, transform: 'translateY(0)', offset: .08, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 0, transform: 'translateY(-48px)', offset: .22 },
+      { opacity: 1, transform: 'translateY(0)', offset: .04, easing: MOTION_EASING },
+      { opacity: 0, transform: 'translateY(-48px)', offset: .19 },
       { opacity: 0, transform: 'translateY(-48px)', offset: 1 }
-    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' }));
+    ], animationOptions));
 
     sequenceAnimations.push(newUserMessage.animate([
-      { opacity: 0, transform: 'translateY(0)', offset: 0 },
-      { opacity: 0, transform: 'translateY(0)', offset: .08, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .22 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .32, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(-96px)', offset: .46 },
+      { opacity: 0, transform: 'translate(12px, 8px)', offset: 0 },
+      { opacity: 0, transform: 'translate(12px, 8px)', offset: .04, easing: MOTION_EASING },
+      { opacity: 1, transform: 'translate(0, -48px)', offset: .19 },
+      { opacity: 1, transform: 'translate(0, -48px)', offset: .24, easing: MOTION_EASING },
+      { opacity: 1, transform: 'translate(0, -96px)', offset: .38 },
       { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
-    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' }));
+    ], animationOptions));
 
     sequenceAnimations.push(typing.animate([
-      { opacity: 0, transform: 'translateY(18px)', offset: 0 },
-      { opacity: 0, transform: 'translateY(18px)', offset: .46, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(-53px)', offset: .49 },
-      { opacity: 1, transform: 'translateY(-53px)', offset: .6 },
-      { opacity: 0, transform: 'translateY(-53px)', offset: .62 },
-      { opacity: 0, transform: 'translateY(-53px)', offset: 1 }
-    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' }));
+      { opacity: 0, transform: 'translate(-10px, 10px)', offset: 0 },
+      { opacity: 0, transform: 'translate(-10px, 10px)', offset: .25, easing: MOTION_EASING },
+      { opacity: 1, transform: 'translate(0, -53px)', offset: .39 },
+      { opacity: 1, transform: 'translate(0, -53px)', offset: .57, easing: 'ease-in-out' },
+      { opacity: 0, transform: 'translate(0, -57px)', offset: .63 },
+      { opacity: 0, transform: 'translate(0, -57px)', offset: 1 }
+    ], animationOptions));
 
     typingDots.forEach((dot, index) => sequenceAnimations.push(dot.animate([
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: 0 },
@@ -255,24 +258,24 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: .8 },
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: 1 }
     ], {
-      duration: 360,
-      delay: 1980 + (index * 100),
+      duration: 260,
+      delay: 1160 + (index * 70),
       easing: 'ease-in-out',
-      iterations: 1,
+      iterations: 2,
       fill: 'both'
     })));
 
     sequenceAnimations.push(aiMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
-      { opacity: 1, transform: 'translateY(0)', offset: .08, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .22 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .32, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 0, transform: 'translateY(-96px)', offset: .46 },
-      { opacity: 0, transform: 'translateY(48px)', offset: .47 },
-      { opacity: 0, transform: 'translateY(48px)', offset: .62, easing: 'cubic-bezier(.4, 0, .2, 1)' },
-      { opacity: 1, transform: 'translateY(0)', offset: .76 },
+      { opacity: 1, transform: 'translateY(0)', offset: .04, easing: MOTION_EASING },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .19 },
+      { opacity: 1, transform: 'translateY(-48px)', offset: .24, easing: MOTION_EASING },
+      { opacity: 0, transform: 'translateY(-96px)', offset: .38 },
+      { opacity: 0, transform: 'translate(-12px, 10px)', offset: .39 },
+      { opacity: 0, transform: 'translate(-12px, 10px)', offset: .58, easing: MOTION_EASING },
+      { opacity: 1, transform: 'translateY(0)', offset: .72 },
       { opacity: 1, transform: 'translateY(0)', offset: 1 }
-    ], { duration: 4200, easing: 'linear', iterations: 1, fill: 'forwards' }));
+    ], animationOptions));
 
     Promise.all(sequenceAnimations.map(animation => animation.finished.catch(() => {})))
       .then(() => { playing = false; });
@@ -483,16 +486,22 @@ document.querySelectorAll('[data-carousel]').forEach(carousel => {
     const from = dotSliderOffset(previous);
     const to = dotSliderOffset(current);
     dotSlider.getAnimations().forEach(animation => animation.cancel());
-    dotSlider.style.transform = `translateX(${to}px)`;
     if (previous !== current) {
-      dotSlider.animate([
+      const sliderAnimation = dotSlider.animate([
         { transform: `translateX(${from}px)` },
         { transform: `translateX(${to}px)` }
       ], {
         duration: 650,
         easing: 'cubic-bezier(.22, 1, .36, 1)',
-        iterations: 1
+        iterations: 1,
+        fill: 'forwards'
       });
+      sliderAnimation.addEventListener('finish', () => {
+        dotSlider.style.transform = `translateX(${to}px)`;
+        sliderAnimation.cancel();
+      }, { once: true });
+    } else {
+      dotSlider.style.transform = `translateX(${to}px)`;
     }
     status.textContent = `${current + 1} / ${slides.length}`;
   }
