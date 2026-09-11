@@ -227,30 +227,40 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
     const MOTION_EASING = 'cubic-bezier(.22, 1, .36, 1)';
     const animationOptions = { duration: FLOW_DURATION, easing: 'linear', iterations: 1, fill: 'forwards' };
     const sequenceAnimations = [];
+    const topLane = userMessage.offsetTop;
+    const bottomLane = aiMessage.offsetTop;
+    const grayToTop = topLane - bottomLane;
+    const blueToBottom = bottomLane - newUserMessage.offsetTop;
+    const blueToTop = topLane - newUserMessage.offsetTop;
+    const dotsToBottom = bottomLane - typing.offsetTop;
+    const blueExit = -(topLane + userMessage.offsetHeight + 8);
+    const grayExit = grayToTop - aiMessage.offsetHeight - 8;
+    const grayEntrance = aiMessage.offsetHeight + 16;
 
     sequenceAnimations.push(userMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
-      { opacity: 1, transform: 'translateY(0)', offset: .04, easing: MOTION_EASING },
-      { opacity: 0, transform: 'translateY(-48px)', offset: .19 },
-      { opacity: 0, transform: 'translateY(-48px)', offset: 1 }
+      { opacity: 1, transform: 'translateY(0)', offset: .04 },
+      { opacity: 0, transform: `translateY(${blueExit}px)`, offset: .16, easing: MOTION_EASING },
+      { opacity: 0, transform: `translateY(${blueExit}px)`, offset: 1 }
     ], animationOptions));
 
     sequenceAnimations.push(newUserMessage.animate([
-      { opacity: 0, transform: 'translate(12px, 8px)', offset: 0 },
-      { opacity: 0, transform: 'translate(12px, 8px)', offset: .04, easing: MOTION_EASING },
-      { opacity: 1, transform: 'translate(0, -48px)', offset: .19 },
-      { opacity: 1, transform: 'translate(0, -48px)', offset: .24, easing: MOTION_EASING },
-      { opacity: 1, transform: 'translate(0, -96px)', offset: .38 },
-      { opacity: 1, transform: 'translateY(-96px)', offset: 1 }
+      { opacity: 0, transform: 'translateY(8px) scaleX(.18)', offset: 0 },
+      { opacity: 1, transform: 'translateY(8px) scaleX(.18)', offset: .04 },
+      { opacity: 1, transform: `translateY(${blueToBottom}px) scaleX(.18)`, offset: .11, easing: MOTION_EASING },
+      { opacity: 1, transform: `translateY(${blueToBottom}px) scaleX(1)`, offset: .17, easing: MOTION_EASING },
+      { opacity: 1, transform: `translateY(${blueToBottom}px) scaleX(1)`, offset: .36 },
+      { opacity: 1, transform: `translateY(${blueToTop}px) scaleX(1)`, offset: .50, easing: MOTION_EASING },
+      { opacity: 1, transform: `translateY(${blueToTop}px) scaleX(1)`, offset: 1 }
     ], animationOptions));
 
     sequenceAnimations.push(typing.animate([
-      { opacity: 0, transform: 'translate(-10px, 10px)', offset: 0 },
-      { opacity: 0, transform: 'translate(-10px, 10px)', offset: .25, easing: MOTION_EASING },
-      { opacity: 1, transform: 'translate(0, -53px)', offset: .39 },
-      { opacity: 1, transform: 'translate(0, -53px)', offset: .57, easing: 'ease-in-out' },
-      { opacity: 0, transform: 'translate(0, -57px)', offset: .63 },
-      { opacity: 0, transform: 'translate(0, -57px)', offset: 1 }
+      { opacity: 0, transform: `translateY(${dotsToBottom + 8}px)`, offset: 0 },
+      { opacity: 0, transform: `translateY(${dotsToBottom + 8}px)`, offset: .43 },
+      { opacity: 1, transform: `translateY(${dotsToBottom}px)`, offset: .49, easing: MOTION_EASING },
+      { opacity: 1, transform: `translateY(${dotsToBottom}px)`, offset: .70 },
+      { opacity: 0, transform: `translateY(${dotsToBottom - 4}px)`, offset: .76, easing: 'ease-in-out' },
+      { opacity: 0, transform: `translateY(${dotsToBottom - 4}px)`, offset: 1 }
     ], animationOptions));
 
     typingDots.forEach((dot, index) => sequenceAnimations.push(dot.animate([
@@ -260,7 +270,7 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
       { transform: 'translateY(0) scale(1)', opacity: .38, offset: 1 }
     ], {
       duration: 260,
-      delay: 1160 + (index * 70),
+      delay: 1580 + (index * 70),
       easing: 'ease-in-out',
       iterations: 2,
       fill: 'both'
@@ -268,18 +278,21 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
 
     sequenceAnimations.push(aiMessage.animate([
       { opacity: 1, transform: 'translateY(0)', offset: 0 },
-      { opacity: 1, transform: 'translateY(0)', offset: .04, easing: MOTION_EASING },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .19 },
-      { opacity: 1, transform: 'translateY(-48px)', offset: .24, easing: MOTION_EASING },
-      { opacity: 0, transform: 'translateY(-96px)', offset: .38 },
-      { opacity: 0, transform: 'translate(-12px, 10px)', offset: .39 },
-      { opacity: 0, transform: 'translate(-12px, 10px)', offset: .58, easing: MOTION_EASING },
-      { opacity: 1, transform: 'translateY(0)', offset: .72 },
+      { opacity: 1, transform: 'translateY(0)', offset: .04 },
+      { opacity: 1, transform: `translateY(${grayToTop}px)`, offset: .17, easing: MOTION_EASING },
+      { opacity: 1, transform: `translateY(${grayToTop}px)`, offset: .36 },
+      { opacity: 0, transform: `translateY(${grayExit}px)`, offset: .50, easing: MOTION_EASING },
+      { opacity: 0, transform: `translateY(${grayEntrance}px) scaleX(.18)`, offset: .75 },
+      { opacity: 1, transform: 'translateY(0) scaleX(.18)', offset: .82, easing: MOTION_EASING },
+      { opacity: 1, transform: 'translateY(0) scaleX(1)', offset: .88, easing: MOTION_EASING },
       { opacity: 1, transform: 'translateY(0)', offset: 1 }
     ], animationOptions));
 
     Promise.all(sequenceAnimations.map(animation => animation.finished.catch(() => {})))
-      .then(() => { playing = false; });
+      .then(() => {
+        sequenceAnimations.forEach(animation => animation.cancel());
+        playing = false;
+      });
   }
 
   preview.addEventListener('pointerenter', playChatSequence);
@@ -288,10 +301,11 @@ document.querySelectorAll('.sugar-cane-preview').forEach(preview => {
 
 document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
   const bars = [...preview.querySelectorAll('.revenue-bars i')];
+  const indicators = [...preview.querySelectorAll('.revenue-sidebar i')];
   const patterns = [
-    [43, 53, 65, 76, 86, 96],
-    [0, 0, 42, 68, 82, 52],
-    [28, 62, 38, 88, 56, 74]
+    [18, 30, 43, 57, 70, 80, 91, 100],
+    [0, 0, 0, 38, 58, 72, 84, 48],
+    [24, 46, 32, 66, 48, 82, 61, 76]
   ];
   let playing = false;
 
@@ -319,7 +333,24 @@ document.querySelectorAll('.revenue-growth-preview').forEach(preview => {
       });
     });
 
-    Promise.all(animations.map(animation => animation.finished.catch(() => {})))
+    const indicatorAnimations = indicators.map((indicator, index) => {
+      indicator.getAnimations().forEach(animation => animation.cancel());
+      const indicatorStates = [0, 1, 2, 0];
+      const indicatorOffsets = [0, .32, .66, 1];
+      return indicator.animate(indicatorStates.map((activeIndex, stateIndex) => ({
+        width: index === activeIndex ? '100%' : '58%',
+        opacity: index === activeIndex ? 1 : .58,
+        offset: indicatorOffsets[stateIndex],
+        easing: 'cubic-bezier(.22, 1, .36, 1)'
+      })), {
+        duration: 2100,
+        easing: 'linear',
+        iterations: 1,
+        fill: 'forwards'
+      });
+    });
+
+    Promise.all([...animations, ...indicatorAnimations].map(animation => animation.finished.catch(() => {})))
       .then(() => { playing = false; });
   }
 
@@ -333,9 +364,9 @@ document.querySelectorAll('.piracicaba-preview').forEach(preview => {
   let playing = false;
 
   const slots = [
-    { left: '0%', top: '15%', width: '25%', height: '70%', background: 'color-mix(in srgb, var(--ink) 16%, var(--bg))', borderColor: 'color-mix(in srgb, var(--ink) 12%, var(--bg))', opacity: 1 },
-    { left: '31%', top: '4%', width: '38%', height: '92%', background: 'var(--blue)', borderColor: 'var(--blue)', opacity: 1 },
-    { left: '75%', top: '15%', width: '25%', height: '70%', background: 'color-mix(in srgb, var(--ink) 16%, var(--bg))', borderColor: 'color-mix(in srgb, var(--ink) 12%, var(--bg))', opacity: 1 }
+    { left: '0%', top: '14%', width: '23.3%', height: '64%', background: 'var(--piracicaba-card-bg)', borderColor: 'var(--piracicaba-card-border)', opacity: 1 },
+    { left: '31.6%', top: '0%', width: '36.7%', height: '100%', background: '#0736FE', borderColor: '#0736FE', opacity: 1 },
+    { left: '76.7%', top: '18%', width: '23.3%', height: '64%', background: 'var(--piracicaba-card-bg)', borderColor: 'var(--piracicaba-card-border)', opacity: 1 }
   ];
   const dotSlots = [
     { left: '0px', top: '1px', width: '7px', height: '7px', background: 'color-mix(in srgb, var(--ink) 24%, var(--bg))', borderRadius: '50%', opacity: 1 },
@@ -403,7 +434,7 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
   }
 
   async function drawMusicRace() {
-    const duration = 900;
+    const duration = 600;
     await new Promise(resolve => {
       const startedAt = performance.now();
       function drawFrame(now) {
@@ -419,12 +450,21 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
   }
 
   async function selectMusicTab(index, showLine) {
-    tabs[index].classList.add('tab-click');
-    await wait(130);
+    const nextTab = tabs[index];
+    nextTab.getAnimations().forEach(animation => animation.cancel());
+    const clickAnimation = nextTab.animate([
+      { transform: 'scale(1)', backgroundColor: '#b8b8b8' },
+      { transform: 'scale(.9)', backgroundColor: '#625e5f', offset: .48 },
+      { transform: 'scale(1)', backgroundColor: '#625e5f' }
+    ], {
+      duration: 190,
+      easing: 'cubic-bezier(.22, 1, .36, 1)',
+      iterations: 1
+    });
+    await clickAnimation.finished.catch(() => {});
     tabs.forEach((tab, tabIndex) => tab.classList.toggle('is-active', tabIndex === index));
     chart.classList.toggle('show-line', showLine);
-    await wait(180);
-    tabs[index].classList.remove('tab-click');
+    await wait(220);
   }
 
   async function playMusicTabs() {
@@ -432,11 +472,11 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
     playing = true;
     resetMusicRace();
     await wait(180);
-    await selectMusicTab(2, true);
-    await wait(70);
+    await selectMusicTab(1, true);
+    await wait(20);
     await drawMusicRace();
     await wait(160);
-    await selectMusicTab(1, false);
+    await selectMusicTab(0, false);
     await wait(350);
     resetMusicRace();
     playing = false;
@@ -445,6 +485,50 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
   preview.addEventListener('pointerenter', playMusicTabs);
   preview.addEventListener('focusin', playMusicTabs);
   resetMusicRace();
+});
+
+document.querySelectorAll('.project-repo-link').forEach(link => {
+  const label = link.querySelector('span');
+  const collapsedWidth = 42;
+  if (!label) return;
+
+  const labelStyle = getComputedStyle(label);
+  const measureContext = document.createElement('canvas').getContext('2d');
+  measureContext.font = `${labelStyle.fontWeight} ${labelStyle.fontSize} ${labelStyle.fontFamily}`;
+  const labelWidth = measureContext.measureText(label.textContent.trim()).width;
+  let expandedWidth = Math.ceil(18 + 28 + 9 + labelWidth);
+  link.style.setProperty('--repo-expanded-width', `${expandedWidth}px`);
+
+  function animateRepositoryLink(expanded) {
+    if (expanded) {
+      const visibleLabelWidth = Math.max(labelWidth, label.scrollWidth);
+      expandedWidth = Math.ceil(18 + 28 + 9 + visibleLabelWidth);
+      link.style.setProperty('--repo-expanded-width', `${expandedWidth}px`);
+    }
+    const from = link.getBoundingClientRect().width;
+    const to = expanded ? expandedWidth : collapsedWidth;
+    link.getAnimations().forEach(animation => animation.cancel());
+
+    const animation = link.animate([
+      { width: `${from}px` },
+      { width: `${to}px` }
+    ], {
+      duration: 520,
+      easing: 'cubic-bezier(.22, 1, .36, 1)',
+      iterations: 1,
+      fill: 'forwards'
+    });
+
+    animation.addEventListener('finish', () => {
+      link.style.width = `${to}px`;
+      animation.cancel();
+    }, { once: true });
+  }
+
+  link.addEventListener('pointerenter', () => animateRepositoryLink(true));
+  link.addEventListener('pointerleave', () => animateRepositoryLink(false));
+  link.addEventListener('focus', () => animateRepositoryLink(true));
+  link.addEventListener('blur', () => animateRepositoryLink(false));
 });
 
 document.querySelectorAll('[data-carousel]').forEach(carousel => {

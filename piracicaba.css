@@ -1,17 +1,21 @@
 body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 .piracicaba-page .piracicaba-shell{height:calc(100dvh - 64px);min-height:0;padding-top:0;display:grid;grid-template-rows:74px minmax(0,1fr)}
 .piracicaba-page .piracicaba-toolbar{min-height:74px;width:100%}
-.piracicaba-preview{padding:0;background:color-mix(in srgb,var(--ink) 10%,var(--bg));border-color:color-mix(in srgb,var(--ink) 18%,var(--bg));display:grid;place-items:center;transition:background-color .35s ease,border-color .35s ease}
-[data-theme="dark"] .piracicaba-preview{background:color-mix(in srgb,var(--ink) 18%,var(--bg));border-color:color-mix(in srgb,var(--ink) 26%,var(--bg))}
-.piracicaba-deck{position:relative;width:91%;height:88%;transition:transform .55s cubic-bezier(.22,1,.36,1)}
+.piracicaba-preview{--piracicaba-card-bg:#e8e6e3;--piracicaba-card-border:#d9d9d9;padding:0;background:#f3f3f1;border-color:transparent;display:grid;place-items:center;transition:background-color .35s ease,border-color .35s ease}
+[data-theme="dark"] .piracicaba-preview{--piracicaba-card-bg:#2d292a;--piracicaba-card-border:#484344;background:#231f20;border-color:transparent}
+.piracicaba-deck{position:relative;width:100%;height:auto;aspect-ratio:565/294;transition:transform .55s cubic-bezier(.22,1,.36,1)}
 .piracicaba-preview:hover .piracicaba-deck,.project-card-link:focus-visible .piracicaba-preview .piracicaba-deck{transform:none}
 .piracicaba-deck .deck-card{position:absolute;display:block;border-radius:24px;border:1px solid color-mix(in srgb,var(--ink) 34%,var(--bg));transition:background-color .35s ease,border-color .35s ease}
-.deck-card-back{inset:7% 11% 2% 0;background:color-mix(in srgb,var(--bg) 72%,var(--ink));transform:translateX(-2%) rotate(-2.5deg)}
-.deck-card-middle{inset:2% 0 7% 11%;background:color-mix(in srgb,var(--bg) 84%,var(--ink));transform:translateX(2%) rotate(2.5deg)}
+.deck-card-back{display:none!important}.deck-card-middle{display:none!important}
 .deck-card-back,.deck-card-middle{border:0!important}
-.piracicaba-deck .deck-card-front{inset:4% 5%;background:var(--bg);color:var(--ink);overflow:hidden;box-shadow:0 18px 40px color-mix(in srgb,#000 30%,transparent)}
-.deck-map{position:absolute;inset:13% 7% 20%;overflow:hidden}
-.deck-map i{position:absolute;top:15%;left:0;display:block;width:25%;height:70%;background:color-mix(in srgb,var(--ink) 16%,var(--bg));border:1px solid color-mix(in srgb,var(--ink) 12%,var(--bg));border-radius:18px;will-change:left,width,height,opacity,background-color}.deck-map i:nth-child(2){top:4%;left:31%;width:38%;height:92%;background:var(--blue);border-color:var(--blue)}.deck-map i:nth-child(3){left:75%}
+.piracicaba-deck .deck-card-front{inset:0;border:1px solid #231f20;border-radius:32px;background:#f3f3f1;color:#231f20;overflow:hidden;box-shadow:none}
+[data-theme="dark"] .piracicaba-deck .deck-card-front{border-color:#f3f3f1;background:#231f20;color:#f3f3f1}
+[data-theme="dark"] .piracicaba-deck .deck-map i{border-color:#484344;background:#2d292a}
+[data-theme="dark"] .piracicaba-deck .deck-map i:nth-child(2){border-color:#0736fe;background:#0736fe}
+[data-theme="dark"] .piracicaba-deck .deck-pagination i{background:#625e5f}
+[data-theme="dark"] .piracicaba-deck .deck-pagination i:nth-child(2){background:#0736fe}
+.deck-map{position:absolute;inset:20.4% 6.6% 19.2%;overflow:hidden}
+.deck-map i{position:absolute;top:14%;left:0;display:block;width:23.3%;height:64%;background:#e8e6e3;border:1px solid #d9d9d9;border-radius:30px;will-change:left,width,height,opacity,background-color}.deck-map i:nth-child(2){top:0;left:31.6%;width:36.7%;height:100%;background:#0736fe;border-color:#0736fe}.deck-map i:nth-child(3){top:18%;left:76.7%}
 .deck-pagination{position:absolute;left:50%;bottom:7%;translate:-50% 0;width:45px;height:8px;overflow:hidden}.deck-pagination i{position:absolute;top:1px;left:0;width:7px;height:7px;border-radius:50%;background:color-mix(in srgb,var(--ink) 24%,var(--bg));will-change:left,width,opacity,background-color}.deck-pagination i:nth-child(2){top:0;left:13px;width:19px;height:8px;border-radius:999px;background:var(--blue)}.deck-pagination i:nth-child(3){left:38px}
 .piracicaba-workspace{height:auto;min-height:0;display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;padding-bottom:18px}
 .piracicaba-workspace .story-hub{min-height:0;margin:0;display:flex;flex-direction:column;gap:10px}
