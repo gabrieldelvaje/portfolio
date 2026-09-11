@@ -61,3 +61,10 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
   .piracicaba-workspace .carousel-footer{margin:7px 0 0;display:flex;justify-content:center}.piracicaba-workspace .carousel-dots{position:relative;justify-self:auto;gap:5px;padding:0 8px}.piracicaba-workspace .carousel-dots button{position:relative;z-index:1;width:7px;height:7px;transition:background-color .28s ease,opacity .28s ease}.piracicaba-workspace .carousel-dots button.active{width:7px;background:transparent}.piracicaba-workspace .carousel-status{position:absolute;right:0;justify-self:auto}
   .piracicaba-workspace .carousel-arrow{display:none}
 }
+
+/* The active pagination dot expands in-flow, avoiding overlap and clipping. */
+.piracicaba-workspace .carousel-dot-slider{display:none!important}
+.piracicaba-workspace .carousel-dots{display:flex;align-items:center;overflow:visible}
+.piracicaba-workspace .carousel-dots button{flex:0 0 auto;width:9px;height:9px;border-radius:999px;background:color-mix(in srgb,var(--ink) 24%,var(--bg));transition:background-color .28s ease,opacity .28s ease;will-change:width}
+.piracicaba-workspace .carousel-dots button.active{width:30px;background:var(--blue)}
+@media(max-width:700px){.piracicaba-workspace .carousel-dots button{width:7px;height:7px}.piracicaba-workspace .carousel-dots button.active{width:22px;background:var(--blue)}}
