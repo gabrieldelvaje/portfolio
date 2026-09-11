@@ -3534,7 +3534,7 @@ body > .footer {
     width: 42px;
     flex-direction: row-reverse;
     justify-content: flex-start;
-    transition: width .62s cubic-bezier(.22, 1, .36, 1), gap .5s cubic-bezier(.22, 1, .36, 1), color .2s ease, border-color .2s ease, background-color .2s ease;
+    transition: gap .5s cubic-bezier(.22, 1, .36, 1), color .2s ease, border-color .2s ease, background-color .2s ease;
   }
 
   .project-detail-toolbar .project-repo-link span {

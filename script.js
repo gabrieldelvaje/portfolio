@@ -117,10 +117,14 @@ function showRoute() {
 
   if (shouldAnimate) {
     activePage.getAnimations().forEach(animation => animation.cancel());
-    activePage.animate([
-      { opacity: 0, transform: `translateX(${direction === 'backward' ? '-32px' : '32px'})` },
-      { opacity: 1, transform: 'translateX(0)' }
-    ], {
+    const keepMobileFilterFixed = validRoute === 'work' && matchMedia('(max-width: 600px)').matches;
+    const routeFrames = keepMobileFilterFixed
+      ? [{ opacity: 0 }, { opacity: 1 }]
+      : [
+          { opacity: 0, transform: `translateX(${direction === 'backward' ? '-32px' : '32px'})` },
+          { opacity: 1, transform: 'translateX(0)' }
+        ];
+    activePage.animate(routeFrames, {
       duration: 460,
       easing: 'cubic-bezier(.22, 1, .36, 1)',
       iterations: 1
@@ -498,20 +502,44 @@ document.querySelectorAll('.project-repo-link').forEach(link => {
   const labelWidth = measureContext.measureText(label.textContent.trim()).width;
   let expandedWidth = Math.ceil(18 + 28 + 9 + labelWidth);
   link.style.setProperty('--repo-expanded-width', `${expandedWidth}px`);
+  link.style.width = `${collapsedWidth}px`;
+  link.style.gap = '0px';
+  label.style.maxWidth = '0px';
+  label.style.opacity = '0';
+  label.style.transform = 'translateX(5px)';
 
   function animateRepositoryLink(expanded) {
+    const from = link.getBoundingClientRect().width;
     if (expanded) {
       const visibleLabelWidth = Math.max(labelWidth, label.scrollWidth);
       expandedWidth = Math.ceil(18 + 28 + 9 + visibleLabelWidth);
       link.style.setProperty('--repo-expanded-width', `${expandedWidth}px`);
     }
-    const from = link.getBoundingClientRect().width;
     const to = expanded ? expandedWidth : collapsedWidth;
     link.getAnimations().forEach(animation => animation.cancel());
+    label.getAnimations().forEach(animation => animation.cancel());
 
     const animation = link.animate([
-      { width: `${from}px` },
-      { width: `${to}px` }
+      { width: `${from}px`, gap: getComputedStyle(link).gap },
+      { width: `${to}px`, gap: expanded ? '9px' : '0px' }
+    ], {
+      duration: 520,
+      easing: 'cubic-bezier(.22, 1, .36, 1)',
+      iterations: 1,
+      fill: 'forwards'
+    });
+
+    const labelAnimation = label.animate([
+      {
+        maxWidth: getComputedStyle(label).maxWidth,
+        opacity: getComputedStyle(label).opacity,
+        transform: getComputedStyle(label).transform
+      },
+      {
+        maxWidth: expanded ? `${Math.ceil(Math.max(labelWidth, label.scrollWidth))}px` : '0px',
+        opacity: expanded ? 1 : 0,
+        transform: expanded ? 'translateX(0)' : 'translateX(5px)'
+      }
     ], {
       duration: 520,
       easing: 'cubic-bezier(.22, 1, .36, 1)',
@@ -521,7 +549,15 @@ document.querySelectorAll('.project-repo-link').forEach(link => {
 
     animation.addEventListener('finish', () => {
       link.style.width = `${to}px`;
+      link.style.gap = expanded ? '9px' : '0px';
       animation.cancel();
+    }, { once: true });
+
+    labelAnimation.addEventListener('finish', () => {
+      label.style.maxWidth = expanded ? `${Math.ceil(Math.max(labelWidth, label.scrollWidth))}px` : '0px';
+      label.style.opacity = expanded ? '1' : '0';
+      label.style.transform = expanded ? 'translateX(0)' : 'translateX(5px)';
+      labelAnimation.cancel();
     }, { once: true });
   }
 
