@@ -141,6 +141,20 @@ const filterButtons = [...document.querySelectorAll('[data-filter]')];
 const filterMenuToggle = filterBar?.querySelector('.filter-menu-toggle');
 
 function updateFilterSlider() {
+  if (filterBar && matchMedia('(min-width: 901px)').matches) {
+    const workPage = filterBar.closest('.work-page');
+    if (!workPage.hidden) {
+      // offsetLeft is unaffected by the page's route-transition transform.
+      const navBounds = navLinks.getBoundingClientRect();
+      const header = document.querySelector('.site-header');
+      const headerTop = parseFloat(getComputedStyle(header).top) || 0;
+      filterBar.style.setProperty('--work-header-bottom', `${headerTop + header.getBoundingClientRect().height}px`);
+      filterBar.style.setProperty('--filter-screen-left', `${navBounds.left}px`);
+      filterBar.style.setProperty('--filter-screen-width', `${document.documentElement.clientWidth}px`);
+      filterBar.style.setProperty('--filter-nav-left', `${navBounds.left - workPage.offsetLeft}px`);
+      filterBar.style.setProperty('--filter-nav-width', `${navBounds.width}px`);
+    }
+  }
   const activeFilter = filterButtons.find(button => button.classList.contains('active'));
   if (!filterBar || !activeFilter) return;
   const activeIndex = filterButtons.indexOf(activeFilter);
@@ -193,6 +207,7 @@ document.addEventListener('pointerdown', event => {
 });
 
 addEventListener('resize', updateFilterSlider);
+addEventListener('hashchange', () => requestAnimationFrame(updateFilterSlider));
 requestAnimationFrame(updateFilterSlider);
 
 const projectInfoDialog = document.querySelector('#project-info-dialog');
@@ -509,6 +524,13 @@ document.querySelectorAll('.project-repo-link').forEach(link => {
   label.style.transform = 'translateX(5px)';
 
   function animateRepositoryLink(expanded) {
+    if (matchMedia('(max-width: 900px), (hover: none)').matches) {
+      link.getAnimations().forEach(animation => animation.cancel());
+      label.getAnimations().forEach(animation => animation.cancel());
+      link.style.width = `${collapsedWidth}px`;
+      link.style.gap = '0px';
+      return;
+    }
     const from = link.getBoundingClientRect().width;
     if (expanded) {
       const visibleLabelWidth = Math.max(labelWidth, label.scrollWidth);
@@ -656,3 +678,14 @@ document.querySelectorAll('[data-story-choice]').forEach(choice => {
 document.getElementById('year').textContent = new Date().getFullYear();
 function updateTime(){document.querySelector('.local-time').textContent = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'}).format(new Date())}
 updateTime(); setInterval(updateTime, 60000);
+
+// Follow the actual navbar height when the viewport or browser zoom changes.
+const projectHeader = document.querySelector('.site-header');
+if (projectHeader) {
+  const syncProjectHeaderHeight = () => {
+    const top = parseFloat(getComputedStyle(projectHeader).top) || 0;
+    document.documentElement.style.setProperty('--project-header-height', `${projectHeader.getBoundingClientRect().height + top}px`);
+  };
+  new ResizeObserver(syncProjectHeaderHeight).observe(projectHeader);
+  syncProjectHeaderHeight();
+}

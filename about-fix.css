@@ -3552,3 +3552,924 @@ body > .footer {
     transform: translateX(0);
   }
 }
+
+/* Keep desktop Work and Resume bounded and centered above the footer. */
+@media (min-width: 901px) {
+  body.work-active > main,
+  body.resume-active > main {
+    flex: 1 0 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  body.work-active .work-page,
+  body.resume-active .resume-page {
+    flex: 0 0 auto;
+    min-height: 0;
+    margin-block: 0;
+    padding-block: 34px;
+  }
+
+  body.work-active .work-page {
+    width: min(1360px, calc(100% - 64px));
+  }
+
+  body.work-active .work-page .project-filters {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  body.resume-active .resume-page {
+    width: min(1494px, calc(100% - 64px));
+    display: block;
+  }
+
+  body.resume-active .resume-layout > .timeline,
+  body.resume-active .resume-layout > .education,
+  body.resume-active .resume-layout > .skills-panel {
+    grid-template-rows: minmax(240px, auto) repeat(2, minmax(200px, auto));
+  }
+
+  body.work-active > .footer,
+  body.resume-active > .footer {
+    flex: 0 0 auto;
+    margin-block: 0;
+  }
+}
+
+/* Compact Resume as one composition, including typography and row spacing. */
+@media (min-width: 901px) {
+  body.resume-active .resume-page {
+    width: min(1360px, calc(100% - 64px));
+  }
+
+  body.resume-active .resume-row {
+    padding-block: 18px;
+  }
+
+  body.resume-active .resume-row h2,
+  body.resume-active .hard-skills-card h2,
+  body.resume-active .skill-group h2 {
+    font-size: 15px;
+  }
+
+  body.resume-active .timeline-item h3,
+  body.resume-active .degree h3 {
+    font-size: 17px;
+  }
+
+  body.resume-active .timeline-item h3 {
+    padding-right: 132px;
+  }
+
+  body.resume-active .timeline-item p {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  body.resume-active .timeline-item time,
+  body.resume-active .degree time {
+    font-size: 11px;
+  }
+
+  body.resume-active .tags span {
+    font-size: 12px;
+    padding: 7px 10px;
+  }
+
+  body.resume-active .skill-icons img {
+    width: 44px;
+    height: 44px;
+  }
+
+  body.resume-active .resume-layout > .timeline,
+  body.resume-active .resume-layout > .education {
+    grid-template-rows: minmax(210px, auto) repeat(2, minmax(175px, auto));
+  }
+}
+
+@media (min-width: 1241px) {
+  body.resume-active .resume-layout > .skills-panel {
+    grid-template-rows: minmax(210px, auto) repeat(2, minmax(175px, auto));
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1240px) {
+  body.resume-active .resume-layout > .skills-panel {
+    grid-template-rows: auto;
+  }
+}
+
+/* Match About: the footer begins below the initial desktop viewport. */
+@media (min-width: 901px) {
+  body.resume-active > main {
+    flex: 0 0 auto;
+    min-height: calc(100dvh - 80px);
+  }
+}
+
+/* Equal visible gaps: navbar → filters → project grid. */
+@media (min-width: 901px) {
+  body.work-active {
+    --work-navigation-gap: 20px;
+  }
+
+  body.work-active .site-header {
+    padding-bottom: 0;
+  }
+
+  body.work-active > main {
+    justify-content: flex-start;
+  }
+
+  body.work-active .work-page {
+    padding-top: var(--work-navigation-gap);
+  }
+
+  body.work-active .work-page .project-filters {
+    height: 38px;
+    margin-top: 0;
+    margin-bottom: var(--work-navigation-gap);
+  }
+}
+
+/* Filters share the primary navigation's measured columns and left edge. */
+@media (min-width: 901px) {
+  body.work-active .work-page .project-filters {
+    width: var(--filter-nav-width, 276px);
+    margin-left: var(--filter-nav-left, 0px);
+    padding-left: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  body.work-active .work-page .project-filters button[data-filter] {
+    width: 100%;
+    border-radius: 999px;
+  }
+
+  body.work-active .work-page .project-filters .filter-slider {
+    left: 0;
+    width: calc(100% / 3);
+  }
+}
+
+body.work-active .work-page .project-filters button[data-filter]:not(.active) {
+  background: #e7e6e4;
+  color: #242122;
+  border-radius: 999px;
+}
+
+/* The sticky filters keep a continuous backdrop across the viewport. */
+@media (min-width: 901px) {
+  body.work-active .work-page .project-filters {
+    isolation: isolate;
+  }
+
+  body.work-active .work-page .project-filters::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: calc(-1 * var(--work-navigation-gap));
+    bottom: calc(-1 * var(--work-navigation-gap));
+    left: calc(-1 * var(--filter-screen-left, 0px));
+    width: var(--filter-screen-width, 100vw);
+    background: var(--bg);
+    pointer-events: none;
+  }
+}
+
+/* Inset the capsules without moving the navigation-aligned label centers. */
+@media (min-width: 901px) {
+  body.work-active .work-page .project-filters button[data-filter] {
+    width: calc(100% - 8px);
+    justify-self: center;
+  }
+
+  body.work-active .work-page .project-filters .filter-slider {
+    clip-path: inset(0 4px round 999px);
+  }
+}
+
+/* Preserve the resting navbar gap when the compact filter row sticks. */
+@media (min-width: 901px) {
+  body.work-active .work-page .project-filters {
+    top: calc(var(--work-header-bottom, 72px) + var(--work-navigation-gap));
+    height: 32px;
+  }
+
+  body.work-active .work-page .project-filters button[data-filter],
+  body.work-active .work-page .project-filters .filter-slider {
+    height: 32px;
+  }
+}
+
+/* A slimmer continuous filter band with only the active capsule visible. */
+body.work-active .work-page .project-filters button[data-filter]:not(.active) {
+  background: transparent;
+  color: var(--ink);
+}
+
+@media (min-width: 901px) {
+  body.work-active {
+    --work-navigation-gap: 16px;
+  }
+
+  body.work-active .work-page .project-filters {
+    align-items: center;
+  }
+}
+
+/* Equal education cards centered against the matching experience entries. */
+@media (min-width: 901px) {
+  body.resume-active .resume-layout > .timeline,
+  body.resume-active .resume-layout > .education {
+    grid-template-rows: 228px repeat(2, 196px);
+  }
+
+  body.resume-active .timeline > .resume-row,
+  body.resume-active .education > .resume-row {
+    padding-block: 14px;
+    justify-content: center;
+  }
+
+  body.resume-active .timeline > .resume-row:first-child,
+  body.resume-active .education > .resume-row:first-child {
+    justify-content: flex-start;
+  }
+
+  body.resume-active .timeline > .resume-row > h2,
+  body.resume-active .education > .resume-row > h2 {
+    height: 18px;
+    line-height: 18px;
+    margin-bottom: 14px;
+  }
+
+  body.resume-active .timeline .resume-row:first-child .timeline-item {
+    flex: 0 0 auto;
+    margin-block: auto;
+  }
+
+  body.resume-active .timeline .resume-row:first-child .timeline-item time {
+    top: -5px;
+    transform: none;
+  }
+
+  body.resume-active .education .resume-row .degree {
+    flex: 0 0 168px;
+    height: 168px;
+    min-height: 168px;
+    padding-block: 18px;
+  }
+
+  body.resume-active .education .degree h3 {
+    margin-bottom: 10px;
+    line-height: 1.45;
+  }
+}
+
+/* Keep experience dates in the title row, never over the description. */
+@media (min-width: 901px) {
+  body.resume-active .timeline .resume-row .timeline-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 12px;
+    align-items: start;
+  }
+
+  body.resume-active .timeline .resume-row .timeline-item h3 {
+    grid-column: 1;
+    grid-row: 1;
+    padding-right: 0;
+  }
+
+  body.resume-active .timeline .resume-row .timeline-item time,
+  body.resume-active .timeline .resume-row:first-child .timeline-item time {
+    position: static;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+    margin: 0;
+    transform: none;
+  }
+
+  body.resume-active .timeline .resume-row .timeline-item p {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+/* Compact resume rows and align dates to the first title baseline. */
+@media (min-width: 901px) {
+  body.resume-active .resume-layout > .timeline,
+  body.resume-active .resume-layout > .education {
+    grid-template-rows: 210px repeat(2, 175px);
+  }
+
+  body.resume-active .timeline > .resume-row,
+  body.resume-active .education > .resume-row {
+    padding-block: 12px;
+  }
+
+  body.resume-active .education .resume-row .degree {
+    flex: 0 0 148px;
+    height: 148px;
+    min-height: 148px;
+    padding-block: 14px;
+  }
+
+  body.resume-active .education .degree h3 {
+    margin-bottom: 8px;
+  }
+
+  body.resume-active .timeline .resume-row .timeline-item {
+    align-items: first baseline;
+  }
+
+  body.resume-active .timeline .resume-row .timeline-item time,
+  body.resume-active .timeline .resume-row:first-child .timeline-item time {
+    align-self: first baseline;
+    line-height: 1.35;
+  }
+
+  body.resume-active .resume-page {
+    padding-block: 28px;
+  }
+}
+
+@media (min-width: 1241px) {
+  body.resume-active .resume-layout > .skills-panel {
+    grid-template-rows: 210px repeat(2, 175px);
+  }
+}
+
+/* Expand the full desktop Resume composition to the same frame as About. */
+@media (min-width: 1241px) {
+  body.resume-active .resume-page {
+    --resume-inset: clamp(28px, 3.5vh, 48px);
+    --resume-height: max(580px, calc(100dvh - 80px - 2 * var(--resume-inset)));
+    --resume-row-height: calc((var(--resume-height) - 36px) / 3);
+    width: min(1600px, calc(100% - clamp(40px, 6vw, 144px)));
+    padding-block: var(--resume-inset);
+  }
+
+  body.resume-active .resume-layout {
+    min-height: var(--resume-height);
+  }
+
+  body.resume-active .resume-layout > .timeline,
+  body.resume-active .resume-layout > .education,
+  body.resume-active .resume-layout > .skills-panel {
+    grid-template-rows: calc(var(--resume-row-height) + 36px) repeat(2, var(--resume-row-height));
+  }
+
+  body.resume-active .timeline > .resume-row > h2,
+  body.resume-active .education > .resume-row > h2 {
+    height: 22px;
+    line-height: 22px;
+  }
+
+  body.resume-active .resume-row h2,
+  body.resume-active .hard-skills-card h2,
+  body.resume-active .skill-group h2 {
+    font-size: clamp(15px, 1.05vw, 18px);
+  }
+
+  body.resume-active .timeline-item h3,
+  body.resume-active .degree h3 {
+    font-size: clamp(17px, 1.16vw, 20px);
+  }
+
+  body.resume-active .timeline-item p {
+    font-size: clamp(14px, 1vw, 17px);
+    line-height: 1.5;
+  }
+
+  body.resume-active .timeline-item time,
+  body.resume-active .degree time {
+    font-size: clamp(11px, .75vw, 13px);
+  }
+
+  body.resume-active .education .resume-row .degree {
+    flex: 0 0 calc(var(--resume-row-height) - 24px);
+    height: calc(var(--resume-row-height) - 24px);
+    min-height: 148px;
+    padding-block: clamp(14px, 2vh, 24px);
+  }
+
+  body.resume-active .hard-skills-image {
+    height: auto;
+    flex: 1 1 auto;
+    min-height: 180px;
+  }
+
+  body.resume-active .skill-icons {
+    flex: 0 0 auto;
+    min-height: 76px;
+  }
+
+  body.resume-active .skill-icons img {
+    width: clamp(44px, 3.2vw, 56px);
+    height: clamp(44px, 3.2vw, 56px);
+  }
+
+  body.resume-active .tags span {
+    font-size: clamp(12px, .85vw, 14px);
+    padding: 8px 12px;
+  }
+}
+
+/* Enlarge the Introduction artwork inside its existing reserved column. */
+@media (min-width: 901px) {
+  .about-page .intro-illustration {
+    transform: scale(1.35);
+    transform-origin: center;
+  }
+}
+
+/* Equal desktop columns and a safe inset inside every education card. */
+@media (min-width: 1241px) {
+  body.resume-active .resume-page .resume-layout {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+  }
+
+  body.resume-active .resume-layout > .timeline,
+  body.resume-active .resume-layout > .education,
+  body.resume-active .resume-layout > .skills-panel {
+    min-width: 0;
+    padding-inline: clamp(24px, 2vw, 32px);
+  }
+}
+
+@media (min-width: 901px) {
+  body.resume-active .education .resume-row .degree {
+    padding: clamp(22px, 2.5vh, 30px) clamp(28px, 2.2vw, 36px);
+  }
+}
+
+/* Keep the employer separator together and center dates on title line one. */
+.timeline-item h3 > span {
+  white-space: nowrap;
+}
+
+@media (min-width: 901px) {
+  body.resume-active .timeline .resume-row .timeline-item {
+    align-items: start;
+  }
+
+  body.resume-active .timeline .resume-row .timeline-item h3 {
+    line-height: 1.35;
+  }
+
+  body.resume-active .timeline .resume-row .timeline-item time,
+  body.resume-active .timeline .resume-row:first-child .timeline-item time {
+    align-self: start;
+    /* One title line minus the badge's own height, divided by two. */
+    margin-top: calc((clamp(17px, 1.16vw, 20px) * 1.35 - (1em * 1.35 + 12px)) / 2);
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1240px) {
+  body.resume-active .timeline .resume-row .timeline-item time,
+  body.resume-active .timeline .resume-row:first-child .timeline-item time {
+    margin-top: calc((17px * 1.35 - (1em * 1.35 + 12px)) / 2);
+  }
+}
+
+/* Give the role/date heading more breathing room above its description. */
+@media (min-width: 901px) {
+  body.resume-active .timeline .resume-row .timeline-item h3 {
+    margin-bottom: 20px;
+  }
+}
+
+/* Show the complete illustration and label each hard-skill tool. */
+body.resume-active .hard-skills-image {
+  flex: 0 1 auto;
+  height: clamp(160px, 29vh, 280px);
+  max-height: 58%;
+  min-height: 0;
+}
+
+.hard-skills-image img {
+  object-fit: contain;
+  object-position: center;
+}
+
+body.resume-active .hard-skills-card h2 {
+  margin: 18px 0 0;
+}
+
+body.resume-active .skill-icons {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: start;
+  gap: 8px;
+  flex: 0 0 auto;
+  min-height: 0;
+  margin-top: 16px;
+}
+
+.skill-tool {
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+}
+
+.skill-tool figcaption {
+  color: #f4f2f0;
+  font-size: 11px;
+  line-height: 1.3;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Center the complete tool rows in the space below the Hard Skills heading. */
+body.resume-active .skill-icons {
+  flex: 1 0 auto;
+  align-content: center;
+  align-items: center;
+  margin-top: 0;
+  padding-top: 18px;
+}
+
+/* Equal, more generous vertical insets for the education cards. */
+@media (min-width: 901px) {
+  body.resume-active .education .resume-row .degree {
+    padding-block: clamp(30px, 3.5vh, 40px);
+  }
+}
+
+/* Work shares the full desktop frame and readable scale of About and Resume. */
+@media (min-width: 901px) {
+  body.work-active > main {
+    flex: 0 0 auto;
+    min-height: calc(100dvh - 80px);
+  }
+
+  body.work-active .work-page {
+    width: min(1600px, calc(100% - clamp(40px, 6vw, 144px)));
+  }
+
+  body.work-active .work-page .project-card h2 {
+    font-size: clamp(20px, 1.4vw, 24px);
+  }
+
+  body.work-active .work-page .project-card p {
+    font-size: clamp(12px, .85vw, 14px);
+    line-height: 1.4;
+  }
+
+  body.work-active .work-page .project-tags span {
+    font-size: 11px;
+    padding: 5px 9px;
+  }
+}
+
+/* Project action sits beside the title, outside the preview artwork. */
+.work-page .project-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 4px 0 6px;
+}
+
+.work-page .project-card .project-title-row h2 {
+  width: auto;
+  min-width: 0;
+  margin: 0;
+}
+
+.work-page .project-card .project-title-row .project-open-cue {
+  position: static;
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding: 6px 9px;
+  font-size: 10px;
+  white-space: nowrap;
+  box-shadow: none;
+  opacity: 1;
+  transform: none;
+}
+
+/* Reveal the title-row action on hover without shifting the title. */
+@media (hover: hover) and (pointer: fine) {
+  .work-page .project-card .project-title-row .project-open-cue {
+    opacity: 0;
+    transform: translateY(5px);
+    pointer-events: none;
+  }
+
+  .work-page .project-card .project-card-link:hover .project-open-cue,
+  .work-page .project-card .project-card-link:focus-visible .project-open-cue {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Keep project information directly below the sticky primary navigation. */
+@media (min-width: 901px) {
+  body.project-open .project-detail-toolbar {
+    position: sticky;
+    top: var(--project-header-height, 80px);
+    z-index: 19;
+    background: var(--bg);
+  }
+}
+
+/* Match the desktop filter capsule height. */
+@media (min-width: 901px) {
+  body.project-open .project-detail-toolbar .project-back,
+  body.project-open .project-detail-toolbar .project-info-button {
+    height: 32px;
+    font-size: 13px;
+  }
+
+  body.project-open .project-detail-toolbar .project-info-button {
+    width: 32px;
+  }
+}
+
+/* Touch layouts keep GitHub as a circular icon, with color feedback only. */
+@media (max-width: 900px), (hover: none) {
+  .project-detail-toolbar .project-repo-link {
+    width: 42px !important;
+    gap: 0 !important;
+    justify-content: center;
+  }
+
+  .project-detail-toolbar .project-repo-link span {
+    display: none;
+  }
+
+  .project-detail-toolbar .project-repo-link:hover,
+  .project-detail-toolbar .project-repo-link:focus,
+  .project-detail-toolbar .project-repo-link:active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+  }
+
+  .project-detail-toolbar .project-repo-link:hover img,
+  .project-detail-toolbar .project-repo-link:focus img,
+  .project-detail-toolbar .project-repo-link:active img {
+    filter: brightness(0) invert(1);
+  }
+}
+
+/* Anchor both project bars and paint the information band edge to edge. */
+@media (min-width: 901px) {
+  body.project-open .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    width: 100%;
+    background: var(--bg);
+  }
+
+  body.project-open > main {
+    padding-top: var(--project-header-height, 80px);
+  }
+
+  body.project-open .project-detail-page {
+    padding-top: 52px;
+  }
+
+  body.project-open .project-detail-toolbar {
+    position: fixed;
+    top: var(--project-header-height, 80px);
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    height: 52px;
+    min-height: 52px;
+    padding-left: calc((100% - min(1600px, calc(100% - clamp(40px, 6vw, 144px)))) / 2 + 18px);
+    padding-right: calc((100% - min(1600px, calc(100% - clamp(40px, 6vw, 144px)))) / 2 + 14px);
+    background: var(--bg);
+    z-index: 19;
+  }
+}
+
+/* Center every project toolbar control and heading within the fixed band. */
+@media (min-width: 901px) {
+  body.project-open .project-detail-toolbar {
+    display: flex;
+    align-items: center;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  body.project-open .project-detail-toolbar .project-mobile-controls,
+  body.project-open .project-detail-toolbar .project-detail-actions,
+  body.project-open .project-detail-toolbar .project-detail-heading {
+    align-self: center;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  body.project-open .project-detail-toolbar h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  body.project-open .project-detail-toolbar .project-back,
+  body.project-open .project-detail-toolbar .project-info-button,
+  body.project-open .project-detail-toolbar .project-repo-link {
+    align-self: center;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+/* Tablet project toolbar follows the same fixed, continuous desktop band. */
+@media (min-width: 601px) and (max-width: 900px) and (min-height: 501px) {
+  body.project-open .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    width: 100%;
+    background: var(--bg);
+  }
+
+  body.project-open > main {
+    padding-top: var(--project-header-height, 80px);
+  }
+
+  body.project-open .project-detail-page {
+    padding-top: 64px;
+  }
+
+  body.project-open .project-detail-toolbar {
+    position: fixed;
+    inset: var(--project-header-height, 80px) 0 auto;
+    z-index: 19;
+    width: 100%;
+    max-width: none;
+    height: 64px;
+    min-height: 64px;
+    margin: 0;
+    padding: 0 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: var(--bg);
+  }
+
+  body.project-open .project-mobile-controls,
+  body.project-open .project-detail-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+  }
+
+  body.project-open .project-mobile-controls {
+    flex: 0 0 auto;
+  }
+
+  body.project-open .project-detail-actions,
+  body.project-open .project-detail-heading {
+    min-width: 0;
+  }
+
+  body.project-open .project-detail-heading {
+    width: auto;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3px;
+    text-align: right;
+  }
+
+  body.project-open .project-detail-heading h1 {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.15;
+  }
+
+  body.project-open .project-detail-heading > span {
+    font-size: 8px;
+    line-height: 1.3;
+  }
+
+  body.project-open .project-detail-toolbar .project-back,
+  body.project-open .project-detail-toolbar .project-info-button {
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  body.project-open .project-detail-toolbar .project-back {
+    padding: 0 10px;
+    white-space: nowrap;
+  }
+
+  body.project-open .project-back-label {
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 400;
+  }
+
+  body.project-open .project-back-icon {
+    display: none;
+  }
+
+  body.project-open .project-detail-toolbar .project-info-button {
+    width: 32px;
+    padding: 0;
+  }
+
+  body.project-open .project-detail-toolbar .project-repo-link {
+    flex: 0 0 32px;
+    width: 32px !important;
+    height: 32px;
+    padding: 4px;
+    align-self: center;
+  }
+
+  body.project-open .project-repo-link img {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Wide, compact portrait card for tablet and mobile. */
+@media (max-width: 900px) {
+  .about-page .portrait-card {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    height: clamp(230px, 42vw, 320px);
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: auto;
+    align-self: stretch;
+  }
+
+  .about-page .portrait-crop img {
+    width: auto;
+    height: 115%;
+    max-width: none;
+    left: auto;
+    right: -3%;
+    top: auto;
+    bottom: -20%;
+    transform: none;
+  }
+
+  .about-page .portrait-copy {
+    top: 20px;
+    left: 24px;
+    max-width: 48%;
+    font-size: clamp(26px, 5vw, 44px);
+    line-height: 1.25;
+  }
+}
+
+/* Tighter spacing between education cards on tablet and mobile. */
+@media (max-width: 900px) {
+  .resume-page .education > .resume-row {
+    padding-block: 18px;
+  }
+}
+
+/* Touch focus and sticky hover must not leave the close control red. */
+@media (max-width: 900px), (hover: none) {
+  .project-info-close,
+  .project-info-close:hover,
+  .project-info-close:focus,
+  .project-info-close:focus-visible {
+    color: var(--ink);
+    border-color: color-mix(in srgb, var(--ink) 18%, transparent);
+    background: transparent;
+    transition: none;
+  }
+
+  .project-info-close:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  .project-info-close:active {
+    color: #e02b2b;
+    border-color: #e02b2b;
+    background: color-mix(in srgb, #e02b2b 8%, transparent);
+  }
+}
