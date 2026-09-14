@@ -743,6 +743,9 @@ document.querySelectorAll('[data-story-choice]').forEach(choice => {
       if (active) item.setAttribute('aria-current', 'true');
       else item.removeAttribute('aria-current');
     });
+    document.querySelectorAll('[data-story-panel]').forEach(panel => {
+      panel.hidden = panel.dataset.storyPanel !== choice.dataset.storyChoice;
+    });
     if (!storyRepoLink) return;
     storyRepoLink.href = choice.dataset.repo;
     storyRepoLink.setAttribute('aria-label', `Open ${choice.dataset.storyName} repository on GitHub`);

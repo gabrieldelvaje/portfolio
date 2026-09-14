@@ -8,7 +8,7 @@
     <title>Gabriel Delvaje — Data Analytics</title>
     <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="about-fix.css?v=232" />
-  <link rel="stylesheet" href="piracicaba.css?v=34" />
+  <link rel="stylesheet" href="piracicaba.css?v=35" />
   </head>
   <body>
     <header class="site-header">
@@ -234,17 +234,17 @@
       <section class="page project-detail-page piracicaba-page" data-page="piracicaba-data-stories" aria-labelledby="piracicaba-title" hidden>
         <div class="piracicaba-shell shell">
           <div class="project-detail-toolbar piracicaba-toolbar">
-            <div class="project-mobile-controls"><a class="project-back" href="#work" aria-label="Back to Work"><span class="project-back-icon" aria-hidden="true"><img src="assets/project-back-arrow.png" alt="" /></span><img class="project-mobile-icon" src="assets/mobile-back-icon.png" alt=""><span class="project-back-label">Back to Work</span></a><button class="project-info-button" type="button" aria-label="About Piracicaba Data Stories" data-project-info data-info-title="Piracicaba Data Stories" data-info-description="Piracicaba Data Stories is a series of Instagram carousels that makes local data analysis accessible through visual storytelling. The series explores different aspects of life in Piracicaba, including income distribution, same-sex marriages and patterns in the local retail landscape. Each story aims to simplify the analysis while preserving its meaning, sharing knowledge about the city and the people who live in it. The portfolio currently features the income distribution carousel."><span>i</span><img class="project-mobile-icon" src="assets/mobile-info-icon.png" alt=""></button></div>
+            <div class="project-mobile-controls"><a class="project-back" href="#work" aria-label="Back to Work"><span class="project-back-icon" aria-hidden="true"><img src="assets/project-back-arrow.png" alt="" /></span><img class="project-mobile-icon" src="assets/mobile-back-icon.png" alt=""><span class="project-back-label">Back to Work</span></a><button class="project-info-button" type="button" aria-label="About Piracicaba Data Stories" data-project-info data-info-title="Piracicaba Data Stories" data-info-description="Piracicaba Data Stories is a series of Instagram carousels that makes local data analysis accessible through visual storytelling. The series explores different aspects of life in Piracicaba, including income distribution, same-sex marriages and patterns in the local retail landscape. Each story aims to simplify the analysis while preserving its meaning, sharing knowledge about the city and the people who live in it. The portfolio features carousels on income distribution and the tongue-rolling phenotype in a voluntary local sample."><span>i</span><img class="project-mobile-icon" src="assets/mobile-info-icon.png" alt=""></button></div>
             <div class="project-detail-actions">
               <div class="project-detail-heading"><h1 id="piracicaba-title">Piracicaba Data Stories</h1><span>Data Analytics · Geospatial Analysis · Storytelling</span></div>
               <a class="project-repo-link" id="story-repo-link" href="https://github.com/gabrieldelvaje/distribuicao-renda-piracicaba" target="_blank" rel="noreferrer" aria-label="Open Income Distribution repository on GitHub"><img src="assets/github-icon.png" alt="" /><span>View on GitHub</span></a>
             </div>
           </div>
           <div class="piracicaba-workspace"><div class="story-hub" aria-label="Choose a Piracicaba data story">
-            <button class="story-choice active" type="button" aria-current="true" data-story-choice data-repo="https://github.com/gabrieldelvaje/distribuicao-renda-piracicaba" data-story-name="Income Distribution"><span class="story-choice-number">01</span><span><strong>Income Distribution</strong><small>2000 · 2010 · 2022</small></span><b aria-hidden="true">→</b></button>
-            <div class="story-choice story-choice-upcoming" aria-disabled="true"><span class="story-choice-number">02</span><span><strong>Next Piracicaba analysis</strong><small>Coming soon</small></span></div>
+            <button class="story-choice active" type="button" aria-current="true" data-story-choice="income" data-repo="https://github.com/gabrieldelvaje/distribuicao-renda-piracicaba" data-story-name="Income Distribution"><span class="story-choice-number">01</span><span><strong>Income Distribution</strong><small>2000 · 2010 · 2022</small></span><b aria-hidden="true">→</b></button>
+            <button class="story-choice" type="button" data-story-choice="tongue" data-repo="https://github.com/gabrieldelvaje/dobras-lingua-piracicaba" data-story-name="Tongue Rolling"><span class="story-choice-number">02</span><span><strong>Tongue Rolling</strong><small>Survey · Observed phenotype</small></span><b aria-hidden="true">→</b></button>
           </div>
-          <section class="data-story" aria-label="Income Distribution in Piracicaba carousel">
+          <section class="data-story" data-story-panel="income" aria-label="Income Distribution in Piracicaba carousel">
             <div class="story-carousel" data-carousel tabindex="0" aria-label="Income Distribution carousel">
               <div class="story-track">
                 <figure class="story-slide" aria-label="Slide 1 of 7"><img src="assets/piracicaba/01.png" alt="Original income distribution carousel cover" /><figcaption><span>1/7 · English</span><h3>Where is Piracicaba’s income going?</h3><p>Over 20 years, income concentration moved away from the center and spread toward outer neighborhoods.</p></figcaption></figure>
@@ -258,7 +258,15 @@
               <button class="carousel-arrow previous" type="button" aria-label="Previous slide">←</button><button class="carousel-arrow next" type="button" aria-label="Next slide">→</button>
             </div>
             <div class="carousel-footer"><div class="carousel-dots" role="group" aria-label="Choose carousel slide"></div><span class="carousel-status" aria-live="polite">1 / 7</span></div>
-          </section></div>
+          </section><section class="data-story tongue-story" data-story-panel="tongue" aria-label="Tongue Rolling in Piracicaba carousel" hidden>
+<div class="story-carousel" data-carousel tabindex="0" aria-label="Tongue Rolling carousel"><div class="story-track"><figure class="story-slide" aria-label="Slide 1 of 7"><img src="assets/piracicaba/tongue-rolling/01-cover.jpeg" alt="Tongue rolling in Piracicaba" loading="lazy" /><figcaption><span>1/7 · English</span><h3>Tongue rolling in Piracicaba</h3><p>What does a local sample reveal about this observed phenotype? A survey combining descriptive statistics and comparison with published studies.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 2 of 7"><img src="assets/piracicaba/tongue-rolling/02-methodology.jpeg" alt="How the survey was conducted" loading="lazy" /><figcaption><span>2/7 · English</span><h3>How the survey was conducted</h3><p>79 responses: 73 included in the Piracicaba subsample and 6 from other cities. Santa Rita responses were counted as Piracicaba. Participation was voluntary.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 3 of 7"><img src="assets/piracicaba/tongue-rolling/03-main-result.jpeg" alt="75.3% of the local sample" loading="lazy" /><figcaption><span>3/7 · English</span><h3>75.3% of the local sample</h3><p>55 of 73 respondents reported being able to roll their tongue; 18 reported they could not. These percentages describe the surveyed sample.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 4 of 7"><img src="assets/piracicaba/tongue-rolling/04-confidence-interval.jpeg" alt="Uncertainty around the result" loading="lazy" /><figcaption><span>4/7 · English</span><h3>Uncertainty around the result</h3><p>The 95% Wilson interval is 64.4%–83.8%. It captures binomial uncertainty, but does not remove selection bias or make the voluntary sample representative of the city.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 5 of 7"><img src="assets/piracicaba/tongue-rolling/05-literature-comparison.jpeg" alt="Comparison with published studies" loading="lazy" /><figcaption><span>5/7 · English</span><h3>Comparison with published studies</h3><p>The carousel compares Piracicaba’s 75.3% with 72.9% in an Esan sample, approximately 70% in Sturtevant’s study and 63.9% in a Lagos sample. Different samples and methods limit direct comparisons.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 6 of 7"><img src="assets/piracicaba/tongue-rolling/06-not-simple-gene.jpeg" alt="An observed phenotype" loading="lazy" /><figcaption><span>6/7 · English</span><h3>An observed phenotype</h3><p>The simple dominant-gene explanation is insufficient. Studies of identical twins and later research challenged a simple genetic model for tongue rolling.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 7 of 7"><img src="assets/piracicaba/tongue-rolling/07-summary.jpeg" alt="What the sample suggests" loading="lazy" /><figcaption><span>7/7 · English</span><h3>What the sample suggests</h3><p>About three in four surveyed Piracicaba residents reported tongue rolling. The result is close to some published estimates, but is not an exact prevalence for the whole city.</p></figcaption></figure></div><button class="carousel-arrow previous" type="button" aria-label="Previous slide">←</button><button class="carousel-arrow next" type="button" aria-label="Next slide">→</button></div>
+<div class="carousel-footer"><div class="carousel-dots" role="group" aria-label="Choose carousel slide"></div><span class="carousel-status" aria-live="polite">1 / 7</span></div></section></div>
         </div>
       </section>
       <dialog class="project-info-dialog" id="project-info-dialog" aria-labelledby="project-info-title">
@@ -272,6 +280,6 @@
     </main>
 
     <footer class="footer shell"><span>© <span id="year"></span> Gabriel Delvaje</span><span>São Paulo, Brazil · <span class="local-time"></span></span></footer>
-    <script src="script.js?v=97"></script>
+    <script src="script.js?v=98"></script>
   </body>
 </html>
