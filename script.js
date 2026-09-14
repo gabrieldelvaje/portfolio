@@ -90,6 +90,39 @@ function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction
   scrollTo({top: 0, behavior: 'smooth'});
 }
 
+let navTextFrame = 0;
+links.forEach(link => {
+  const selectedLabel = document.createElement('span');
+  selectedLabel.className = 'nav-label-selected';
+  const labelText = link.textContent;
+  selectedLabel.textContent = labelText;
+  const baseLabel = document.createElement('span');
+  baseLabel.className = 'nav-label-base';
+  baseLabel.textContent = labelText;
+  link.replaceChildren(baseLabel);
+  selectedLabel.setAttribute('aria-hidden', 'true');
+  link.append(selectedLabel);
+});
+function syncNavText() {
+  const capsule = navSlider.getBoundingClientRect();
+  links.forEach(link => {
+    const bounds = link.getBoundingClientRect();
+    link.style.setProperty('--nav-clip-left', `${capsule.left - bounds.left}px`);
+    link.style.setProperty('--nav-clip-right', `${bounds.right - capsule.right}px`);
+  });
+}
+function trackNavText() {
+  cancelAnimationFrame(navTextFrame);
+  const tick = () => {
+    syncNavText();
+    if (navSlider.getAnimations().some(animation => animation.playState === 'running')) {
+      navTextFrame = requestAnimationFrame(tick);
+    }
+  };
+  tick();
+}
+addEventListener('resize', trackNavText);
+
 function showRoute() {
   const route = location.hash.slice(1) || 'about';
   const validRoute = pages.some(page => page.dataset.page === route) ? route : 'about';
@@ -102,23 +135,31 @@ function showRoute() {
   const shouldAnimate = currentPrimaryRoute !== null && !matchMedia('(prefers-reduced-motion: reduce)').matches;
   applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction);
 
+  const currentNavTransform = getComputedStyle(navSlider).transform;
   navLinks.style.setProperty('--nav-offset', `${nextIndex * 100}%`);
   navSlider.getAnimations().forEach(animation => animation.cancel());
   if (currentPrimaryRoute !== null && nextIndex !== previousIndex) {
-    navSlider.animate([
-      { transform: `translateX(${previousIndex * 100}%)` },
+    const capsuleAnimation = navSlider.animate([
+      { transform: currentNavTransform },
       { transform: `translateX(${nextIndex * 100}%)` }
     ], {
       duration: 650,
       easing: 'cubic-bezier(.22, 1, .36, 1)',
-      iterations: 1
+      iterations: 1,
+      fill: 'both'
     });
+    capsuleAnimation.addEventListener('finish', () => {
+      capsuleAnimation.cancel();
+      syncNavText();
+    }, { once: true });
   }
+
+  trackNavText();
 
   if (shouldAnimate) {
     activePage.getAnimations().forEach(animation => animation.cancel());
     const keepMobileFilterFixed = validRoute === 'work' && matchMedia('(max-width: 600px)').matches;
-    const routeFrames = keepMobileFilterFixed
+    const routeFrames = (keepMobileFilterFixed || projectOpen)
       ? [{ opacity: 0 }, { opacity: 1 }]
       : [
           { opacity: 0, transform: `translateX(${direction === 'backward' ? '-32px' : '32px'})` },
@@ -140,6 +181,34 @@ const filterSlider = filterBar?.querySelector('.filter-slider');
 const filterButtons = [...document.querySelectorAll('[data-filter]')];
 const filterMenuToggle = filterBar?.querySelector('.filter-menu-toggle');
 
+let filterTextFrame = 0;
+filterButtons.forEach(button => {
+  const text = button.textContent;
+  const base = document.createElement('span');
+  base.className = 'filter-label-base';
+  base.textContent = text;
+  const selected = document.createElement('span');
+  selected.className = 'filter-label-selected';
+  selected.textContent = text;
+  selected.setAttribute('aria-hidden', 'true');
+  button.replaceChildren(base, selected);
+});
+function trackFilterText() {
+  cancelAnimationFrame(filterTextFrame);
+  const tick = () => {
+    if (!filterSlider) return;
+    const capsule = filterSlider.getBoundingClientRect();
+    const inset = matchMedia('(min-width: 901px)').matches ? 4 : 0;
+    filterButtons.forEach(button => {
+      const bounds = button.getBoundingClientRect();
+      button.style.setProperty('--filter-text-clip', `inset(${capsule.top - bounds.top}px ${bounds.right - capsule.right + inset}px ${bounds.bottom - capsule.bottom}px ${capsule.left - bounds.left + inset}px round 999px)`);
+    });
+    if (filterSlider.getAnimations().some(animation => animation.playState === 'running')) {
+      filterTextFrame = requestAnimationFrame(tick);
+    }
+  };
+  tick();
+}
 function updateFilterSlider() {
   if (filterBar && matchMedia('(min-width: 901px)').matches) {
     const workPage = filterBar.closest('.work-page');
@@ -161,6 +230,7 @@ function updateFilterSlider() {
   filterBar.style.setProperty('--filter-left', `${activeFilter.offsetLeft}px`);
   filterBar.style.setProperty('--filter-width', `${activeFilter.offsetWidth}px`);
   filterBar.style.setProperty('--filter-offset', `${activeIndex * 100}%`);
+  trackFilterText();
 }
 
 filterMenuToggle?.addEventListener('click', () => {
@@ -176,6 +246,7 @@ filterButtons.forEach(button => button.addEventListener('click', () => {
   const nextIndex = filterButtons.indexOf(button);
   if (previousIndex === nextIndex) return;
 
+  const currentFilterTransform = filterSlider ? getComputedStyle(filterSlider).transform : 'none';
   filterButtons.forEach(item => item.classList.toggle('active', item === button));
   document.querySelectorAll('[data-category]').forEach(card => {
     const filter = button.dataset.filter;
@@ -188,14 +259,16 @@ filterButtons.forEach(button => button.addEventListener('click', () => {
   const isMobile = matchMedia('(max-width: 600px)').matches;
   const verticalOffset = isMobile ? '' : ', -50%';
   const frames = [
-    { transform: `translate(${previousIndex * 100}%${verticalOffset})` },
+    { transform: currentFilterTransform },
     { transform: `translate(${nextIndex * 100}%${verticalOffset})` }
   ];
-  filterSlider.animate(frames, {
+  const filterAnimation = filterSlider.animate(frames, {
     duration: 650,
     easing: 'cubic-bezier(.22, 1, .36, 1)',
     iterations: 1
   });
+  trackFilterText();
+  filterAnimation.addEventListener('finish', trackFilterText, { once: true });
 
 }));
 
@@ -506,16 +579,17 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
   resetMusicRace();
 });
 
-document.querySelectorAll('.project-repo-link').forEach(link => {
-  const label = link.querySelector('span');
-  const collapsedWidth = 42;
+document.querySelectorAll('.project-repo-link, .project-back').forEach(link => {
+  const isBackLink = link.classList.contains('project-back');
+  const label = link.querySelector(isBackLink ? '.project-back-label' : 'span');
+  const collapsedWidth = isBackLink ? 32 : 42;
   if (!label) return;
 
   const labelStyle = getComputedStyle(label);
   const measureContext = document.createElement('canvas').getContext('2d');
   measureContext.font = `${labelStyle.fontWeight} ${labelStyle.fontSize} ${labelStyle.fontFamily}`;
   const labelWidth = measureContext.measureText(label.textContent.trim()).width;
-  let expandedWidth = Math.ceil(18 + 28 + 9 + labelWidth);
+  let expandedWidth = Math.ceil((isBackLink ? 14 + 18 : 18 + 28) + 9 + labelWidth);
   link.style.setProperty('--repo-expanded-width', `${expandedWidth}px`);
   link.style.width = `${collapsedWidth}px`;
   link.style.gap = '0px';
@@ -534,7 +608,7 @@ document.querySelectorAll('.project-repo-link').forEach(link => {
     const from = link.getBoundingClientRect().width;
     if (expanded) {
       const visibleLabelWidth = Math.max(labelWidth, label.scrollWidth);
-      expandedWidth = Math.ceil(18 + 28 + 9 + visibleLabelWidth);
+      expandedWidth = Math.ceil((isBackLink ? 14 + 18 : 18 + 28) + 9 + visibleLabelWidth);
       link.style.setProperty('--repo-expanded-width', `${expandedWidth}px`);
     }
     const to = expanded ? expandedWidth : collapsedWidth;

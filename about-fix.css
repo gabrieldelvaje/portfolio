@@ -4473,3 +4473,203 @@ body.resume-active .skill-icons {
     background: color-mix(in srgb, #e02b2b 8%, transparent);
   }
 }
+
+/* Keep the fixed project band outside page-transition coordinate changes. */
+@media (min-width: 901px), (min-width: 601px) and (min-height: 501px) {
+  body.project-open .site-header {
+    height: 80px;
+    min-height: 80px;
+    padding-block: 14px 8px;
+    box-sizing: border-box;
+  }
+
+  body.project-open .site-header .nav {
+    height: 58px;
+  }
+
+  body.project-open .project-detail-page {
+    transform: none !important;
+  }
+
+  body.project-open .project-detail-toolbar {
+    top: 80px;
+    z-index: 21;
+    overflow: visible;
+  }
+
+  body.project-open > main {
+    padding-top: 80px;
+  }
+
+  body.project-open .project-detail-toolbar .project-repo-link {
+    flex-shrink: 0;
+    margin-block: 0;
+  }
+}
+
+/* Circular back control, expanding toward its label on pointer hover. */
+@media (min-width: 601px) and (min-height: 501px), (min-width: 901px) {
+  body.project-open .project-detail-toolbar .project-back {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 auto;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0;
+    padding: 6px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg);
+    transition: width .52s cubic-bezier(.22, 1, .36, 1), gap .52s cubic-bezier(.22, 1, .36, 1), background-color .2s, border-color .2s;
+  }
+
+  body.project-open .project-detail-toolbar .project-back-icon {
+    display: block;
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    font-size: 0;
+    background: var(--ink);
+    -webkit-mask: url('assets/project-back-arrow.png') center / 22px 22px no-repeat;
+    mask: url('assets/project-back-arrow.png') center / 22px 22px no-repeat;
+  }
+
+  body.project-open .project-detail-toolbar .project-back .project-back-label {
+    display: block;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    font-size: 12px;
+    line-height: 1;
+    transition: max-width .52s cubic-bezier(.22, 1, .36, 1), opacity .25s;
+  }
+
+  body.project-open .project-detail-toolbar .project-back .project-mobile-icon {
+    display: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    body.project-open .project-detail-toolbar .project-back:hover,
+    body.project-open .project-detail-toolbar .project-back:focus-visible {
+      width: 148px;
+      gap: 9px;
+      color: #fff;
+      border-color: var(--blue);
+      background: var(--blue);
+    }
+
+    body.project-open .project-detail-toolbar .project-back:hover .project-back-icon,
+    body.project-open .project-detail-toolbar .project-back:focus-visible .project-back-icon {
+      background: #fff;
+    }
+
+    body.project-open .project-detail-toolbar .project-back:hover .project-back-label,
+    body.project-open .project-detail-toolbar .project-back:focus-visible .project-back-label {
+      max-width: 100px;
+      opacity: 1;
+    }
+  }
+}
+
+/* Use an image rather than a mask so local-file previews also show the arrow. */
+@media (min-width: 601px) and (min-height: 501px), (min-width: 901px) {
+  body.project-open .project-detail-toolbar .project-back {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+    transition: background-color .2s, border-color .2s;
+  }
+
+  body.project-open .project-detail-toolbar .project-back .project-back-icon {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    background: transparent;
+    -webkit-mask: none;
+    mask: none;
+  }
+
+  body.project-open .project-detail-toolbar .project-back-icon img {
+    display: block;
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
+
+  [data-theme="dark"] body.project-open .project-back-icon img {
+    filter: invert(1);
+  }
+
+  body.project-open .project-detail-toolbar .project-back .project-back-label {
+    transition: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    body.project-open .project-detail-toolbar .project-back:hover .project-back-icon,
+    body.project-open .project-detail-toolbar .project-back:focus-visible .project-back-icon {
+      background: transparent;
+    }
+
+    body.project-open .project-detail-toolbar .project-back:hover .project-back-icon img,
+    body.project-open .project-detail-toolbar .project-back:focus-visible .project-back-icon img {
+      filter: brightness(0) invert(1);
+    }
+  }
+}
+
+/* Text changes only where the moving capsule actually covers it. */
+@media (min-width: 901px) {
+  .nav-links a[data-route],
+  .nav-links a[data-route].active {
+    color: var(--ink);
+    transition: none;
+  }
+
+  .nav-label-selected {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: var(--bg);
+    pointer-events: none;
+    clip-path: inset(0 var(--nav-clip-right, 100%) 0 var(--nav-clip-left, 0px) round 999px);
+  }
+}
+
+@media (max-width: 900px) {
+  .nav-label-selected { display: none; }
+}
+
+/* The base label never inherits the active/hover link color. */
+@media (min-width: 901px) {
+  .site-header .nav-links a[data-route] .nav-label-base {
+    color: var(--ink);
+    transition: none;
+  }
+
+  .site-header .nav-links a[data-route] .nav-label-selected {
+    color: var(--bg);
+    transition: none;
+  }
+}
+
+/* Work labels reveal their selected color only under the moving capsule. */
+.work-page .project-filters button[data-filter] .filter-label-base {
+  color: var(--ink);
+  transition: none;
+}
+
+.work-page .project-filters button[data-filter] .filter-label-selected {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  clip-path: var(--filter-text-clip, inset(0 100% 0 0));
+  pointer-events: none;
+  transition: none;
+}
