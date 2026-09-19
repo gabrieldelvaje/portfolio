@@ -98,3 +98,8 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
   .piracicaba-workspace .story-choice { height: auto; min-height: 56px; }
   .piracicaba-workspace .tongue-story .story-slide > img { aspect-ratio: 4 / 5; }
 }
+
+@media (max-width: 700px) {
+  .piracicaba-workspace .story-hub { grid-template-columns: 1fr; }
+  .piracicaba-workspace .marriage-story .story-slide > img { aspect-ratio: 4 / 5; }
+}
