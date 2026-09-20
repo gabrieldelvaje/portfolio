@@ -4859,3 +4859,42 @@ body.work-active .work-page .project-card:not(.filtered) ~ .project-card:not(.fi
   padding-top: 0;
   border-top: 0;
 }
+
+/* Primary sections form one continuous document; projects keep their own view. */
+body.stacked-pages { height: auto; overflow-y: auto; }
+body.stacked-pages > main { display: block; height: auto; min-height: 0; flex: none; }
+body.stacked-pages .page:not(.project-detail-page) { position: relative; scroll-margin-top: 90px; }
+body.stacked-pages .work-page,
+body.stacked-pages .resume-page { margin-top: 56px; margin-bottom: 56px; }
+body.stacked-pages > .footer { position: relative; margin-top: 32px; }
+@media (min-width: 901px) {
+  body.stacked-pages .site-header { position: sticky; top: 0; z-index: 100; background: var(--bg); }
+}
+@media (max-width: 900px) {
+  body.stacked-pages .work-page .project-filters { position: relative; top: auto; left: auto; right: auto; margin-bottom: 24px; z-index: 5; }
+  body.stacked-pages .work-page { padding-top: 24px; }
+}
+
+/* Section headings separate the continuous portfolio blocks. */
+body.stacked-pages .stacked-section-title {
+  display: block;
+  margin: 0 0 28px;
+  font-family: inherit;
+  font-size: clamp(36px, 3.3vw, 52px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink);
+}
+@media (max-width: 600px) {
+  body.stacked-pages .stacked-section-title { margin-bottom: 22px; font-size: 36px; }
+}
+
+/* Headings mark section boundaries without oversized gaps. */
+body.stacked-pages .work-page,
+body.stacked-pages .resume-page {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+body.stacked-pages .stacked-section-title { margin-bottom: 20px; }

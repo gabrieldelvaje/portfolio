@@ -64,30 +64,66 @@ toggles.forEach(toggle => {
 
 const routeOrder = ['about', 'work', 'resume'];
 let currentPrimaryRoute = null;
+let sectionNavigationFrame = 0;
+let sectionNavigationRunning = false;
+function stopSectionNavigation() {
+  cancelAnimationFrame(sectionNavigationFrame);
+  sectionNavigationRunning = false;
+}
+function scrollToSection(top, animated) {
+  stopSectionNavigation();
+  const target = Math.min(Math.max(0, top), Math.max(0, document.documentElement.scrollHeight - innerHeight));
+  if (!animated) { scrollTo({ top: target, behavior: 'instant' }); return; }
+  const start = scrollY;
+  const distance = target - start;
+  const duration = Math.min(1200, Math.max(650, Math.abs(distance) * .45));
+  const started = performance.now();
+  sectionNavigationRunning = true;
+  const step = now => {
+    const t = Math.min(1, (now - started) / duration);
+    const eased = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    scrollTo({ top: start + distance * eased, behavior: 'instant' });
+    if (t < 1) sectionNavigationFrame = requestAnimationFrame(step);
+    else sectionNavigationRunning = false;
+  };
+  sectionNavigationFrame = requestAnimationFrame(step);
+}
+addEventListener('wheel', stopSectionNavigation, { passive: true });
+addEventListener('touchstart', stopSectionNavigation, { passive: true });
+addEventListener('keydown', event => {
+  if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) stopSectionNavigation();
+});
 
 function primaryRouteFor(route, projectOpen) {
   return projectOpen ? 'work' : route;
 }
 
-function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction) {
+function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction, scrollOnly = false) {
   root.dataset.routeDirection = direction;
-  pages.forEach(page => page.hidden = page.dataset.page !== validRoute);
+  pages.forEach(page => page.hidden = projectOpen ? page.dataset.page !== validRoute : !routeOrder.includes(page.dataset.page));
   links.forEach(link => {
     const active = link.dataset.route === validRoute || (projectOpen && link.dataset.route === 'work');
     link.classList.toggle('active', active);
     if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
   });
   document.body.classList.toggle('project-open', projectOpen);
-  document.body.classList.toggle('about-active', validRoute === 'about');
-  document.body.classList.toggle('work-active', validRoute === 'work');
-  document.body.classList.toggle('resume-active', validRoute === 'resume');
+  document.body.classList.toggle('stacked-pages', !projectOpen);
+  routeOrder.forEach(route => document.body.classList.toggle(`${route}-active`, !projectOpen));
   if (validRoute !== 'work') {
     document.querySelector('.project-filters')?.classList.remove('is-open');
     const filterToggle = document.querySelector('.filter-menu-toggle');
     filterToggle?.setAttribute('aria-expanded', 'false');
     filterToggle?.setAttribute('aria-label', 'Open project filters');
   }
-  scrollTo({top: 0, behavior: 'smooth'});
+  if (!scrollOnly) {
+    const header = document.querySelector('.site-header');
+    const desktop = matchMedia('(min-width: 901px)').matches;
+    const offset = desktop ? header.getBoundingClientRect().height + 20 : 16;
+    const target = validRoute === 'resume' ? activePage.querySelector('.resume-layout')
+      : validRoute === 'work' ? activePage.querySelector('.project-filters') : activePage;
+    const top = projectOpen ? 0 : (target || activePage).getBoundingClientRect().top + scrollY - offset;
+    scrollToSection(top, currentPrimaryRoute !== null && !projectOpen);
+  }
 }
 
 let navTextFrame = 0;
@@ -123,7 +159,8 @@ function trackNavText() {
 }
 addEventListener('resize', trackNavText);
 
-function showRoute() {
+function showRoute(scrollOnly = false) {
+  scrollOnly = scrollOnly === true;
   const route = location.hash.slice(1) || 'about';
   const validRoute = pages.some(page => page.dataset.page === route) ? route : 'about';
   const activePage = pages.find(page => page.dataset.page === validRoute);
@@ -133,7 +170,7 @@ function showRoute() {
   const previousIndex = currentPrimaryRoute === null ? nextIndex : routeOrder.indexOf(currentPrimaryRoute);
   const direction = nextIndex < previousIndex ? 'backward' : 'forward';
   const shouldAnimate = currentPrimaryRoute !== null && !matchMedia('(prefers-reduced-motion: reduce)').matches;
-  applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction);
+  applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction, scrollOnly);
 
   const currentNavTransform = getComputedStyle(navSlider).transform;
   navLinks.style.setProperty('--nav-offset', `${nextIndex * 100}%`);
@@ -156,7 +193,7 @@ function showRoute() {
 
   trackNavText();
 
-  if (shouldAnimate) {
+  if (shouldAnimate && projectOpen && !scrollOnly) {
     activePage.getAnimations().forEach(animation => animation.cancel());
     const keepMobileFilterFixed = validRoute === 'work' && matchMedia('(max-width: 600px)').matches;
     const routeFrames = (keepMobileFilterFixed || projectOpen)
@@ -175,6 +212,27 @@ function showRoute() {
 }
 addEventListener('hashchange', showRoute);
 showRoute();
+
+links.forEach(link => link.addEventListener('click', event => {
+  event.preventDefault();
+  history.pushState(null, '', `#${link.dataset.route}`);
+  showRoute();
+}));
+let sectionScrollFrame = 0;
+addEventListener('scroll', () => {
+  if (sectionNavigationRunning || sectionScrollFrame || document.body.classList.contains('project-open')) return;
+  sectionScrollFrame = requestAnimationFrame(() => {
+    sectionScrollFrame = 0;
+    if (sectionNavigationRunning) return;
+    const threshold = innerHeight * .35;
+    const primaryPages = routeOrder.map(route => pages.find(page => page.dataset.page === route));
+    const visible = primaryPages.filter(page => page.getBoundingClientRect().top <= threshold).pop() || primaryPages[0];
+    if (visible.dataset.page !== currentPrimaryRoute) {
+      history.replaceState(null, '', `#${visible.dataset.page}`);
+      showRoute(true);
+    }
+  });
+}, { passive: true });
 
 const filterBar = document.querySelector('.project-filters');
 const filterSlider = filterBar?.querySelector('.filter-slider');
@@ -588,8 +646,8 @@ document.querySelectorAll('.project-repo-link, .project-back').forEach(link => {
   const labelStyle = getComputedStyle(label);
   const measureContext = document.createElement('canvas').getContext('2d');
   measureContext.font = `${labelStyle.fontWeight} ${labelStyle.fontSize} ${labelStyle.fontFamily}`;
-  const labelWidth = measureContext.measureText(label.textContent.trim()).width;
-  let expandedWidth = Math.ceil((isBackLink ? 14 + 18 : 18 + 28) + 9 + labelWidth);
+  let labelWidth = measureContext.measureText(label.textContent.trim()).width;
+  let expandedWidth = Math.ceil((isBackLink ? 20 + 18 : 18 + 28) + 9 + labelWidth);
   link.style.setProperty('--repo-expanded-width', `${expandedWidth}px`);
   link.style.width = `${collapsedWidth}px`;
   link.style.gap = '0px';
@@ -607,8 +665,11 @@ document.querySelectorAll('.project-repo-link, .project-back').forEach(link => {
     }
     const from = link.getBoundingClientRect().width;
     if (expanded) {
-      const visibleLabelWidth = Math.max(labelWidth, label.scrollWidth);
-      expandedWidth = Math.ceil((isBackLink ? 14 + 18 : 18 + 28) + 9 + visibleLabelWidth);
+      const currentLabelStyle = getComputedStyle(label);
+      measureContext.font = `${currentLabelStyle.fontWeight} ${currentLabelStyle.fontSize} ${currentLabelStyle.fontFamily}`;
+      labelWidth = Math.ceil(measureContext.measureText(label.textContent.trim()).width);
+      const visibleLabelWidth = isBackLink ? labelWidth : Math.max(labelWidth, label.scrollWidth);
+      expandedWidth = Math.ceil((isBackLink ? 20 + 18 : 18 + 28) + 9 + visibleLabelWidth);
       link.style.setProperty('--repo-expanded-width', `${expandedWidth}px`);
     }
     const to = expanded ? expandedWidth : collapsedWidth;
@@ -632,7 +693,7 @@ document.querySelectorAll('.project-repo-link, .project-back').forEach(link => {
         transform: getComputedStyle(label).transform
       },
       {
-        maxWidth: expanded ? `${Math.ceil(Math.max(labelWidth, label.scrollWidth))}px` : '0px',
+        maxWidth: expanded ? `${Math.ceil(isBackLink ? labelWidth : Math.max(labelWidth, label.scrollWidth))}px` : '0px',
         opacity: expanded ? 1 : 0,
         transform: expanded ? 'translateX(0)' : 'translateX(5px)'
       }
@@ -650,7 +711,7 @@ document.querySelectorAll('.project-repo-link, .project-back').forEach(link => {
     }, { once: true });
 
     labelAnimation.addEventListener('finish', () => {
-      label.style.maxWidth = expanded ? `${Math.ceil(Math.max(labelWidth, label.scrollWidth))}px` : '0px';
+      label.style.maxWidth = expanded ? `${Math.ceil(isBackLink ? labelWidth : Math.max(labelWidth, label.scrollWidth))}px` : '0px';
       label.style.opacity = expanded ? '1' : '0';
       label.style.transform = expanded ? 'translateX(0)' : 'translateX(5px)';
       labelAnimation.cancel();
@@ -785,6 +846,11 @@ function trackStoryTextColor(item) {
 const storySelectionAnimations = new WeakMap();
 function animateStorySelection(item, active) {
   const subtitle = item.querySelector('small');
+  const compact = matchMedia('(max-width: 700px)').matches;
+  const titleBox = item.querySelector(':scope > span:nth-child(2)');
+  const fromWidth = item.getBoundingClientRect().width;
+  const fromTitleWidth = titleBox.getBoundingClientRect().width;
+  const fromTitleOpacity = getComputedStyle(titleBox).opacity;
   const fromHeight = item.getBoundingClientRect().height;
   const fromSubtitleHeight = subtitle.getBoundingClientRect().height;
   const fromOpacity = getComputedStyle(subtitle).opacity;
@@ -794,7 +860,13 @@ function animateStorySelection(item, active) {
   const toHeight = item.getBoundingClientRect().height;
   const toSubtitleHeight = subtitle.getBoundingClientRect().height;
   const options = { duration: 700, easing: 'cubic-bezier(.4, 0, .2, 1)', fill: 'both' };
-  const animations = [
+  const animations = compact ? [
+    item.animate([{ width: `${fromWidth}px` }, { width: active ? '220px' : '48px' }], options),
+    titleBox.animate([
+      { width: `${fromTitleWidth}px`, opacity: fromTitleOpacity },
+      { width: active ? '172px' : '0px', opacity: active ? 1 : 0 }
+    ], options)
+  ] : [
     item.animate([{ height: `${fromHeight}px` }, { height: `${toHeight}px` }], options),
     subtitle.animate([
       { height: `${fromSubtitleHeight}px`, opacity: fromOpacity },

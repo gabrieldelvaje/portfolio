@@ -324,3 +324,93 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 @media (prefers-reduced-motion: reduce) {
   .piracicaba-workspace .story-choice:not(.active):hover { transform: none; }
 }
+
+/* Transparent circular controls around the carousel chevrons. */
+.piracicaba-workspace .carousel-arrow,
+.piracicaba-workspace .carousel-arrow:hover {
+  border: 1px solid rgba(36, 33, 34, .35);
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Translucent arrow surfaces with hover and press feedback. */
+.piracicaba-workspace .carousel-arrow,
+.piracicaba-workspace .carousel-arrow:hover {
+  border: 0;
+  border-radius: 50%;
+  background: rgba(36, 33, 34, .09);
+  box-shadow: none;
+  transform: scale(1);
+  transition: background-color .2s ease, transform .18s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .piracicaba-workspace .carousel-arrow:hover {
+    background: rgba(36, 33, 34, .17);
+    transform: scale(1.07);
+  }
+}
+.piracicaba-workspace .carousel-arrow:active {
+  background: rgba(36, 33, 34, .24);
+  transform: scale(.9);
+}
+@media (prefers-reduced-motion: reduce) {
+  .piracicaba-workspace .carousel-arrow { transition: background-color .2s ease; }
+  .piracicaba-workspace .carousel-arrow:hover,
+  .piracicaba-workspace .carousel-arrow:active { transform: none; }
+}
+
+/* Mobile story picker: one horizontally scrollable row. */
+@media (max-width: 700px) {
+  .piracicaba-workspace .story-hub {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 2px;
+    scrollbar-width: none;
+    touch-action: pan-x;
+  }
+  .piracicaba-workspace .story-hub::-webkit-scrollbar { display: none; }
+  .piracicaba-workspace .story-choice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 48px;
+    height: 48px;
+    min-height: 48px;
+    flex: 0 0 auto;
+    padding: 0 12px;
+    border-radius: 14px;
+    transition: width .7s cubic-bezier(.4,0,.2,1), --story-fill .7s cubic-bezier(.4,0,.2,1), background-color .25s ease;
+  }
+  .piracicaba-workspace .story-choice.active { width: 220px; }
+  .piracicaba-workspace .story-choice > .story-choice-number { flex: 0 0 22px; text-align: center; }
+  .piracicaba-workspace .story-choice > span:nth-child(2) {
+    min-width: 0;
+    width: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: width .7s cubic-bezier(.4,0,.2,1), opacity .3s ease;
+  }
+  .piracicaba-workspace .story-choice.active > span:nth-child(2) { width: 172px; opacity: 1; }
+  .piracicaba-workspace .story-choice strong { width: 160px; padding-left: 10px; font-size: 13px; }
+  .piracicaba-workspace .story-choice small,
+  .piracicaba-workspace .story-choice.active small { display: none; }
+}
+
+/* Animate measured mobile widths together, without competing CSS transitions. */
+@media (max-width: 700px) {
+  .piracicaba-workspace .story-choice {
+    justify-content: flex-start;
+    transition: --story-fill .7s cubic-bezier(.4,0,.2,1), background-color .25s ease;
+  }
+  .piracicaba-workspace .story-choice > span:nth-child(2) {
+    flex-shrink: 0;
+    transition: none;
+  }
+}
