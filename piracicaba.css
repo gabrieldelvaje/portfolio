@@ -26,7 +26,7 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 .piracicaba-workspace .story-carousel{width:100%;height:100%;min-height:0;border-radius:28px;margin:0;background:#ebe8e3}
 .piracicaba-workspace .story-track{height:100%;transition:transform .72s cubic-bezier(.22,1,.36,1)}
 .piracicaba-workspace .story-slide{height:100%;aspect-ratio:auto;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,36%);background:#f5f2ed}
-.piracicaba-workspace .story-slide>img{width:100%;height:100%;min-height:0;object-fit:contain;background:#f5f2ed}
+.piracicaba-workspace .story-slide>.story-image-window{width:100%;height:100%;min-height:0;object-fit:contain;background:#f5f2ed}
 .piracicaba-workspace .story-slide figcaption{padding:clamp(22px,3vw,44px);background:#171515;color:#fff;display:flex;flex-direction:column;justify-content:center}
 .piracicaba-workspace .story-slide figcaption>span{color:#6e8fff;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 .piracicaba-workspace .story-slide figcaption h3{margin:18px 0 14px;font-size:clamp(23px,2.6vw,40px);line-height:1.02;color:#fff}
@@ -55,7 +55,7 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
   .piracicaba-workspace .story-carousel{border-radius:18px}
   .piracicaba-workspace .story-carousel,.piracicaba-workspace .story-track,.piracicaba-workspace .story-slide{height:auto}
   .piracicaba-workspace .story-slide{grid-template-columns:1fr;grid-template-rows:auto auto}
-  .piracicaba-workspace .story-slide>img{height:auto;aspect-ratio:1;object-fit:contain}
+  .piracicaba-workspace .story-slide>.story-image-window{height:auto;aspect-ratio:1;object-fit:contain}
   .piracicaba-workspace .story-slide figcaption{padding:12px 54px 14px 16px;min-height:104px}
   .piracicaba-workspace .story-slide figcaption>span{font-size:9px}.piracicaba-workspace .story-slide figcaption h3{font-size:16px;margin:4px 0}.piracicaba-workspace .story-slide figcaption p{font-size:11px;line-height:1.25}
   .piracicaba-workspace .carousel-footer{margin:7px 0 0;display:flex;justify-content:center}.piracicaba-workspace .carousel-dots{position:relative;justify-self:auto;gap:5px;padding:0 8px}.piracicaba-workspace .carousel-dots button{position:relative;z-index:1;width:7px;height:7px;transition:background-color .28s ease,opacity .28s ease}.piracicaba-workspace .carousel-dots button.active{width:7px;background:transparent}.piracicaba-workspace .carousel-status{position:absolute;right:0;justify-self:auto}
@@ -96,12 +96,12 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
   .piracicaba-workspace { grid-template-rows: auto auto; }
   .piracicaba-workspace .story-hub { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .piracicaba-workspace .story-choice { height: auto; min-height: 56px; }
-  .piracicaba-workspace .tongue-story .story-slide > img { aspect-ratio: 4 / 5; }
+  .piracicaba-workspace .tongue-story .story-slide > .story-image-window { aspect-ratio: 4 / 5; }
 }
 
 @media (max-width: 700px) {
   .piracicaba-workspace .story-hub { grid-template-columns: 1fr; }
-  .piracicaba-workspace .marriage-story .story-slide > img { aspect-ratio: 4 / 5; }
+  .piracicaba-workspace .marriage-story .story-slide > .story-image-window { aspect-ratio: 4 / 5; }
 }
 
 /* Only the selected story reveals its subtitle. */
@@ -124,7 +124,7 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 }
 
 @media (max-width: 700px) {
-  .piracicaba-workspace .commerce-story .story-slide > img { aspect-ratio: 4 / 5; }
+  .piracicaba-workspace .commerce-story .story-slide > .story-image-window { aspect-ratio: 4 / 5; }
 }
 
 /* Reveal subtitles in normal flow so the whole selector expands smoothly. */
@@ -230,4 +230,97 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 .piracicaba-workspace .story-choice.active,
 [data-theme="dark"] .piracicaba-workspace .story-choice.active {
   border-color: var(--blue);
+}
+
+/* Match the Back to Work chevron without its circular capsule. */
+.piracicaba-workspace .carousel-arrow,
+.piracicaba-workspace .carousel-arrow:hover {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.piracicaba-workspace .carousel-arrow img {
+  display: block;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+.piracicaba-workspace .carousel-arrow.next img {
+  transform: rotate(180deg);
+}
+.piracicaba-workspace .carousel-arrow:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* JavaScript animates the track from its current position, including rapid clicks. */
+.piracicaba-workspace .story-track { transition: none; }
+
+/* Clip image motion to its own column; captions remain stationary. */
+.piracicaba-workspace .story-image-window { position: relative; overflow: hidden; min-width: 0; }
+.piracicaba-workspace .story-image-window > img { display: block; width: 100%; height: 100%; object-fit: contain; background: #f5f2ed; }
+.piracicaba-workspace .story-image-window > .story-image-outgoing { position: absolute; inset: 0; }
+
+@property --story-fill {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 0%;
+}
+.piracicaba-workspace .story-choice {
+  --story-fill: 0%;
+  transition: --story-fill .7s cubic-bezier(.4,0,.2,1), transform .3s ease;
+}
+.piracicaba-workspace .story-choice.active { --story-fill: 100%; }
+.piracicaba-workspace .story-choice.active,
+.piracicaba-workspace .story-choice.active:hover { border-color: #deddda; }
+[data-theme="dark"] .piracicaba-workspace .story-choice.active,
+[data-theme="dark"] .piracicaba-workspace .story-choice.active:hover { border-color: #464142; }
+.piracicaba-workspace .story-choice::before,
+.piracicaba-workspace .story-choice.active::before {
+  clip-path: inset(0 calc(100% - var(--story-fill)) 0 0);
+  transition: none;
+}
+.piracicaba-workspace .story-choice .story-choice-number,
+.piracicaba-workspace .story-choice strong,
+.piracicaba-workspace .story-choice small > span {
+  background: linear-gradient(to right, #fff var(--story-text-edge, 0px), var(--ink) var(--story-text-edge, 0px));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Keep the carousel panel flat, without an outer shadow. */
+.piracicaba-workspace .story-carousel {
+  box-shadow: none;
+}
+
+/* Inactive stories respond to hover without competing with the blue selection. */
+.piracicaba-workspace .story-choice {
+  transition: --story-fill .7s cubic-bezier(.4,0,.2,1), transform .25s ease, background-color .25s ease, border-color .25s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .piracicaba-workspace .story-choice:not(.active):hover {
+    background: #dddcda;
+    border-color: #b8b6b3;
+    transform: translateY(-3px);
+    box-shadow: none;
+  }
+  [data-theme="dark"] .piracicaba-workspace .story-choice:not(.active):hover {
+    background: #3e393b;
+    border-color: #696265;
+  }
+}
+.piracicaba-workspace .story-choice:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .piracicaba-workspace .story-choice:not(.active):hover { transform: none; }
 }

@@ -666,6 +666,13 @@ document.querySelectorAll('.project-repo-link, .project-back').forEach(link => {
 document.querySelectorAll('[data-carousel]').forEach(carousel => {
   const track = carousel.querySelector('.story-track');
   const slides = [...carousel.querySelectorAll('.story-slide')];
+  slides.forEach(slide => {
+    const image = slide.querySelector(':scope > img');
+    const viewport = document.createElement('div');
+    viewport.className = 'story-image-window';
+    image.replaceWith(viewport);
+    viewport.append(image);
+  });
   const footer = carousel.parentElement.querySelector('.carousel-footer');
   const dots = footer.querySelector('.carousel-dots');
   const status = footer.querySelector('.carousel-status');
@@ -684,7 +691,29 @@ document.querySelectorAll('[data-carousel]').forEach(carousel => {
   function goTo(index) {
     const previous = current;
     current = (index + slides.length) % slides.length;
+    carousel.querySelectorAll('.story-image-outgoing').forEach(image => image.remove());
+    slides.forEach(slide => slide.querySelector('.story-image-window > img').getAnimations().forEach(animation => animation.cancel()));
     track.style.transform = `translateX(-${current * 100}%)`;
+    if (previous !== current) {
+      const direction = index > previous ? 1 : -1;
+      const viewport = slides[current].querySelector('.story-image-window');
+      const incoming = viewport.querySelector('img');
+      const outgoing = slides[previous].querySelector('.story-image-window > img').cloneNode(true);
+      outgoing.classList.add('story-image-outgoing');
+      outgoing.alt = '';
+      outgoing.setAttribute('aria-hidden', 'true');
+      viewport.append(outgoing);
+      const motion = { duration: 650, easing: 'cubic-bezier(.4, 0, .2, 1)' };
+      incoming.animate([
+        { transform: `translateX(${direction * 100}%)` },
+        { transform: 'translateX(0)' }
+      ], motion);
+      const exit = outgoing.animate([
+        { transform: 'translateX(0)' },
+        { transform: `translateX(${-direction * 100}%)` }
+      ], motion);
+      exit.addEventListener('finish', () => outgoing.remove(), { once: true });
+    }
     const previousDot = dotButtons[previous];
     const currentDot = dotButtons[current];
     const compactDots = matchMedia('(max-width: 700px)').matches;
@@ -734,6 +763,25 @@ document.querySelectorAll('[data-carousel]').forEach(carousel => {
   goTo(0);
 });
 
+const storyColorFrames = new WeakMap();
+function syncStoryTextColor(item) {
+  const bounds = item.getBoundingClientRect();
+  const fill = parseFloat(getComputedStyle(item).getPropertyValue('--story-fill')) || 0;
+  const edge = bounds.left + item.clientLeft + item.clientWidth * fill / 100;
+  item.querySelectorAll('.story-choice-number, strong, small > span').forEach(text => {
+    text.style.setProperty('--story-text-edge', `${edge - text.getBoundingClientRect().left}px`);
+  });
+}
+function trackStoryTextColor(item) {
+  cancelAnimationFrame(storyColorFrames.get(item));
+  const until = performance.now() + 800;
+  const tick = () => {
+    syncStoryTextColor(item);
+    if (performance.now() < until) storyColorFrames.set(item, requestAnimationFrame(tick));
+  };
+  tick();
+}
+
 const storySelectionAnimations = new WeakMap();
 function animateStorySelection(item, active) {
   const subtitle = item.querySelector('small');
@@ -742,6 +790,7 @@ function animateStorySelection(item, active) {
   const fromOpacity = getComputedStyle(subtitle).opacity;
   (storySelectionAnimations.get(item) || []).forEach(animation => animation.cancel());
   item.classList.toggle('active', active);
+  trackStoryTextColor(item);
   const toHeight = item.getBoundingClientRect().height;
   const toSubtitleHeight = subtitle.getBoundingClientRect().height;
   const options = { duration: 700, easing: 'cubic-bezier(.4, 0, .2, 1)', fill: 'both' };
@@ -758,6 +807,8 @@ function animateStorySelection(item, active) {
 
 const storyRepoLink = document.getElementById('story-repo-link');
 document.querySelectorAll('[data-story-choice]').forEach(choice => {
+  new ResizeObserver(() => syncStoryTextColor(choice)).observe(choice);
+  syncStoryTextColor(choice);
   choice.addEventListener('click', () => {
     document.querySelectorAll('[data-story-choice]').forEach(item => {
       const active = item === choice;
