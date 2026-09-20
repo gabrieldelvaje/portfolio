@@ -103,3 +103,26 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
   .piracicaba-workspace .story-hub { grid-template-columns: 1fr; }
   .piracicaba-workspace .marriage-story .story-slide > img { aspect-ratio: 4 / 5; }
 }
+
+/* Only the selected story reveals its subtitle. */
+.piracicaba-workspace .story-choice {
+  grid-template-columns: 34px minmax(0, 1fr);
+}
+.piracicaba-workspace .story-choice > b {
+  display: none;
+}
+.piracicaba-workspace .story-choice small {
+  display: none;
+}
+.piracicaba-workspace .story-choice.active small {
+  display: block;
+}
+@media (max-width: 700px) {
+  .piracicaba-workspace .story-choice {
+    grid-template-columns: 22px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .piracicaba-workspace .commerce-story .story-slide > img { aspect-ratio: 4 / 5; }
+}
