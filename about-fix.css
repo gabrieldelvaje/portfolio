@@ -4673,3 +4673,189 @@ body.resume-active .skill-icons {
   pointer-events: none;
   transition: none;
 }
+
+/* Work previews and descriptions share one softly outlined card. */
+body.work-active .work-page .project-card-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid #deddda;
+  border-radius: 36px;
+  background: #e8e7e4;
+}
+body.work-active .work-page .project-card .project-visual {
+  flex: none;
+  margin: 0 0 18px;
+  border-radius: 26px;
+  overflow: hidden;
+}
+body.work-active .work-page .project-title-row {
+  margin: 0 12px 12px;
+}
+body.work-active .work-page .project-card .project-title-row h2 {
+  font-weight: 400;
+  line-height: 1.18;
+  padding: 0;
+}
+body.work-active .work-page .project-card p {
+  margin: 0 12px 14px;
+  padding: 0;
+  min-height: 0;
+  line-height: 1.45;
+}
+body.work-active .work-page .project-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: auto 12px 8px;
+}
+body.work-active .work-page .project-card-footer .project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+body.work-active .work-page .project-card-footer .project-tags span {
+  padding: 3px 8px;
+  font-size: 10px;
+  line-height: 1.1;
+  border-color: color-mix(in srgb, var(--ink) 45%, transparent);
+}
+body.work-active .work-page .project-card-footer .project-open-cue {
+  position: static;
+  margin-left: auto;
+  flex: none;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow: none;
+  opacity: 1;
+  transform: none;
+}
+body.work-active .work-page .project-open-cue b {
+  font-size: 23px;
+  line-height: .7;
+  font-weight: 400;
+}
+[data-theme="dark"] body.work-active .work-page .project-card-link {
+  background: #302c2d;
+  border-color: #464142;
+}
+@media (hover: hover) and (pointer: fine) {
+  body.work-active .work-page .project-card-footer .project-open-cue {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  body.work-active .work-page .project-card-link:hover .project-open-cue,
+  body.work-active .work-page .project-card-link:focus-visible .project-open-cue {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 600px) {
+  body.work-active .work-page .project-card-link { padding: 12px; border-radius: 30px; }
+  body.work-active .work-page .project-card .project-visual { border-radius: 22px; }
+  body.work-active .work-page .project-title-row,
+  body.work-active .work-page .project-card p { margin-inline: 8px; }
+  body.work-active .work-page .project-card-footer { margin-inline: 8px; }
+}
+
+/* Fit the preview to its artwork and keep the card footer compact. */
+body.work-active .work-page .project-card .project-visual {
+  aspect-ratio: 565 / 294;
+  margin-bottom: 14px;
+}
+body.work-active .work-page .sugar-chatbot-window,
+body.work-active .work-page .revenue-dashboard,
+body.work-active .work-page .music-dashboard {
+  height: 100%;
+}
+body.work-active .work-page .project-card-footer {
+  flex-wrap: nowrap;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+body.work-active .work-page .project-card-footer .project-tags {
+  width: auto;
+  min-width: 0;
+}
+body.work-active .work-page .project-card-link {
+  height: auto;
+  padding-bottom: 14px;
+}
+
+/* Reserve the tabs' overhang inside the Music thumbnail. */
+body.work-active .work-page .project-card .music-farming-preview {
+  overflow: visible;
+  background: transparent;
+}
+body.work-active .work-page .music-farming-preview .music-dashboard {
+  height: 93%;
+  align-self: end;
+}
+
+/* Preview outlines share the outer card's border color in each theme. */
+body.work-active .work-page .project-card-link {
+  --work-card-border: #deddda;
+  border-color: var(--work-card-border);
+}
+[data-theme="dark"] body.work-active .work-page .project-card-link {
+  --work-card-border: #464142;
+}
+body.work-active .work-page .sugar-chatbot-window,
+body.work-active .work-page .revenue-dashboard,
+body.work-active .work-page .music-dashboard-grid,
+body.work-active .work-page .piracicaba-deck .deck-card-front,
+body.work-active .work-page .music-dashboard-tabs i.is-active {
+  border-color: var(--work-card-border);
+  border-width: 1px;
+}
+
+/* One outline per thumbnail; its surface follows the same rounded edge. */
+body.work-active .work-page .project-card .project-visual {
+  background: transparent;
+  border: 0;
+}
+body.work-active .work-page .sugar-chatbot-window,
+body.work-active .work-page .revenue-dashboard,
+body.work-active .work-page .piracicaba-deck .deck-card-front {
+  box-sizing: border-box;
+  border: 1px solid var(--work-card-border);
+  border-radius: 26px;
+  overflow: hidden;
+}
+body.work-active .work-page .revenue-main {
+  border: 0;
+  border-radius: 0;
+}
+body.work-active .work-page .music-dashboard-grid {
+  border-radius: 26px;
+}
+@media (max-width: 600px) {
+  body.work-active .work-page .sugar-chatbot-window,
+  body.work-active .work-page .revenue-dashboard,
+  body.work-active .work-page .piracicaba-deck .deck-card-front,
+  body.work-active .work-page .music-dashboard-grid {
+    border-radius: 22px;
+  }
+}
+
+/* Equal grid gutters; each card supplies its own outline on mobile. */
+body.work-active .work-page .project-grid {
+  gap: 24px;
+  align-items: start;
+}
+body.work-active .work-page .project-card,
+body.work-active .work-page .project-card:not(.filtered) ~ .project-card:not(.filtered) {
+  margin: 0;
+  padding-top: 0;
+  border-top: 0;
+}

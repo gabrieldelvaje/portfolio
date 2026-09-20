@@ -734,12 +734,34 @@ document.querySelectorAll('[data-carousel]').forEach(carousel => {
   goTo(0);
 });
 
+const storySelectionAnimations = new WeakMap();
+function animateStorySelection(item, active) {
+  const subtitle = item.querySelector('small');
+  const fromHeight = item.getBoundingClientRect().height;
+  const fromSubtitleHeight = subtitle.getBoundingClientRect().height;
+  const fromOpacity = getComputedStyle(subtitle).opacity;
+  (storySelectionAnimations.get(item) || []).forEach(animation => animation.cancel());
+  item.classList.toggle('active', active);
+  const toHeight = item.getBoundingClientRect().height;
+  const toSubtitleHeight = subtitle.getBoundingClientRect().height;
+  const options = { duration: 700, easing: 'cubic-bezier(.4, 0, .2, 1)', fill: 'both' };
+  const animations = [
+    item.animate([{ height: `${fromHeight}px` }, { height: `${toHeight}px` }], options),
+    subtitle.animate([
+      { height: `${fromSubtitleHeight}px`, opacity: fromOpacity },
+      { height: `${toSubtitleHeight}px`, opacity: active ? 1 : 0 }
+    ], options)
+  ];
+  storySelectionAnimations.set(item, animations);
+  animations.forEach(animation => animation.addEventListener('finish', () => animation.cancel(), { once: true }));
+}
+
 const storyRepoLink = document.getElementById('story-repo-link');
 document.querySelectorAll('[data-story-choice]').forEach(choice => {
   choice.addEventListener('click', () => {
     document.querySelectorAll('[data-story-choice]').forEach(item => {
       const active = item === choice;
-      item.classList.toggle('active', active);
+      animateStorySelection(item, active);
       if (active) item.setAttribute('aria-current', 'true');
       else item.removeAttribute('aria-current');
     });

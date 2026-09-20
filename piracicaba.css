@@ -126,3 +126,108 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 @media (max-width: 700px) {
   .piracicaba-workspace .commerce-story .story-slide > img { aspect-ratio: 4 / 5; }
 }
+
+/* Reveal subtitles in normal flow so the whole selector expands smoothly. */
+.piracicaba-workspace .story-choice {
+  transition: transform .3s ease, box-shadow .3s ease, background-color .35s ease, color .35s ease, border-color .35s ease;
+}
+.piracicaba-workspace .story-choice small,
+.piracicaba-workspace .story-choice.active small {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows .45s cubic-bezier(.22,1,.36,1), opacity .3s ease, visibility .45s;
+}
+.piracicaba-workspace .story-choice small > span {
+  min-height: 0;
+  overflow: hidden;
+}
+.piracicaba-workspace .story-choice.active small {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+.piracicaba-workspace .story-choice small > span::before {
+  content: '';
+  display: block;
+  height: 5px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .piracicaba-workspace .story-choice:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 16px rgba(0,0,0,.1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .piracicaba-workspace .story-choice,
+  .piracicaba-workspace .story-choice small { transition: none; }
+  .piracicaba-workspace .story-choice:hover { transform: none; }
+}
+
+/* Selection fills from left to right, while hover only lifts the button. */
+.piracicaba-workspace .story-choice,
+.piracicaba-workspace .story-choice:hover,
+.piracicaba-workspace .story-choice.active {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+}
+.piracicaba-workspace .story-choice::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--blue);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path .5s cubic-bezier(.22,1,.36,1);
+  pointer-events: none;
+}
+.piracicaba-workspace .story-choice.active::before {
+  clip-path: inset(0 0 0 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .piracicaba-workspace .story-choice::before { transition: none; }
+}
+
+/* Measured height animation uses the same timing as the GitHub capsule. */
+.piracicaba-workspace .story-choice { box-sizing: border-box; }
+.piracicaba-workspace .story-choice small,
+.piracicaba-workspace .story-choice.active small {
+  display: block;
+  visibility: visible;
+  overflow: hidden;
+  height: 0;
+  opacity: 0;
+  transition: none;
+}
+.piracicaba-workspace .story-choice.active small {
+  height: auto;
+  opacity: 1;
+}
+.piracicaba-workspace .story-choice small > span { display: block; }
+
+/* Keep the requested selection motion enabled and synchronized. */
+.piracicaba-workspace .story-choice::before {
+  transition: clip-path .7s cubic-bezier(.4,0,.2,1);
+}
+
+/* Story selectors share the neutral surface and outline of Work cards. */
+.piracicaba-workspace .story-choice,
+.piracicaba-workspace .story-choice:hover {
+  background: #e8e7e4;
+  border-color: #deddda;
+}
+[data-theme="dark"] .piracicaba-workspace .story-choice,
+[data-theme="dark"] .piracicaba-workspace .story-choice:hover {
+  background: #302c2d;
+  border-color: #464142;
+}
+.piracicaba-workspace .story-choice.active,
+[data-theme="dark"] .piracicaba-workspace .story-choice.active {
+  border-color: var(--blue);
+}
