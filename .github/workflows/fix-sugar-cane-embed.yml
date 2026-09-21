@@ -1,0 +1,32 @@
+name: Fix Sugar Cane Intelligence embedded site
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-sugar-cane-embed.yml'
+permissions:
+  contents: write
+jobs:
+  fix-embed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Replace old Streamlit embed with GitHub Pages site
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          text = p.read_text(encoding='utf-8')
+          old = '<iframe class="project-embed" title="Sugar Cane Intelligence" src="https://chatbotpy-fsz2nah8pp5z8zcgfpzrdm.streamlit.app/?embed=true"'
+          new = '<iframe class="project-embed" title="Sugar Cane Intelligence" src="https://gabrieldelvaje.github.io/sugar-cane-intelligence/"'
+          assert text.count(old) == 1, f'Expected exactly one old Sugar Cane Intelligence embed, got {text.count(old)}'
+          text = text.replace(old, new, 1)
+          assert 'chatbotpy-fsz2nah8pp5z8zcgfpzrdm.streamlit.app' not in text, 'Old Streamlit URL still appears in index.html'
+          p.write_text(text, encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'fix: embed current Sugar Cane Intelligence site instead of old Streamlit app'
+          git push
