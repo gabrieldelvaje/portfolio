@@ -4898,3 +4898,33 @@ body.stacked-pages .resume-page {
   padding-bottom: 16px;
 }
 body.stacked-pages .stacked-section-title { margin-bottom: 20px; }
+
+body.stacked-pages .mobile-about-title { display: none; }
+@media (max-width: 600px) {
+  body.stacked-pages .page:not(.project-detail-page) {
+    min-height: 0;
+    height: auto;
+    margin-block: 0;
+    padding-block: 16px;
+  }
+  body.stacked-pages .about-page { padding-top: 68px; }
+  body.stacked-pages .about-page .mobile-about-title {
+    display: block;
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+  body.stacked-pages .stacked-section-title { margin-bottom: 16px; }
+  body.stacked-pages .work-page .project-filters {
+    position: sticky;
+    top: calc(14px + env(safe-area-inset-top));
+    left: auto;
+    right: auto;
+    z-index: 99;
+    width: calc(100vw - 136px);
+    height: 44px;
+    margin: 0 0 16px;
+    transform: none;
+  }
+  body.stacked-pages .work-page { overflow: visible; }
+  body.stacked-pages > .footer { margin-top: 16px; }
+}
