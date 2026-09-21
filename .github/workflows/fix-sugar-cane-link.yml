@@ -1,0 +1,30 @@
+name: Fix Sugar Cane Intelligence link
+on:
+  push:
+    paths:
+      - .github/workflows/fix-sugar-cane-link.yml
+permissions:
+  contents: write
+jobs:
+  update-link:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Update project card destination
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('index.html')
+          html = path.read_text(encoding='utf-8')
+          old = 'href="#sugar-cane-intelligence" aria-label="Open Sugar Cane Intelligence application"'
+          new = 'href="https://gabrieldelvaje.github.io/sugar-cane-intelligence/" target="_blank" rel="noopener noreferrer" aria-label="Open Sugar Cane Intelligence application"'
+          assert html.count(old) == 1, f'Expected one Sugar Cane card link, found {html.count(old)}'
+          path.write_text(html.replace(old, new, 1), encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'fix: open Sugar Cane Intelligence external website'
+          git push
