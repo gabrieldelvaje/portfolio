@@ -64,6 +64,7 @@ toggles.forEach(toggle => {
 
 const routeOrder = ['about', 'work', 'resume'];
 let currentPrimaryRoute = null;
+let mobileNavHoldUntil = 0;
 let sectionNavigationFrame = 0;
 let sectionNavigationRunning = false;
 function stopSectionNavigation() {
@@ -100,6 +101,7 @@ function primaryRouteFor(route, projectOpen) {
 
 function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction, scrollOnly = false) {
   const returningFromProject = document.body.classList.contains('project-open') && !projectOpen;
+  if (returningFromProject) { document.body.classList.remove('mobile-nav-hidden'); mobileNavHoldUntil = performance.now() + 400; }
   root.dataset.routeDirection = direction;
   pages.forEach(page => page.hidden = projectOpen ? page.dataset.page !== validRoute : !routeOrder.includes(page.dataset.page));
   links.forEach(link => {
@@ -122,7 +124,11 @@ function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction
     const offset = desktop ? header.getBoundingClientRect().height + 20 : 16;
     const target = validRoute === 'resume' ? activePage.querySelector('.resume-layout')
       : validRoute === 'work' ? activePage.querySelector('.project-filters') : activePage;
-    const top = projectOpen ? 0 : (target || activePage).getBoundingClientRect().top + scrollY - offset;
+    const heading = activePage.querySelector('.stacked-section-title');
+    const targetTop = validRoute === 'work' && heading
+      ? heading.getBoundingClientRect().bottom + scrollY + parseFloat(getComputedStyle(heading).marginBottom)
+      : (target || activePage).getBoundingClientRect().top + scrollY;
+    const top = projectOpen ? 0 : targetTop - offset;
     scrollToSection(top, currentPrimaryRoute !== null && !projectOpen && !returningFromProject);
   }
 }
@@ -341,6 +347,21 @@ document.addEventListener('pointerdown', event => {
 addEventListener('resize', updateFilterSlider);
 addEventListener('hashchange', () => requestAnimationFrame(updateFilterSlider));
 requestAnimationFrame(updateFilterSlider);
+if (filterBar) new ResizeObserver(updateFilterSlider).observe(filterBar);
+let filterScrollFrame = 0;
+let mobileNavLastY = scrollY;
+addEventListener('scroll', () => {
+  if (!filterScrollFrame) filterScrollFrame = requestAnimationFrame(() => {
+    filterScrollFrame = 0;
+    trackFilterText();
+  });
+  const y = scrollY;
+  if (matchMedia('(max-width: 600px)').matches && !document.body.classList.contains('project-open')) {
+    if (performance.now() < mobileNavHoldUntil || y < 20) document.body.classList.remove('mobile-nav-hidden');
+    else if (Math.abs(y - mobileNavLastY) > 6) document.body.classList.toggle('mobile-nav-hidden', y > mobileNavLastY);
+  }
+  if (Math.abs(y - mobileNavLastY) > 6) mobileNavLastY = y;
+}, { passive: true });
 
 const projectInfoDialog = document.querySelector('#project-info-dialog');
 const projectInfoTitle = document.querySelector('#project-info-title');

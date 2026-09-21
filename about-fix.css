@@ -4943,3 +4943,20 @@ body.stacked-pages .mobile-about-title { display: none; }
     -webkit-tap-highlight-color: transparent;
   }
 }
+
+/* Filter labels stay readable when returning from a project. */
+.work-page .project-filters button[data-filter] .filter-label-base { color: var(--ink); }
+@media (max-width: 600px) {
+  body .site-header {
+    z-index: 200;
+    translate: 0 0;
+    transition: translate .35s cubic-bezier(.22,1,.36,1), opacity .25s ease;
+  }
+  body.mobile-nav-hidden .site-header,
+  body.project-open .site-header {
+    translate: 0 calc(100% + 40px + env(safe-area-inset-bottom));
+    opacity: 0;
+    pointer-events: none;
+  }
+  body.project-open .site-header { visibility: hidden; }
+}
