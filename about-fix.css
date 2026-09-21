@@ -4928,3 +4928,18 @@ body.stacked-pages .mobile-about-title { display: none; }
   body.stacked-pages .work-page { overflow: visible; }
   body.stacked-pages > .footer { margin-top: 16px; }
 }
+
+/* Touch close control: keep the X without a circular border or focus ring. */
+@media (max-width: 900px), (hover: none) {
+  .project-info-dialog .project-info-close,
+  .project-info-dialog .project-info-close:hover,
+  .project-info-dialog .project-info-close:focus,
+  .project-info-dialog .project-info-close:focus-visible,
+  .project-info-dialog .project-info-close:active {
+    border: 0;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    -webkit-tap-highlight-color: transparent;
+  }
+}

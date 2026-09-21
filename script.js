@@ -99,6 +99,7 @@ function primaryRouteFor(route, projectOpen) {
 }
 
 function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction, scrollOnly = false) {
+  const returningFromProject = document.body.classList.contains('project-open') && !projectOpen;
   root.dataset.routeDirection = direction;
   pages.forEach(page => page.hidden = projectOpen ? page.dataset.page !== validRoute : !routeOrder.includes(page.dataset.page));
   links.forEach(link => {
@@ -122,7 +123,7 @@ function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction
     const target = validRoute === 'resume' ? activePage.querySelector('.resume-layout')
       : validRoute === 'work' ? activePage.querySelector('.project-filters') : activePage;
     const top = projectOpen ? 0 : (target || activePage).getBoundingClientRect().top + scrollY - offset;
-    scrollToSection(top, currentPrimaryRoute !== null && !projectOpen);
+    scrollToSection(top, currentPrimaryRoute !== null && !projectOpen && !returningFromProject);
   }
 }
 
