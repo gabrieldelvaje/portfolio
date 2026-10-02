@@ -1,0 +1,106 @@
+/* Water series preview: all tokens and selectors are scoped to this card. */
+.water-series-card {
+  --wp-panel: #f3f3f1;
+  --wp-pill: #e8e7e4;
+  --wp-line: #bdbdb9;
+  --wp-blue: var(--blue, #0736fe);
+}
+[data-theme="dark"] .water-series-card {
+  --wp-panel: #231f20;
+  --wp-pill: #302c2d;
+  --wp-line: #696265;
+}
+.work-page .water-series-card .water-series-preview {
+  display: block;
+  height: auto;
+  padding: 0;
+  aspect-ratio: 565 / 294;
+}
+.water-series-card .wp-view {
+  position: relative;
+  overflow: hidden;
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: 565 / 294;
+  border: 1px solid var(--work-card-border, #deddda);
+  border-radius: 26px;
+  background: var(--wp-panel);
+}
+.water-series-card .wp-nav {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
+  height: 9cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4cqw;
+  padding: 0 6cqw;
+  border-bottom: 1px solid var(--wp-line);
+  background: var(--wp-panel);
+}
+.water-series-card .wp-nav i {
+  display: block;
+  height: 2cqw;
+  width: 9cqw;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--wp-line) 60%, transparent);
+}
+.water-series-card .wp-nav .wp-nav__1 { background: var(--wp-blue); }
+.water-series-card .wp-page {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 200%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.water-series-card .wp-sec { padding: 12cqw 6cqw 4cqw; min-height: 0; }
+.water-series-card .wp-sec--pipe { background: var(--wp-panel); display: grid; align-items: center; }
+.water-series-card .wp-pipe { width: 100%; height: auto; overflow: visible; }
+.water-series-card .wp-pipe__tube { fill: none; stroke: var(--wp-blue); stroke-width: 4.2; stroke-linejoin: round; }
+.water-series-card .wp-pipe__joint { fill: var(--wp-blue); stroke: var(--wp-panel); stroke-width: .6; }
+.water-series-card .wp-sec--timeline {
+  background: var(--wp-panel);
+  border-top: 1px solid color-mix(in srgb, var(--wp-line) 45%, transparent);
+}
+.water-series-card .wp-tl {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
+  column-gap: 2.4cqw;
+  row-gap: 3.4cqw;
+}
+.water-series-card .wp-tl__line { position: absolute; left: 0; right: 0; top: 50%; border-top: 1px solid var(--wp-blue); }
+.water-series-card .wp-card { position: relative; padding: 1.4cqw; border-radius: 2cqw; background: var(--wp-pill); min-height: 0; }
+.water-series-card .wp-card--1 { grid-column: 1; grid-row: 1; align-self: end; }
+.water-series-card .wp-card--2 { grid-column: 2; grid-row: 2; align-self: start; }
+.water-series-card .wp-card--3 { grid-column: 3; grid-row: 1; align-self: end; }
+.water-series-card .wp-card::after { content: ""; position: absolute; left: 50%; width: 1.8cqw; height: 1.8cqw; margin-left: -.9cqw; border-radius: 50%; background: var(--wp-blue); }
+.water-series-card .wp-card--1::after, .water-series-card .wp-card--3::after { bottom: -2.6cqw; }
+.water-series-card .wp-card--2::after { top: -2.6cqw; }
+.water-series-card .wp-card__img { display: block; height: 5cqw; border-radius: 1.4cqw; background: color-mix(in srgb, var(--wp-line) 60%, transparent); margin-bottom: 1.4cqw; }
+.water-series-card .wp-card__year { display: block; width: 36%; height: 1.5cqw; border-radius: 99px; background: color-mix(in srgb, var(--wp-line) 85%, transparent); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .water-series-card:is(:hover, :focus-within, .is-playing) .wp-page { animation: wp-scroll 7s infinite; }
+  .water-series-card:is(:hover, :focus-within, .is-playing) .wp-nav__1 { animation: wp-nav-off 7s infinite; }
+  .water-series-card:is(:hover, :focus-within, .is-playing) .wp-nav__2 { animation: wp-nav-on 7s infinite; }
+}
+@keyframes wp-scroll {
+  0%, 22% { transform: translateY(0); animation-timing-function: cubic-bezier(.65, 0, .35, 1); }
+  36%, 72% { transform: translateY(-50%); animation-timing-function: cubic-bezier(.65, 0, .35, 1); }
+  86%, 100% { transform: translateY(0); }
+}
+@keyframes wp-nav-off {
+  0%, 30% { background: var(--wp-blue); }
+  38%, 80% { background: color-mix(in srgb, var(--wp-line) 60%, transparent); }
+  90%, 100% { background: var(--wp-blue); }
+}
+@keyframes wp-nav-on {
+  0%, 30% { background: color-mix(in srgb, var(--wp-line) 60%, transparent); }
+  38%, 80% { background: var(--wp-blue); }
+  90%, 100% { background: color-mix(in srgb, var(--wp-line) 60%, transparent); }
+}
+@media (max-width: 600px) { .water-series-card .wp-view { border-radius: 22px; } }
