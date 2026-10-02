@@ -83,24 +83,5 @@
 .water-series-card .wp-card__img { display: block; height: 5cqw; border-radius: 1.4cqw; background: color-mix(in srgb, var(--wp-line) 60%, transparent); margin-bottom: 1.4cqw; }
 .water-series-card .wp-card__year { display: block; width: 36%; height: 1.5cqw; border-radius: 99px; background: color-mix(in srgb, var(--wp-line) 85%, transparent); }
 
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .water-series-card:hover .wp-page { animation: wp-scroll 7s infinite; }
-  .water-series-card:hover .wp-nav__1 { animation: wp-nav-off 7s infinite; }
-  .water-series-card:hover .wp-nav__2 { animation: wp-nav-on 7s infinite; }
-}
-@keyframes wp-scroll {
-  0%, 22% { transform: translateY(0); animation-timing-function: cubic-bezier(.65, 0, .35, 1); }
-  36%, 72% { transform: translateY(-50%); animation-timing-function: cubic-bezier(.65, 0, .35, 1); }
-  86%, 100% { transform: translateY(0); }
-}
-@keyframes wp-nav-off {
-  0%, 30% { background: var(--wp-blue); }
-  38%, 80% { background: color-mix(in srgb, var(--wp-line) 60%, transparent); }
-  90%, 100% { background: var(--wp-blue); }
-}
-@keyframes wp-nav-on {
-  0%, 30% { background: color-mix(in srgb, var(--wp-line) 60%, transparent); }
-  38%, 80% { background: var(--wp-blue); }
-  90%, 100% { background: color-mix(in srgb, var(--wp-line) 60%, transparent); }
-}
+/* Hover motion is driven by water-preview.js, like the other Work previews. */
 @media (max-width: 600px) { .water-series-card .wp-view { border-radius: 22px; } }
