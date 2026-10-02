@@ -12,8 +12,8 @@
     animations = [];
   }
 
-  function play(event) {
-    if (event.pointerType === 'touch' || animations.length) return;
+  function play() {
+    if (animations.length) return;
     const blue = getComputedStyle(firstTab).backgroundColor;
     const neutral = getComputedStyle(secondTab).backgroundColor;
     const timing = { duration: 2300, iterations: 1, easing: 'linear' };
@@ -42,4 +42,5 @@
   }
 
   card.addEventListener('pointerenter', play);
+  card.addEventListener('focusin', play);
 })();
