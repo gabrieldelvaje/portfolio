@@ -1,13 +1,15 @@
 /* Water series preview: all tokens and selectors are scoped to this card. */
 .water-series-card {
   --wp-panel: #f3f3f1;
-  --wp-pill: #e8e7e4;
+  --wp-pill: #e8e6e3;
+  --wp-card-border: #d9d9d9;
   --wp-line: #bdbdb9;
   --wp-blue: var(--blue, #0736fe);
 }
 [data-theme="dark"] .water-series-card {
   --wp-panel: #231f20;
-  --wp-pill: #302c2d;
+  --wp-pill: #2d292a;
+  --wp-card-border: #484344;
   --wp-line: #696265;
 }
 .work-page .water-series-card .water-series-preview {
@@ -73,7 +75,7 @@
   row-gap: 3.4cqw;
 }
 .water-series-card .wp-tl__line { position: absolute; left: 0; right: 0; top: 50%; border-top: 1px solid var(--wp-blue); }
-.water-series-card .wp-card { position: relative; padding: 1.4cqw; border-radius: 2cqw; background: var(--wp-pill); min-height: 0; }
+.water-series-card .wp-card { position: relative; padding: 1.4cqw; border-radius: 2cqw; background: var(--wp-pill); border: 1px solid var(--wp-card-border); min-height: 0; }
 .water-series-card .wp-card--1 { grid-column: 1; grid-row: 1; align-self: end; }
 .water-series-card .wp-card--2 { grid-column: 2; grid-row: 2; align-self: start; }
 .water-series-card .wp-card--3 { grid-column: 3; grid-row: 1; align-self: end; }
