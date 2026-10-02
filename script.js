@@ -590,6 +590,50 @@ document.querySelectorAll('.piracicaba-preview').forEach(preview => {
   preview.addEventListener('focusin', playPiracicabaCarousel);
 });
 
+document.querySelectorAll('.water-series-preview').forEach(preview => {
+  const page = preview.querySelector('.wp-page');
+  const firstTab = preview.querySelector('.wp-nav__1');
+  const secondTab = preview.querySelector('.wp-nav__2');
+  let animations = [];
+
+  function reset() {
+    animations.forEach(animation => animation.cancel());
+    animations = [];
+  }
+
+  function play() {
+    if (animations.length) return;
+    const blue = getComputedStyle(firstTab).backgroundColor;
+    const neutral = getComputedStyle(secondTab).backgroundColor;
+    const timing = { duration: 2300, iterations: 1, easing: 'linear' };
+    const ease = 'cubic-bezier(.65, 0, .35, 1)';
+    animations = [
+      page.animate([
+        { transform: 'translateY(0)', offset: 0, easing: ease },
+        { transform: 'translateY(-50%)', offset: .35 },
+        { transform: 'translateY(-50%)', offset: .65, easing: ease },
+        { transform: 'translateY(0)', offset: 1 }
+      ], timing),
+      firstTab.animate([
+        { backgroundColor: blue, offset: 0 },
+        { backgroundColor: neutral, offset: .35 },
+        { backgroundColor: neutral, offset: .65 },
+        { backgroundColor: blue, offset: 1 }
+      ], timing),
+      secondTab.animate([
+        { backgroundColor: neutral, offset: 0 },
+        { backgroundColor: blue, offset: .35 },
+        { backgroundColor: blue, offset: .65 },
+        { backgroundColor: neutral, offset: 1 }
+      ], timing)
+    ];
+    animations[0].addEventListener('finish', reset, { once: true });
+  }
+
+  preview.addEventListener('pointerenter', play);
+  preview.addEventListener('focusin', play);
+});
+
 document.querySelectorAll('.music-farming-preview').forEach(preview => {
   const tabs = [...preview.querySelectorAll('.music-dashboard-tabs i')];
   const chart = preview.querySelector('.music-chart');
