@@ -16,7 +16,7 @@
     if (event.pointerType === 'touch' || animations.length) return;
     const blue = getComputedStyle(firstTab).backgroundColor;
     const neutral = getComputedStyle(secondTab).backgroundColor;
-    const timing = { duration: 3200, iterations: 1, easing: 'linear' };
+    const timing = { duration: 2000, iterations: 1, easing: 'linear' };
     const ease = 'cubic-bezier(.65, 0, .35, 1)';
     animations = [
       page.animate([
@@ -42,5 +42,4 @@
   }
 
   card.addEventListener('pointerenter', play);
-  card.addEventListener('pointerleave', reset);
 })();
