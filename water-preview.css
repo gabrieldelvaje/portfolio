@@ -83,10 +83,10 @@
 .water-series-card .wp-card__img { display: block; height: 5cqw; border-radius: 1.4cqw; background: color-mix(in srgb, var(--wp-line) 60%, transparent); margin-bottom: 1.4cqw; }
 .water-series-card .wp-card__year { display: block; width: 36%; height: 1.5cqw; border-radius: 99px; background: color-mix(in srgb, var(--wp-line) 85%, transparent); }
 
-@media (prefers-reduced-motion: no-preference) {
-  .water-series-card:is(:hover, :focus-within, .is-playing) .wp-page { animation: wp-scroll 7s infinite; }
-  .water-series-card:is(:hover, :focus-within, .is-playing) .wp-nav__1 { animation: wp-nav-off 7s infinite; }
-  .water-series-card:is(:hover, :focus-within, .is-playing) .wp-nav__2 { animation: wp-nav-on 7s infinite; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .water-series-card:hover .wp-page { animation: wp-scroll 7s infinite; }
+  .water-series-card:hover .wp-nav__1 { animation: wp-nav-off 7s infinite; }
+  .water-series-card:hover .wp-nav__2 { animation: wp-nav-on 7s infinite; }
 }
 @keyframes wp-scroll {
   0%, 22% { transform: translateY(0); animation-timing-function: cubic-bezier(.65, 0, .35, 1); }
