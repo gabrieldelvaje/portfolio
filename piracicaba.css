@@ -414,3 +414,8 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
     transition: none;
   }
 }
+
+/* Preserve the portrait artwork in the Street Names carousel on mobile. */
+@media (max-width: 700px) {
+  .piracicaba-workspace .street-story .story-slide > .story-image-window { aspect-ratio: 4 / 5; }
+}
