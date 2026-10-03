@@ -4,6 +4,7 @@
   --wp-pill: #e8e6e3;
   --wp-card-border: #d9d9d9;
   --wp-line: #bdbdb9;
+  --wp-timeline: #d2d0cd;
   --wp-blue: var(--blue, #0736fe);
 }
 [data-theme="dark"] .water-series-card {
@@ -11,6 +12,7 @@
   --wp-pill: #2d292a;
   --wp-card-border: #484344;
   --wp-line: #696265;
+  --wp-timeline: #1d1a1b;
 }
 .work-page .water-series-card .water-series-preview {
   display: block;
@@ -62,7 +64,7 @@
 .water-series-card .wp-pipe__tube { fill: none; stroke: var(--wp-blue); stroke-width: 4.2; stroke-linejoin: round; }
 .water-series-card .wp-pipe__joint { fill: var(--wp-blue); stroke: var(--wp-panel); stroke-width: .6; }
 .water-series-card .wp-sec--timeline {
-  background: var(--wp-panel);
+  background: var(--wp-timeline);
   border-top: 1px solid color-mix(in srgb, var(--wp-line) 45%, transparent);
 }
 .water-series-card .wp-tl {
