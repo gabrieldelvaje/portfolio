@@ -5115,3 +5115,53 @@ body.stacked-pages .mobile-about-title { display: none; }
     gap: 8px;
   }
 }
+
+
+/* Match the expand launcher to the Back to Work pill interaction. */
+@media (min-width: 601px) and (min-height: 501px), (min-width: 901px) {
+  body.project-open .project-mobile-controls .project-expand-link {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 6px;
+    overflow: hidden;
+    transition:
+      width .52s cubic-bezier(.22, 1, .36, 1),
+      gap .52s cubic-bezier(.22, 1, .36, 1),
+      color .2s ease,
+      background-color .2s ease,
+      border-color .2s ease;
+  }
+
+  body.project-open .project-mobile-controls .project-expand-link > span {
+    display: block;
+    max-width: 0;
+    opacity: 0;
+    transform: none;
+    font-size: 12px;
+    line-height: 1;
+    transition:
+      max-width .52s cubic-bezier(.22, 1, .36, 1),
+      opacity .25s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    body.project-open .project-mobile-controls .project-expand-link:hover,
+    body.project-open .project-mobile-controls .project-expand-link:focus-visible {
+      width: 172px;
+      gap: 9px;
+      color: #fff;
+      border-color: var(--blue);
+      background: var(--blue);
+      outline: none;
+    }
+
+    body.project-open .project-mobile-controls .project-expand-link:hover > span,
+    body.project-open .project-mobile-controls .project-expand-link:focus-visible > span {
+      max-width: 126px;
+      opacity: 1;
+    }
+  }
+}
