@@ -703,17 +703,19 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
   resetMusicRace();
 });
 
-document.querySelectorAll('.project-repo-link, .project-back').forEach(link => {
+document.querySelectorAll('.project-repo-link, .project-back, .project-expand-link').forEach(link => {
   const isBackLink = link.classList.contains('project-back');
+  const isExpandLink = link.classList.contains('project-expand-link');
+  const isCompactControl = isBackLink || isExpandLink;
   const label = link.querySelector(isBackLink ? '.project-back-label' : 'span');
-  const collapsedWidth = isBackLink ? 32 : 42;
+  const collapsedWidth = isCompactControl ? 32 : 42;
   if (!label) return;
 
   const labelStyle = getComputedStyle(label);
   const measureContext = document.createElement('canvas').getContext('2d');
   measureContext.font = `${labelStyle.fontWeight} ${labelStyle.fontSize} ${labelStyle.fontFamily}`;
   let labelWidth = measureContext.measureText(label.textContent.trim()).width;
-  let expandedWidth = Math.ceil((isBackLink ? 20 + 18 : 18 + 28) + 9 + labelWidth);
+  let expandedWidth = Math.ceil((isCompactControl ? 20 + 18 : 18 + 28) + 9 + labelWidth);
   link.style.setProperty('--repo-expanded-width', `${expandedWidth}px`);
   link.style.width = `${collapsedWidth}px`;
   link.style.gap = '0px';
@@ -734,8 +736,8 @@ document.querySelectorAll('.project-repo-link, .project-back').forEach(link => {
       const currentLabelStyle = getComputedStyle(label);
       measureContext.font = `${currentLabelStyle.fontWeight} ${currentLabelStyle.fontSize} ${currentLabelStyle.fontFamily}`;
       labelWidth = Math.ceil(measureContext.measureText(label.textContent.trim()).width);
-      const visibleLabelWidth = isBackLink ? labelWidth : Math.max(labelWidth, label.scrollWidth);
-      expandedWidth = Math.ceil((isBackLink ? 20 + 18 : 18 + 28) + 9 + visibleLabelWidth);
+      const visibleLabelWidth = isCompactControl ? labelWidth : Math.max(labelWidth, label.scrollWidth);
+      expandedWidth = Math.ceil((isCompactControl ? 20 + 18 : 18 + 28) + 9 + visibleLabelWidth);
       link.style.setProperty('--repo-expanded-width', `${expandedWidth}px`);
     }
     const to = expanded ? expandedWidth : collapsedWidth;
@@ -759,7 +761,7 @@ document.querySelectorAll('.project-repo-link, .project-back').forEach(link => {
         transform: getComputedStyle(label).transform
       },
       {
-        maxWidth: expanded ? `${Math.ceil(isBackLink ? labelWidth : Math.max(labelWidth, label.scrollWidth))}px` : '0px',
+        maxWidth: expanded ? `${Math.ceil(isCompactControl ? labelWidth : Math.max(labelWidth, label.scrollWidth))}px` : '0px',
         opacity: expanded ? 1 : 0,
         transform: expanded ? 'translateX(0)' : 'translateX(5px)'
       }
@@ -777,7 +779,7 @@ document.querySelectorAll('.project-repo-link, .project-back').forEach(link => {
     }, { once: true });
 
     labelAnimation.addEventListener('finish', () => {
-      label.style.maxWidth = expanded ? `${Math.ceil(isBackLink ? labelWidth : Math.max(labelWidth, label.scrollWidth))}px` : '0px';
+      label.style.maxWidth = expanded ? `${Math.ceil(isCompactControl ? labelWidth : Math.max(labelWidth, label.scrollWidth))}px` : '0px';
       label.style.opacity = expanded ? '1' : '0';
       label.style.transform = expanded ? 'translateX(0)' : 'translateX(5px)';
       labelAnimation.cancel();
