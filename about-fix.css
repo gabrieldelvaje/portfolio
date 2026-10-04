@@ -5145,9 +5145,7 @@ body.stacked-pages .mobile-about-title { display: none; }
   }
 }
 
-
-
-/* Mobile: keep Back + Info together; float Expand independently. */
+/* Mobile: keep only Back + Info; hide Expand completely. */
 @media (max-width: 600px), (max-width: 900px) and (max-height: 500px) {
   body.project-open .project-mobile-controls {
     width: 100px;
@@ -5159,44 +5157,7 @@ body.stacked-pages .mobile-about-title { display: none; }
     width: 50px;
   }
 
-  body.project-open .project-mobile-controls .project-expand-link,
-  body.project-open .project-mobile-controls .project-expand-link:hover,
-  body.project-open .project-mobile-controls .project-expand-link:focus,
-  body.project-open .project-mobile-controls .project-expand-link:focus-visible,
-  body.project-open .project-mobile-controls .project-expand-link:active {
-    position: fixed;
-    z-index: 110;
-    right: calc(14px + env(safe-area-inset-right));
-    bottom: calc(14px + env(safe-area-inset-bottom));
-    left: auto;
-    top: auto;
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    flex: none;
-    display: grid;
-    place-items: center;
-    padding: 10px;
-    margin: 0;
-    gap: 0;
-    overflow: visible;
-    border: 0;
-    border-radius: 0;
-    color: var(--blue);
-    background: transparent;
-    box-shadow: none;
-    outline: none;
-    transform: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  body.project-open .project-mobile-controls .project-expand-link > span {
-    display: none;
-  }
-
-  body.project-open .project-mobile-controls .project-expand-icon {
-    width: 24px;
-    height: 24px;
-    flex: none;
+  body.project-open .project-mobile-controls .project-expand-link {
+    display: none !important;
   }
 }
