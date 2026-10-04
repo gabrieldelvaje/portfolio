@@ -5012,3 +5012,106 @@ body.stacked-pages .mobile-about-title { display: none; }
     min-height: 0;
   }
 }
+
+
+/* Full-screen launcher for embedded projects. */
+.project-expand-link {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  overflow: hidden;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  background: var(--bg);
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: width .5s cubic-bezier(.22,1,.36,1), gap .45s cubic-bezier(.22,1,.36,1), color .2s ease, border-color .2s ease, background-color .2s ease;
+}
+
+.project-expand-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  display: block;
+}
+
+.project-expand-link > span {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  transform: translateX(5px);
+  transition: max-width .5s cubic-bezier(.22,1,.36,1), opacity .24s ease, transform .45s cubic-bezier(.22,1,.36,1);
+}
+
+.project-detail-actions {
+  gap: 10px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-expand-link:hover,
+  .project-expand-link:focus-visible {
+    width: 148px;
+    gap: 8px;
+    color: #fff;
+    border-color: var(--blue);
+    background: var(--blue);
+    outline: none;
+  }
+
+  .project-expand-link:hover > span,
+  .project-expand-link:focus-visible > span {
+    max-width: 106px;
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 900px), (hover: none) {
+  .project-expand-link,
+  .project-expand-link:hover,
+  .project-expand-link:focus,
+  .project-expand-link:active {
+    width: 32px;
+    flex-basis: 32px;
+    gap: 0;
+  }
+
+  .project-expand-link > span {
+    display: none;
+  }
+
+  .project-expand-link:active {
+    color: #fff;
+    border-color: var(--blue);
+    background: var(--blue);
+  }
+}
+
+@media (max-width: 600px) {
+  body.project-open .project-expand-link {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+    padding: 10px;
+  }
+
+  body.project-open .project-expand-icon {
+    width: 20px;
+    height: 20px;
+    flex-basis: 20px;
+  }
+
+  body.project-open .project-detail-actions {
+    gap: 8px;
+  }
+}
