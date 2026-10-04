@@ -4960,3 +4960,55 @@ body.stacked-pages .mobile-about-title { display: none; }
   }
   body.project-open .site-header { visibility: hidden; }
 }
+
+
+/* Fit embedded project views exactly inside the viewport. */
+@media (min-width: 901px) {
+  body.project-open:has(.project-detail-page:not(.piracicaba-page):not([hidden])) {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  body.project-open:has(.project-detail-page:not(.piracicaba-page):not([hidden])) > main {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  body.project-open .project-detail-page:not(.piracicaba-page) {
+    height: calc(100dvh - 80px);
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  body.project-open .project-detail-page:not(.piracicaba-page) > .powerbi-embed,
+  body.project-open .project-detail-page:not(.piracicaba-page) > .project-embed {
+    height: 100%;
+    min-height: 0;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) and (min-height: 501px) {
+  body.project-open:has(.project-detail-page:not(.piracicaba-page):not([hidden])) {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  body.project-open:has(.project-detail-page:not(.piracicaba-page):not([hidden])) > main {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  body.project-open .project-detail-page:not(.piracicaba-page) {
+    height: calc(100dvh - 80px);
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  body.project-open .project-detail-page:not(.piracicaba-page) > .powerbi-embed,
+  body.project-open .project-detail-page:not(.piracicaba-page) > .project-embed {
+    height: 100%;
+    min-height: 0;
+  }
+}
