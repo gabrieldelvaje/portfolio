@@ -5013,7 +5013,6 @@ body.stacked-pages .mobile-about-title { display: none; }
   }
 }
 
-
 /* Full-screen launcher for embedded projects. */
 .project-expand-link {
   width: 32px;
@@ -5021,7 +5020,7 @@ body.stacked-pages .mobile-about-title { display: none; }
   flex: 0 0 32px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0;
   overflow: hidden;
   padding: 6px;
@@ -5031,7 +5030,6 @@ body.stacked-pages .mobile-about-title { display: none; }
   background: var(--bg);
   text-decoration: none;
   box-sizing: border-box;
-  transition: width .5s cubic-bezier(.22,1,.36,1), gap .45s cubic-bezier(.22,1,.36,1), color .2s ease, border-color .2s ease, background-color .2s ease;
 }
 
 .project-expand-icon {
@@ -5042,6 +5040,8 @@ body.stacked-pages .mobile-about-title { display: none; }
 }
 
 .project-expand-link > span {
+  display: block;
+  width: auto;
   max-width: 0;
   opacity: 0;
   overflow: hidden;
@@ -5049,30 +5049,59 @@ body.stacked-pages .mobile-about-title { display: none; }
   font-size: 12px;
   font-weight: 500;
   line-height: 1;
-  transform: translateX(5px);
-  transition: max-width .5s cubic-bezier(.22,1,.36,1), opacity .24s ease, transform .45s cubic-bezier(.22,1,.36,1);
 }
 
 .project-detail-actions {
   gap: 10px;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .project-expand-link:hover,
-  .project-expand-link:focus-visible {
-    width: 148px;
-    gap: 8px;
-    color: #fff;
-    border-color: var(--blue);
-    background: var(--blue);
-    outline: none;
+/* Same slow pill-opening motion as Back to Work. */
+@media (min-width: 601px) and (min-height: 501px), (min-width: 901px) {
+  body.project-open .project-mobile-controls .project-expand-link {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    gap: 0;
+    padding: 6px;
+    will-change: width, gap;
+    transition:
+      width .68s cubic-bezier(.22, 1, .36, 1),
+      gap .68s cubic-bezier(.22, 1, .36, 1),
+      color .22s ease,
+      background-color .22s ease,
+      border-color .22s ease;
   }
 
-  .project-expand-link:hover > span,
-  .project-expand-link:focus-visible > span {
-    max-width: 106px;
-    opacity: 1;
-    transform: translateX(0);
+  body.project-open .project-mobile-controls .project-expand-link > span {
+    max-width: 0;
+    opacity: 0;
+    transform: translateX(-2px);
+    will-change: max-width, opacity, transform;
+    transition:
+      max-width .62s cubic-bezier(.22, 1, .36, 1),
+      opacity .28s ease,
+      transform .52s cubic-bezier(.22, 1, .36, 1);
+    transition-delay: 0s, 0s, 0s;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    body.project-open .project-mobile-controls .project-expand-link:hover,
+    body.project-open .project-mobile-controls .project-expand-link:focus-visible {
+      width: 172px;
+      gap: 9px;
+      color: #fff;
+      border-color: var(--blue);
+      background: var(--blue);
+      outline: none;
+    }
+
+    body.project-open .project-mobile-controls .project-expand-link:hover > span,
+    body.project-open .project-mobile-controls .project-expand-link:focus-visible > span {
+      max-width: 126px;
+      opacity: 1;
+      transform: translateX(0);
+      transition-delay: .08s, .14s, .08s;
+    }
   }
 }
 
@@ -5116,52 +5145,3 @@ body.stacked-pages .mobile-about-title { display: none; }
   }
 }
 
-
-/* Match the expand launcher to the Back to Work pill interaction. */
-@media (min-width: 601px) and (min-height: 501px), (min-width: 901px) {
-  body.project-open .project-mobile-controls .project-expand-link {
-    width: 32px;
-    height: 32px;
-    flex: 0 0 auto;
-    justify-content: flex-start;
-    gap: 0;
-    padding: 6px;
-    overflow: hidden;
-    transition:
-      width .52s cubic-bezier(.22, 1, .36, 1),
-      gap .52s cubic-bezier(.22, 1, .36, 1),
-      color .2s ease,
-      background-color .2s ease,
-      border-color .2s ease;
-  }
-
-  body.project-open .project-mobile-controls .project-expand-link > span {
-    display: block;
-    max-width: 0;
-    opacity: 0;
-    transform: none;
-    font-size: 12px;
-    line-height: 1;
-    transition:
-      max-width .52s cubic-bezier(.22, 1, .36, 1),
-      opacity .25s ease;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    body.project-open .project-mobile-controls .project-expand-link:hover,
-    body.project-open .project-mobile-controls .project-expand-link:focus-visible {
-      width: 172px;
-      gap: 9px;
-      color: #fff;
-      border-color: var(--blue);
-      background: var(--blue);
-      outline: none;
-    }
-
-    body.project-open .project-mobile-controls .project-expand-link:hover > span,
-    body.project-open .project-mobile-controls .project-expand-link:focus-visible > span {
-      max-width: 126px;
-      opacity: 1;
-    }
-  }
-}
