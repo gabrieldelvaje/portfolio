@@ -5171,7 +5171,7 @@ body.stacked-pages .mobile-about-title { display: none; }
     display: inline-flex;
     width: 32px;
     height: 32px;
-    flex: 0 0 32px;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: flex-start;
     gap: 0;
@@ -5202,33 +5202,13 @@ body.stacked-pages .mobile-about-title { display: none; }
   }
 }
 
+/* WAAPI controls movement like Back to Work and Open in new window.
+   Do not animate width/flex-basis with CSS at the same time. */
 @media (min-width: 901px) and (hover: hover) and (pointer: fine) {
   body.project-open .project-mobile-controls .project-info-button {
-    transition: width .52s cubic-bezier(.22, 1, .36, 1),
-                flex-basis .52s cubic-bezier(.22, 1, .36, 1),
-                gap .52s cubic-bezier(.22, 1, .36, 1),
-                color .2s ease, border-color .2s ease, background-color .2s ease;
+    transition: color .2s ease, border-color .2s ease, background-color .2s ease;
   }
-
-  body.project-open .project-mobile-controls .project-info-label {
-    transition: max-width .52s cubic-bezier(.22, 1, .36, 1),
-                opacity .25s ease,
-                transform .52s cubic-bezier(.22, 1, .36, 1);
-  }
-
-  body.project-open .project-mobile-controls .project-info-button:hover,
-  body.project-open .project-mobile-controls .project-info-button:focus-visible {
-    width: 108px;
-    flex-basis: 108px;
-    gap: 9px;
-  }
-
-  body.project-open .project-mobile-controls .project-info-button:hover .project-info-label,
-  body.project-open .project-mobile-controls .project-info-button:focus-visible .project-info-label {
-    max-width: 72px;
-    opacity: 1;
-    transform: translateX(0);
-  }
+  body.project-open .project-mobile-controls .project-info-label { transition: none; }
 }
 
 /* Desktop project actions: Back to Work -> More About -> Open in new window.
