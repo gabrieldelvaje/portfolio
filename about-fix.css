@@ -5218,15 +5218,23 @@ body.stacked-pages .mobile-about-title { display: none; }
 
   body.project-open .project-mobile-controls .project-info-button:hover,
   body.project-open .project-mobile-controls .project-info-button:focus-visible {
-    width: 126px;
-    flex-basis: 126px;
+    width: 108px;
+    flex-basis: 108px;
     gap: 9px;
   }
 
   body.project-open .project-mobile-controls .project-info-button:hover .project-info-label,
   body.project-open .project-mobile-controls .project-info-button:focus-visible .project-info-label {
-    max-width: 87px;
+    max-width: 72px;
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+/* Desktop project actions: Back to Work -> More About -> Open in new window.
+   CSS-only order preserves source markup and all original animation handlers. */
+@media (min-width: 901px) {
+  body.project-open .project-mobile-controls .project-back { order: 0; }
+  body.project-open .project-mobile-controls .project-info-button { order: 1; }
+  body.project-open .project-mobile-controls .project-expand-link { order: 2; }
 }
