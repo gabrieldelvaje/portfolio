@@ -757,14 +757,22 @@ document.querySelectorAll('.project-repo-link, .project-back, .project-expand-li
     cancelAnimations();
     if (projectPillDesktop.matches) {
       applyState(false);
-    } else {
-      // Never override the existing touch/tablet layout with desktop widths.
+    } else if (isInfo) {
+      // The information button stays exactly as it was on mobile/tablet.
       control.style.removeProperty('--repo-expanded-width');
       control.style.removeProperty('width');
       control.style.removeProperty('gap');
       label.style.removeProperty('max-width');
       label.style.removeProperty('opacity');
       label.style.removeProperty('transform');
+    } else {
+      // Retain the original mobile/tablet inline state for existing controls.
+      control.style.setProperty('--repo-expanded-width', `${measureExpandedSize().controlWidth}px`);
+      control.style.width = `${collapsedWidth}px`;
+      control.style.gap = '0px';
+      label.style.maxWidth = '0px';
+      label.style.opacity = '0';
+      label.style.transform = 'translateX(5px)';
     }
   }
 
