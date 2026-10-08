@@ -792,6 +792,87 @@ document.querySelectorAll('.project-repo-link, .project-back, .project-expand-li
   link.addEventListener('blur', () => animateRepositoryLink(false));
 });
 
+// More About uses the same 520ms Web Animations API as Back and Open.
+// Keep this isolated so neither of the working original animations changes.
+const aboutDesktop = matchMedia('(min-width: 901px) and (hover: hover) and (pointer: fine)');
+document.querySelectorAll('.project-info-button').forEach(button => {
+  const label = button.querySelector('.project-info-label');
+  if (!label) return;
+  const context = document.createElement('canvas').getContext('2d');
+  const collapsedWidth = 32;
+  let labelWidth = 0;
+  let expandedWidth = 108;
+  function measureLabel() {
+    const style = getComputedStyle(label);
+    context.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+    labelWidth = Math.ceil(context.measureText(label.textContent.trim()).width) + 2;
+    expandedWidth = 12 + 18 + 9 + labelWidth + 2;
+  }
+  function resetMode() {
+    button.getAnimations().forEach(a => a.cancel());
+    label.getAnimations().forEach(a => a.cancel());
+    for (const name of ['width', 'gap']) button.style.removeProperty(name);
+    for (const name of ['max-width', 'opacity', 'transform']) label.style.removeProperty(name);
+    if (!aboutDesktop.matches) return; // Keep the original mobile controls.
+    measureLabel();
+    button.style.width = '32px';
+    button.style.gap = '0px';
+    label.style.maxWidth = '0px';
+    label.style.opacity = '0';
+    label.style.transform = 'translateX(5px)';
+  }
+  function animateInfo(expanded) {
+    if (!aboutDesktop.matches) return;
+    if (expanded) measureLabel();
+    const from = button.getBoundingClientRect().width;
+    const gap = getComputedStyle(button).gap;
+    const currentLabel = getComputedStyle(label);
+    const labelStart = {
+      maxWidth: currentLabel.maxWidth,
+      opacity: currentLabel.opacity,
+      transform: currentLabel.transform
+    };
+    // Sample the current visual state before cancelling an interrupted animation.
+    button.getAnimations().forEach(a => a.cancel());
+    label.getAnimations().forEach(a => a.cancel());
+    const widthTo = expanded ? expandedWidth : collapsedWidth;
+    const gapTo = expanded ? '9px' : '0px';
+    const labelTo = {
+      maxWidth: expanded ? `${labelWidth}px` : '0px',
+      opacity: expanded ? 1 : 0,
+      transform: expanded ? 'translateX(0)' : 'translateX(5px)'
+    };
+    const options = {
+      duration: 520,
+      easing: 'cubic-bezier(.22, 1, .36, 1)',
+      iterations: 1,
+      fill: 'forwards'
+    };
+    const widthAnimation = button.animate([
+      { width: `${from}px`, gap },
+      { width: `${widthTo}px`, gap: gapTo }
+    ], options);
+    const labelAnimation = label.animate([labelStart, labelTo], options);
+    widthAnimation.addEventListener('finish', () => {
+      button.style.width = `${widthTo}px`;
+      button.style.gap = gapTo;
+      widthAnimation.cancel();
+    }, { once: true });
+    labelAnimation.addEventListener('finish', () => {
+      label.style.maxWidth = labelTo.maxWidth;
+      label.style.opacity = String(labelTo.opacity);
+      label.style.transform = labelTo.transform;
+      labelAnimation.cancel();
+    }, { once: true });
+  }
+  button.addEventListener('pointerenter', () => animateInfo(true));
+  button.addEventListener('pointerleave', () => animateInfo(false));
+  button.addEventListener('focus', () => animateInfo(true));
+  button.addEventListener('blur', () => animateInfo(false));
+  aboutDesktop.addEventListener('change', resetMode);
+  resetMode();
+});
+
 document.querySelectorAll('[data-carousel]').forEach(carousel => {
   const track = carousel.querySelector('.story-track');
   const slides = [...carousel.querySelectorAll('.story-slide')];
