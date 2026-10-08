@@ -703,149 +703,93 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
   resetMusicRace();
 });
 
-// The desktop project controls share a single WAAPI pill animation.
-// Keep layout transitions out of CSS while JS is active to prevent width flashes.
-const projectPillDesktop = matchMedia('(min-width: 901px) and (hover: hover) and (pointer: fine)');
-const projectPillReducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-function syncProjectPillMode() {
-  document.documentElement.classList.toggle('project-pill-js', projectPillDesktop.matches);
-}
-syncProjectPillMode();
-projectPillDesktop.addEventListener('change', syncProjectPillMode);
-
-document.querySelectorAll('.project-repo-link, .project-back, .project-expand-link, .project-info-button').forEach(control => {
-  const isBack = control.classList.contains('project-back');
-  const isInfo = control.classList.contains('project-info-button');
-  const isCompact = isBack || isInfo || control.classList.contains('project-expand-link');
-  const label = control.querySelector(isBack ? '.project-back-label' : isInfo ? '.project-info-label' : 'span');
+document.querySelectorAll('.project-repo-link, .project-back, .project-expand-link').forEach(link => {
+  const isBackLink = link.classList.contains('project-back');
+  const isExpandLink = link.classList.contains('project-expand-link');
+  const isCompactControl = isBackLink || isExpandLink;
+  const label = link.querySelector(isBackLink ? '.project-back-label' : 'span');
+  const collapsedWidth = isCompactControl ? 32 : 42;
   if (!label) return;
 
-  const collapsedWidth = isCompact ? 32 : 42;
+  const labelStyle = getComputedStyle(label);
   const measureContext = document.createElement('canvas').getContext('2d');
-  let sizeAnimation = null;
-  let labelAnimation = null;
+  measureContext.font = `${labelStyle.fontWeight} ${labelStyle.fontSize} ${labelStyle.fontFamily}`;
+  let labelWidth = measureContext.measureText(label.textContent.trim()).width;
+  let expandedWidth = Math.ceil((isCompactControl ? 20 + 18 : 18 + 28) + 9 + labelWidth);
+  link.style.setProperty('--repo-expanded-width', `${expandedWidth}px`);
+  link.style.width = `${collapsedWidth}px`;
+  link.style.gap = '0px';
+  label.style.maxWidth = '0px';
+  label.style.opacity = '0';
+  label.style.transform = 'translateX(5px)';
 
-  function measureExpandedSize() {
-    const style = getComputedStyle(label);
-    measureContext.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-    // The extra pixels accommodate rounding and font rendering differences.
-    const labelWidth = Math.ceil(Math.max(measureContext.measureText(label.textContent.trim()).width, label.scrollWidth)) + 4;
-    return {
-      labelWidth,
-      controlWidth: Math.ceil((isCompact ? 20 + 18 : 18 + 28) + 9 + labelWidth)
-    };
-  }
-
-  function cancelAnimations() {
-    sizeAnimation?.cancel();
-    labelAnimation?.cancel();
-    sizeAnimation = null;
-    labelAnimation = null;
-  }
-
-  function applyState(expanded) {
-    const measured = measureExpandedSize();
-    control.style.setProperty('--repo-expanded-width', `${measured.controlWidth}px`);
-    control.style.width = `${expanded ? measured.controlWidth : collapsedWidth}px`;
-    control.style.gap = expanded ? '9px' : '0px';
-    label.style.maxWidth = expanded ? `${measured.labelWidth}px` : '0px';
-    label.style.opacity = expanded ? '1' : '0';
-    label.style.transform = expanded ? 'translateX(0)' : 'translateX(5px)';
-  }
-
-  function syncViewport() {
-    cancelAnimations();
-    if (projectPillDesktop.matches) {
-      applyState(false);
-    } else if (isInfo) {
-      // The information button stays exactly as it was on mobile/tablet.
-      control.style.removeProperty('--repo-expanded-width');
-      control.style.removeProperty('width');
-      control.style.removeProperty('gap');
-      label.style.removeProperty('max-width');
-      label.style.removeProperty('opacity');
-      label.style.removeProperty('transform');
-    } else {
-      // Retain the original mobile/tablet inline state for existing controls.
-      control.style.setProperty('--repo-expanded-width', `${measureExpandedSize().controlWidth}px`);
-      control.style.width = `${collapsedWidth}px`;
-      control.style.gap = '0px';
-      label.style.maxWidth = '0px';
-      label.style.opacity = '0';
-      label.style.transform = 'translateX(5px)';
-    }
-  }
-
-  function animatePill(expanded) {
-    if (!projectPillDesktop.matches) return;
-
-    // Read the actual in-flight frame BEFORE cancelling the old animations.
-    // The next animation then starts at precisely that frame instead of flashing.
-    const currentWidth = control.getBoundingClientRect().width;
-    const controlStyle = getComputedStyle(control);
-    const labelStyle = getComputedStyle(label);
-    const fromGap = controlStyle.gap;
-    const fromMaxWidth = labelStyle.maxWidth;
-    const fromOpacity = labelStyle.opacity;
-    const fromTransform = labelStyle.transform;
-    cancelAnimations();
-
-    // Set the captured values as underlying styles before starting again.
-    control.style.width = `${currentWidth}px`;
-    control.style.gap = fromGap;
-    label.style.maxWidth = fromMaxWidth;
-    label.style.opacity = fromOpacity;
-    label.style.transform = fromTransform;
-
-    if (projectPillReducedMotion.matches) {
-      applyState(expanded);
+  function animateRepositoryLink(expanded) {
+    if (matchMedia('(max-width: 900px), (hover: none)').matches) {
+      link.getAnimations().forEach(animation => animation.cancel());
+      label.getAnimations().forEach(animation => animation.cancel());
+      link.style.width = `${collapsedWidth}px`;
+      link.style.gap = '0px';
       return;
     }
+    const from = link.getBoundingClientRect().width;
+    if (expanded) {
+      const currentLabelStyle = getComputedStyle(label);
+      measureContext.font = `${currentLabelStyle.fontWeight} ${currentLabelStyle.fontSize} ${currentLabelStyle.fontFamily}`;
+      labelWidth = Math.ceil(measureContext.measureText(label.textContent.trim()).width);
+      const visibleLabelWidth = isCompactControl ? labelWidth : Math.max(labelWidth, label.scrollWidth);
+      expandedWidth = Math.ceil((isCompactControl ? 20 + 18 : 18 + 28) + 9 + visibleLabelWidth);
+      link.style.setProperty('--repo-expanded-width', `${expandedWidth}px`);
+    }
+    const to = expanded ? expandedWidth : collapsedWidth;
+    link.getAnimations().forEach(animation => animation.cancel());
+    label.getAnimations().forEach(animation => animation.cancel());
 
-    const measured = measureExpandedSize();
-    const targetWidth = expanded ? measured.controlWidth : collapsedWidth;
-    const targetGap = expanded ? '9px' : '0px';
-    const targetLabelWidth = expanded ? `${measured.labelWidth}px` : '0px';
-    const targetOpacity = expanded ? '1' : '0';
-    const targetTransform = expanded ? 'translateX(0)' : 'translateX(5px)';
-    control.style.setProperty('--repo-expanded-width', `${measured.controlWidth}px`);
+    const animation = link.animate([
+      { width: `${from}px`, gap: getComputedStyle(link).gap },
+      { width: `${to}px`, gap: expanded ? '9px' : '0px' }
+    ], {
+      duration: 520,
+      easing: 'cubic-bezier(.22, 1, .36, 1)',
+      iterations: 1,
+      fill: 'forwards'
+    });
 
-    const options = {duration: 520, easing: 'cubic-bezier(.22, 1, .36, 1)', fill: 'forwards'};
-    const nextSize = control.animate([
-      {width: `${currentWidth}px`, gap: fromGap},
-      {width: `${targetWidth}px`, gap: targetGap}
-    ], options);
-    const nextLabel = label.animate([
-      {maxWidth: fromMaxWidth, opacity: fromOpacity, transform: fromTransform},
-      {maxWidth: targetLabelWidth, opacity: targetOpacity, transform: targetTransform}
-    ], options);
-    sizeAnimation = nextSize;
-    labelAnimation = nextLabel;
+    const labelAnimation = label.animate([
+      {
+        maxWidth: getComputedStyle(label).maxWidth,
+        opacity: getComputedStyle(label).opacity,
+        transform: getComputedStyle(label).transform
+      },
+      {
+        maxWidth: expanded ? `${Math.ceil(isCompactControl ? labelWidth : Math.max(labelWidth, label.scrollWidth))}px` : '0px',
+        opacity: expanded ? 1 : 0,
+        transform: expanded ? 'translateX(0)' : 'translateX(5px)'
+      }
+    ], {
+      duration: 520,
+      easing: 'cubic-bezier(.22, 1, .36, 1)',
+      iterations: 1,
+      fill: 'forwards'
+    });
 
-    nextSize.addEventListener('finish', () => {
-      if (sizeAnimation !== nextSize) return;
-      control.style.width = `${targetWidth}px`;
-      control.style.gap = targetGap;
-      nextSize.cancel();
-      sizeAnimation = null;
-    }, {once: true});
+    animation.addEventListener('finish', () => {
+      link.style.width = `${to}px`;
+      link.style.gap = expanded ? '9px' : '0px';
+      animation.cancel();
+    }, { once: true });
 
-    nextLabel.addEventListener('finish', () => {
-      if (labelAnimation !== nextLabel) return;
-      label.style.maxWidth = targetLabelWidth;
-      label.style.opacity = targetOpacity;
-      label.style.transform = targetTransform;
-      nextLabel.cancel();
-      labelAnimation = null;
-    }, {once: true});
+    labelAnimation.addEventListener('finish', () => {
+      label.style.maxWidth = expanded ? `${Math.ceil(isCompactControl ? labelWidth : Math.max(labelWidth, label.scrollWidth))}px` : '0px';
+      label.style.opacity = expanded ? '1' : '0';
+      label.style.transform = expanded ? 'translateX(0)' : 'translateX(5px)';
+      labelAnimation.cancel();
+    }, { once: true });
   }
 
-  control.addEventListener('pointerenter', () => animatePill(true));
-  control.addEventListener('pointerleave', () => animatePill(false));
-  control.addEventListener('focus', () => animatePill(true));
-  control.addEventListener('blur', () => animatePill(false));
-  projectPillDesktop.addEventListener('change', syncViewport);
-  syncViewport();
+  link.addEventListener('pointerenter', () => animateRepositoryLink(true));
+  link.addEventListener('pointerleave', () => animateRepositoryLink(false));
+  link.addEventListener('focus', () => animateRepositoryLink(true));
+  link.addEventListener('blur', () => animateRepositoryLink(false));
 });
 
 document.querySelectorAll('[data-carousel]').forEach(carousel => {
