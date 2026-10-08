@@ -68,6 +68,9 @@ let mobileNavHoldUntil = 0;
 let sectionNavigationFrame = 0;
 let sectionNavigationRunning = false;
 function stopSectionNavigation() {
+  // A finger gesture interrupts automatic navigation and restores the
+  // normal swipe-controlled navbar behavior immediately.
+  if (sectionNavigationRunning && matchMedia('(max-width: 600px)').matches) mobileNavHoldUntil = 0;
   cancelAnimationFrame(sectionNavigationFrame);
   sectionNavigationRunning = false;
 }
@@ -77,12 +80,6 @@ function scrollToSection(top, animated) {
   if (!animated) { scrollTo({ top: target, behavior: 'instant' }); return; }
   const start = scrollY;
   const distance = target - start;
-  // A navbar click scrolls the page programmatically: hide the mobile bar
-  // as that transition starts, just as a downward finger scroll does.
-  if (Math.abs(distance) > 12 && matchMedia('(max-width: 600px)').matches &&
-      !document.body.classList.contains('project-open') && performance.now() >= mobileNavHoldUntil) {
-    document.body.classList.add('mobile-nav-hidden');
-  }
   const duration = Math.min(1200, Math.max(650, Math.abs(distance) * .45));
   const started = performance.now();
   sectionNavigationRunning = true;
@@ -91,7 +88,11 @@ function scrollToSection(top, animated) {
     const eased = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     scrollTo({ top: start + distance * eased, behavior: 'instant' });
     if (t < 1) sectionNavigationFrame = requestAnimationFrame(step);
-    else sectionNavigationRunning = false;
+    else {
+      sectionNavigationRunning = false;
+      // Ignore the last queued scroll event from the navigation animation.
+      if (matchMedia('(max-width: 600px)').matches) mobileNavHoldUntil = performance.now() + 180;
+    }
   };
   sectionNavigationFrame = requestAnimationFrame(step);
 }
@@ -228,6 +229,11 @@ showRoute();
 
 links.forEach(link => link.addEventListener('click', event => {
   event.preventDefault();
+  if (matchMedia('(max-width: 600px)').matches) {
+    // Tapping the bottom navbar never dismisses it, even if the page scrolls.
+    document.body.classList.remove('mobile-nav-hidden');
+    mobileNavHoldUntil = performance.now() + 180;
+  }
   history.pushState(null, '', `#${link.dataset.route}`);
   showRoute();
 }));
@@ -363,10 +369,11 @@ addEventListener('scroll', () => {
   });
   const y = scrollY;
   if (matchMedia('(max-width: 600px)').matches && !document.body.classList.contains('project-open')) {
-    if (performance.now() < mobileNavHoldUntil) document.body.classList.remove('mobile-nav-hidden');
-    else if (sectionNavigationRunning) document.body.classList.add('mobile-nav-hidden');
-    else if (y < 20) document.body.classList.remove('mobile-nav-hidden');
-    else if (Math.abs(y - mobileNavLastY) > 6) document.body.classList.toggle('mobile-nav-hidden', y > mobileNavLastY);
+    if (sectionNavigationRunning || performance.now() < mobileNavHoldUntil || y < 20) {
+      document.body.classList.remove('mobile-nav-hidden');
+    } else if (Math.abs(y - mobileNavLastY) > 6) {
+      document.body.classList.toggle('mobile-nav-hidden', y > mobileNavLastY);
+    }
   }
   if (Math.abs(y - mobileNavLastY) > 6) mobileNavLastY = y;
 }, { passive: true });
