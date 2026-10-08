@@ -77,6 +77,12 @@ function scrollToSection(top, animated) {
   if (!animated) { scrollTo({ top: target, behavior: 'instant' }); return; }
   const start = scrollY;
   const distance = target - start;
+  // A navbar click scrolls the page programmatically: hide the mobile bar
+  // as that transition starts, just as a downward finger scroll does.
+  if (Math.abs(distance) > 12 && matchMedia('(max-width: 600px)').matches &&
+      !document.body.classList.contains('project-open') && performance.now() >= mobileNavHoldUntil) {
+    document.body.classList.add('mobile-nav-hidden');
+  }
   const duration = Math.min(1200, Math.max(650, Math.abs(distance) * .45));
   const started = performance.now();
   sectionNavigationRunning = true;
@@ -357,7 +363,9 @@ addEventListener('scroll', () => {
   });
   const y = scrollY;
   if (matchMedia('(max-width: 600px)').matches && !document.body.classList.contains('project-open')) {
-    if (performance.now() < mobileNavHoldUntil || y < 20) document.body.classList.remove('mobile-nav-hidden');
+    if (performance.now() < mobileNavHoldUntil) document.body.classList.remove('mobile-nav-hidden');
+    else if (sectionNavigationRunning) document.body.classList.add('mobile-nav-hidden');
+    else if (y < 20) document.body.classList.remove('mobile-nav-hidden');
     else if (Math.abs(y - mobileNavLastY) > 6) document.body.classList.toggle('mobile-nav-hidden', y > mobileNavLastY);
   }
   if (Math.abs(y - mobileNavLastY) > 6) mobileNavLastY = y;
