@@ -5161,3 +5161,63 @@ body.stacked-pages .mobile-about-title { display: none; }
     display: none !important;
   }
 }
+
+/* Desktop: the information button uses the same expanding pill as Back/Open. */
+.project-info-label {
+  display: none;
+}
+
+@media (min-width: 901px) {
+  body.project-open .project-mobile-controls .project-info-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 auto;
+    gap: 0;
+    padding: 6px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  body.project-open .project-mobile-controls .project-info-glyph {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    font: 600 14px/1 Georgia, serif;
+  }
+
+  body.project-open .project-mobile-controls .project-info-label {
+    display: block;
+    width: auto;
+    max-width: 0;
+    flex: 0 0 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(5px);
+    font: 500 12px/1 Helvetica, Arial, sans-serif;
+  }
+}
+
+/* WAAPI owns pill geometry on desktop; CSS still handles hover colors.
+   This prevents simultaneous CSS transitions from skipping an in-flight frame. */
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  html.project-pill-js body.project-open .project-detail-toolbar .project-back,
+  html.project-pill-js body.project-open .project-detail-toolbar .project-expand-link,
+  html.project-pill-js body.project-open .project-detail-toolbar .project-info-button,
+  html.project-pill-js body.project-open .project-detail-toolbar .project-repo-link {
+    transition: color .2s ease, background-color .2s ease, border-color .2s ease;
+  }
+
+  html.project-pill-js body.project-open .project-detail-toolbar .project-back-label,
+  html.project-pill-js body.project-open .project-detail-toolbar .project-expand-link > span,
+  html.project-pill-js body.project-open .project-detail-toolbar .project-info-label,
+  html.project-pill-js body.project-open .project-detail-toolbar .project-repo-link > span {
+    transition: none;
+  }
+}
