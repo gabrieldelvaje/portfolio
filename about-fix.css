@@ -5218,31 +5218,3 @@ body.stacked-pages .mobile-about-title { display: none; }
   body.project-open .project-mobile-controls .project-info-button { order: 1; }
   body.project-open .project-mobile-controls .project-expand-link { order: 2; }
 }
-
-/* Work cards: dark outer panels, original thumbnails, high-contrast type. */
-[data-theme="light"] body.work-active .work-page .project-card-link {
-  background: #231f20;
-  border-color: #231f20;
-  color: #f3f3f1;
-}
-
-[data-theme="light"] body.work-active .work-page .project-card p {
-  color: #c4bfc0;
-}
-
-[data-theme="light"] body.work-active .work-page .project-card-footer .project-tags span {
-  color: #f3f3f1;
-  border-color: rgba(243, 243, 241, .52);
-}
-
-[data-theme="light"] body.work-active .work-page .project-card-footer .project-open-cue {
-  background: #f3f3f1;
-  color: #231f20;
-}
-
-/* In dark mode, keep the existing dark surfaces and give the outer
-   frame and the previews their matching light outlines. */
-[data-theme="dark"] body.work-active .work-page .project-card-link {
-  --work-card-border: #f3f3f1;
-  border-color: var(--work-card-border);
-}
