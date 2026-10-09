@@ -66,6 +66,9 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
   .piracicaba-workspace .data-story{grid-template-rows:auto 26px}.piracicaba-workspace .data-story-heading{display:none}
   .piracicaba-workspace .story-carousel{border-radius:18px}
   .piracicaba-workspace .story-carousel,.piracicaba-workspace .story-track,.piracicaba-workspace .story-slide{height:auto}
+  /* Natural slide heights: keep each caption from stretching to the tallest slide. */
+  .piracicaba-workspace .story-track { align-items: flex-start; }
+  .piracicaba-page { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   .piracicaba-workspace .story-slide{grid-template-columns:1fr;grid-template-rows:auto auto}
   .piracicaba-workspace .story-slide>.story-image-window{height:auto;aspect-ratio:1;object-fit:contain}
   .piracicaba-workspace .story-slide figcaption{padding:12px 54px 14px 16px;min-height:104px}
@@ -108,7 +111,7 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
   .piracicaba-workspace { grid-template-rows: auto auto; }
   .piracicaba-workspace .story-hub { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .piracicaba-workspace .story-choice { height: auto; min-height: 56px; }
-  .piracicaba-workspace [data-story-panel="income"] .story-slide > .story-image-window { aspect-ratio: 4 / 5; }
+  .piracicaba-workspace [data-story-panel="income"] .story-slide > .story-image-window { aspect-ratio: 1 / 1; }
   .piracicaba-workspace .tongue-story .story-slide > .story-image-window { aspect-ratio: 4 / 5; }
 }
 
