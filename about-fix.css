@@ -5218,3 +5218,18 @@ body.stacked-pages .mobile-about-title { display: none; }
   body.project-open .project-mobile-controls .project-info-button { order: 1; }
   body.project-open .project-mobile-controls .project-expand-link { order: 2; }
 }
+
+/* Project detail action labels: use Back to Work typography across all three pills. */
+@media (min-width: 901px) {
+  body.project-open .project-detail-toolbar .project-back .project-back-label,
+  body.project-open .project-detail-toolbar .project-info-label,
+  body.project-open .project-detail-toolbar .project-expand-link > span {
+    font-family: Inter, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+}
