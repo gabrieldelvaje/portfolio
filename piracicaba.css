@@ -23,11 +23,13 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 .piracicaba-workspace .story-choice{min-height:68px;width:100%;flex:none}
 .piracicaba-workspace .story-choice-upcoming{margin-top:0}
 .piracicaba-workspace .data-story{min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto}
-.piracicaba-workspace .story-carousel{width:100%;height:100%;min-height:0;border-radius:28px;margin:0;background:#ebe8e3}
+.piracicaba-workspace .story-carousel{width:100%;height:100%;min-height:0;border:1px solid transparent;border-radius:28px;margin:0;background:#231f20}
+/* Crisp thumbnail outline in dark mode, without resizing the carousel. */
+[data-theme="dark"] .piracicaba-workspace .story-carousel{border-color:#f3f3f1}
 .piracicaba-workspace .story-track{height:100%;transition:transform .72s cubic-bezier(.22,1,.36,1)}
-.piracicaba-workspace .story-slide{height:100%;aspect-ratio:auto;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,36%);background:#f5f2ed}
-.piracicaba-workspace .story-slide>.story-image-window{width:100%;height:100%;min-height:0;object-fit:contain;background:#f5f2ed}
-.piracicaba-workspace .story-slide figcaption{padding:clamp(22px,3vw,44px);background:#171515;color:#fff;display:flex;flex-direction:column;justify-content:center}
+.piracicaba-workspace .story-slide{height:100%;aspect-ratio:auto;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,36%);background:#231f20}
+.piracicaba-workspace .story-slide>.story-image-window{width:100%;height:100%;min-height:0;object-fit:contain;background:#231f20}
+.piracicaba-workspace .story-slide figcaption{padding:clamp(22px,3vw,44px);background:#231f20;color:#fff;display:flex;flex-direction:column;justify-content:center}
 .piracicaba-workspace .story-slide figcaption>span{color:#6e8fff;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 .piracicaba-workspace .story-slide figcaption h3{margin:18px 0 14px;font-size:clamp(23px,2.6vw,40px);line-height:1.02;color:#fff}
 .piracicaba-workspace .story-slide figcaption p{margin:0;color:#ddd;font-size:clamp(14px,1.25vw,18px);line-height:1.45}
@@ -250,6 +252,7 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
   width: 20px;
   height: 20px;
   object-fit: contain;
+  filter: invert(1);
 }
 .piracicaba-workspace .carousel-arrow.next img {
   transform: rotate(180deg);
@@ -264,7 +267,7 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 
 /* Clip image motion to its own column; captions remain stationary. */
 .piracicaba-workspace .story-image-window { position: relative; overflow: hidden; min-width: 0; }
-.piracicaba-workspace .story-image-window > img { display: block; width: 100%; height: 100%; object-fit: contain; background: #f5f2ed; }
+.piracicaba-workspace .story-image-window > img { display: block; width: 100%; height: 100%; object-fit: contain; background: #231f20; }
 .piracicaba-workspace .story-image-window > .story-image-outgoing { position: absolute; inset: 0; }
 
 @property --story-fill {
@@ -339,19 +342,19 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
 .piracicaba-workspace .carousel-arrow:hover {
   border: 0;
   border-radius: 50%;
-  background: rgba(36, 33, 34, .09);
+  background: rgba(243, 243, 241, .12);
   box-shadow: none;
   transform: scale(1);
   transition: background-color .2s ease, transform .18s ease;
 }
 @media (hover: hover) and (pointer: fine) {
   .piracicaba-workspace .carousel-arrow:hover {
-    background: rgba(36, 33, 34, .17);
+    background: rgba(243, 243, 241, .20);
     transform: scale(1.07);
   }
 }
 .piracicaba-workspace .carousel-arrow:active {
-  background: rgba(36, 33, 34, .24);
+  background: rgba(243, 243, 241, .28);
   transform: scale(.9);
 }
 @media (prefers-reduced-motion: reduce) {
