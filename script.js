@@ -904,6 +904,25 @@ document.querySelectorAll('[data-carousel]').forEach(carousel => {
   const status = footer.querySelector('.carousel-status');
   let current = 0;
 
+  // On phones the track follows the visible slide, not the tallest caption.
+  // The ResizeObserver also resynchronizes after fonts or images settle.
+  const compactStory = matchMedia('(max-width: 700px)');
+  function syncVisibleSlideHeight() {
+    if (!compactStory.matches) {
+      track.style.removeProperty('height');
+      return;
+    }
+    const activeSlide = slides[current];
+    if (!activeSlide || !activeSlide.getClientRects().length) return;
+    const height = Math.ceil(activeSlide.getBoundingClientRect().height);
+    if (height > 0 && track.style.height !== `${height}px`) {
+      track.style.height = `${height}px`;
+    }
+  }
+  const storyHeightObserver = new ResizeObserver(syncVisibleSlideHeight);
+  slides.forEach(slide => storyHeightObserver.observe(slide));
+  compactStory.addEventListener('change', syncVisibleSlideHeight);
+
   slides.forEach((_, index) => {
     const dot = document.createElement('button');
     dot.type = 'button';
@@ -972,6 +991,7 @@ document.querySelectorAll('[data-carousel]').forEach(carousel => {
     }
 
     status.textContent = `${current + 1} / ${slides.length}`;
+    syncVisibleSlideHeight();
   }
 
   carousel.querySelector('.previous').addEventListener('click', () => goTo(current - 1));
