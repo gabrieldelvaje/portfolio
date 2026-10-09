@@ -108,6 +108,7 @@ body.project-open:has(.piracicaba-page:not([hidden])){overflow:auto}
   .piracicaba-workspace { grid-template-rows: auto auto; }
   .piracicaba-workspace .story-hub { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .piracicaba-workspace .story-choice { height: auto; min-height: 56px; }
+  .piracicaba-workspace [data-story-panel="income"] .story-slide > .story-image-window { aspect-ratio: 4 / 5; }
   .piracicaba-workspace .tongue-story .story-slide > .story-image-window { aspect-ratio: 4 / 5; }
 }
 
