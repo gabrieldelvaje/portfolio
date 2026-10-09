@@ -893,6 +893,7 @@ document.querySelectorAll('[data-carousel]').forEach(carousel => {
   const slides = [...carousel.querySelectorAll('.story-slide')];
   slides.forEach(slide => {
     const image = slide.querySelector(':scope > img');
+    if (!image) return; // Pre-rendered first-carousel image windows need no replacement.
     const viewport = document.createElement('div');
     viewport.className = 'story-image-window';
     image.replaceWith(viewport);
