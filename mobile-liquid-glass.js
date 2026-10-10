@@ -12,7 +12,7 @@
   // CSS.supports can accept this syntax even on engines that do not render
   // SVG refs in backdrop-filter. Use native refraction only on Chromium.
   // Safari/iOS and Firefox retain the layered glass fallback from CSS.
-  const chromium = /\\b(?:Chrome|Chromium|Edg|OPR)\\/\\d+/.test(navigator.userAgent) &&
+  const chromium = /\b(?:Chrome|Chromium|Edg|OPR)\/\d+/.test(navigator.userAgent) &&
     !/CriOS|EdgiOS|FxiOS/.test(navigator.userAgent);
   const supported = chromium && typeof CSS !== 'undefined' &&
     (CSS.supports('backdrop-filter', `url("#${id}") blur(.9px)`) ||
