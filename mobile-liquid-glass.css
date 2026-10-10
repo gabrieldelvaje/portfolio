@@ -68,6 +68,17 @@
       inset 1px 0 1px rgba(255,255,255,.1);
   }
 
+  /* Safari/iOS and Firefox: a refractive-looking edge ring with
+     stronger optical blur, while true backdrop displacement is unavailable. */
+  .theme-toggle-mobile:not(.portfolio-liquid-glass-ready)::after {
+    padding: 2px;
+    -webkit-backdrop-filter: blur(4px) saturate(145%) brightness(1.08);
+    backdrop-filter: blur(4px) saturate(145%) brightness(1.08);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
   .theme-toggle-mobile .toggle-slider { z-index: 2; }
   .theme-toggle-mobile .toggle-symbol { z-index: 3; }
 }
