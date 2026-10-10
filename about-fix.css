@@ -5235,12 +5235,13 @@ body.stacked-pages .mobile-about-title { display: none; }
 }
 
 
-/* Revenue & Growth Tracker: preserve the Power BI report viewport ratio.
+/* Revenue & Growth Tracker and Music Farming Race: preserve the Power BI report viewport ratio.
    The generic project rule stretches embeds to a very wide, shallow rectangle,
    which makes the combined chart's data labels overlap. Scope this fix only
-   to this report and leave other Power BI/projects unchanged. */
+   to these two reports and leave other Power BI/projects unchanged. */
 @media (min-width: 901px) {
-  body.project-open .project-detail-page[data-page="revenue-growth-tracker"] > iframe.powerbi-embed {
+  body.project-open .project-detail-page[data-page="revenue-growth-tracker"] > iframe.powerbi-embed,
+  body.project-open .project-detail-page[data-page="music-farming-race"] > iframe.powerbi-embed {
     display: block;
     box-sizing: border-box;
     width: min(100%, calc((100dvh - 164px) * 16 / 9));
