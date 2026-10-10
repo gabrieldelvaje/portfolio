@@ -44,7 +44,7 @@
   clip.className = 'portfolio-glass-mirror-clip';
   clip.setAttribute('aria-hidden', 'true');
   clip.inert = true;
-  const scene = document.createElement('main');
+  const scene = document.createElement('div');
   scene.className = 'portfolio-glass-mirror-scene';
   scene.setAttribute('aria-hidden', 'true');
   scene.inert = true;
@@ -138,7 +138,15 @@
     const lens = toggle.getBoundingClientRect();
     const main = sourceMain.getBoundingClientRect();
     const w = Math.round(lens.width), h = Math.round(lens.height);
-    if (!w || !h) return;
+    if (!w || !h || getComputedStyle(toggle).display === 'none') {
+      clip.style.display = 'none';
+      return;
+    }
+    clip.style.display = 'block';
+    clip.style.left = lens.left + 'px';
+    clip.style.top = lens.top + 'px';
+    clip.style.width = w + 'px';
+    clip.style.height = h + 'px';
 
     const sources = nearbyPages(lens);
     const ids = sources.map(el => el.dataset.page).join('|');
@@ -180,8 +188,7 @@
   function enable() {
     if (active) return;
     active = true;
-    document.body.append(svg);
-    toggle.insertBefore(clip, toggle.firstChild);
+    document.body.append(svg, clip);
     toggle.classList.add('portfolio-safari-refraction');
     activeIds = '';
     sync();
