@@ -192,8 +192,15 @@
     toggle.classList.add('portfolio-safari-refraction');
     activeIds = '';
     sync();
-    observer = new MutationObserver(() => { activeIds = ''; schedule(); });
+    observer = new MutationObserver(records => {
+      if (records.some(r => r.target === document.body)) activeIds = '';
+      schedule();
+    });
     observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    // The light/dark switch changes <html data-theme>, not <body>.
+    observer.observe(document.documentElement, {
+      attributes: true, attributeFilter: ['data-theme']
+    });
   }
 
   function disable() {
