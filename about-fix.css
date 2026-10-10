@@ -5254,3 +5254,20 @@ body.stacked-pages .mobile-about-title { display: none; }
     transform: none;
   }
 }
+
+
+/* Match the project header's left/right limits to the actual 16:9 Power BI
+   iframe width (rather than the full viewport). Desktop only. */
+@media (min-width: 901px) {
+  body.project-open .project-detail-page[data-page="revenue-growth-tracker"] > .project-detail-toolbar,
+  body.project-open .project-detail-page[data-page="music-farming-race"] > .project-detail-toolbar {
+    box-sizing: border-box;
+    width: min(100%, calc((100dvh - 164px) * 16 / 9));
+    max-width: none;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
