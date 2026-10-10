@@ -5244,10 +5244,12 @@ body.stacked-pages .mobile-about-title { display: none; }
   body.project-open .project-detail-page[data-page="music-farming-race"] > iframe.powerbi-embed {
     display: block;
     box-sizing: border-box;
+    /* Bind both dimensions: height:auto was overridden by the viewport-height
+       embed rule and let Power BI render a distorted internal viewport. */
     width: min(100%, calc((100dvh - 164px) * 16 / 9)) !important;
-    height: auto;
+    height: min(56.25vw, calc(100dvh - 164px)) !important;
     aspect-ratio: 16 / 9;
-    min-height: 0;
+    min-height: 0 !important;
     max-height: calc(100dvh - 164px);
     margin-inline: auto;
     border: 0;
