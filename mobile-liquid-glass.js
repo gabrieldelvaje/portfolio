@@ -9,11 +9,15 @@
   const mq = window.matchMedia('(max-width: 600px), (max-width: 900px) and (max-height: 500px)');
   const id = 'portfolio-mobile-glass-filter';
   const svgNS = 'http://www.w3.org/2000/svg';
-  const supported =
-    (typeof CSS !== 'undefined') &&
+  // CSS.supports can accept this syntax even on engines that do not render
+  // SVG refs in backdrop-filter. Use native refraction only on Chromium.
+  // Safari/iOS and Firefox retain the layered glass fallback from CSS.
+  const chromium = /\\b(?:Chrome|Chromium|Edg|OPR)\\/\\d+/.test(navigator.userAgent) &&
+    !/CriOS|EdgiOS|FxiOS/.test(navigator.userAgent);
+  const supported = chromium && typeof CSS !== 'undefined' &&
     (CSS.supports('backdrop-filter', `url("#${id}") blur(.9px)`) ||
      CSS.supports('-webkit-backdrop-filter', `url("#${id}") blur(.9px)`));
-  if (!supported) return; // CSS-only blur fallback, including Safari if necessary.
+  if (!supported) return;
 
   const createSVG = (name, attributes = {}) => {
     const element = document.createElementNS(svgNS, name);
