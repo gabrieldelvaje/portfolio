@@ -7,22 +7,37 @@
     overflow: hidden;
     background: color-mix(in srgb, var(--bg) 10%, transparent);
   }
-  .theme-toggle-mobile.portfolio-safari-refraction .portfolio-glass-mirror-clip {
+  /* The mirror is a noninteractive sibling BEHIND the existing button.
+     No cloned controls are ever nested inside an actual <button>. */
+  .portfolio-glass-mirror-clip {
     display: block;
-    position: absolute;
-    inset: 0;
-    z-index: 1;
+    position: fixed;
+    z-index: 99;
     overflow: hidden;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
+    box-sizing: border-box;
+    border-radius: 999px;
     background: var(--bg);
-    opacity: .88;
+    opacity: .96;
     pointer-events: none;
     -webkit-filter: url("#portfolio-safari-refraction-filter");
     filter: url("#portfolio-safari-refraction-filter");
   }
-  .theme-toggle-mobile.portfolio-safari-refraction .portfolio-glass-mirror-scene {
+  .theme-toggle-mobile.portfolio-safari-refraction,
+  html[data-theme="dark"] .theme-toggle-mobile.portfolio-safari-refraction {
+    background: rgba(244,244,241,.075);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  html[data-theme="dark"] .theme-toggle-mobile.portfolio-safari-refraction {
+    background: rgba(33,30,31,.075);
+  }
+  .theme-toggle-mobile.portfolio-safari-refraction::before,
+  html[data-theme="dark"] .theme-toggle-mobile.portfolio-safari-refraction::before {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: linear-gradient(150deg,rgba(255,255,255,.12),transparent 64%);
+  }
+  .portfolio-glass-mirror-clip .portfolio-glass-mirror-scene {
     position: absolute !important;
     display: block !important;
     overflow: visible !important;
@@ -34,13 +49,13 @@
     view-transition-name: none !important;
     pointer-events: none !important;
   }
-  .theme-toggle-mobile.portfolio-safari-refraction .portfolio-glass-mirror-scene .page {
+  .portfolio-glass-mirror-clip .portfolio-glass-mirror-scene .page {
     margin: 0 !important;
     view-transition-name: none !important;
   }
-  .theme-toggle-mobile.portfolio-safari-refraction .portfolio-glass-mirror-scene *,
-  .theme-toggle-mobile.portfolio-safari-refraction .portfolio-glass-mirror-scene *::before,
-  .theme-toggle-mobile.portfolio-safari-refraction .portfolio-glass-mirror-scene *::after {
+  .portfolio-glass-mirror-clip .portfolio-glass-mirror-scene *,
+  .portfolio-glass-mirror-clip .portfolio-glass-mirror-scene *::before,
+  .portfolio-glass-mirror-clip .portfolio-glass-mirror-scene *::after {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
