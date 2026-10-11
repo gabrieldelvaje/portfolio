@@ -23,7 +23,7 @@
     character += 1;
     outputs[lineIndex].textContent = letters.slice(0, character).join('');
     if (character < letters.length) {
-      setTimeout(typeNext, letters[character - 1] === ',' ? 260 : 95);
+      setTimeout(typeNext, 50);
     } else if (lineIndex < outputs.length - 1) {
       setTimeout(() => {
         outputs[lineIndex].classList.remove('is-current');
@@ -31,7 +31,7 @@
         character = 0;
         outputs[lineIndex].classList.add('is-current');
         typeNext();
-      }, 320);
+      }, 50);
     } else {
       setTimeout(() => {
         lines.forEach((line, index) => { line.textContent = texts[index]; });
@@ -39,5 +39,5 @@
       }, 1800);
     }
   }
-  setTimeout(typeNext, 350);
+  setTimeout(typeNext, 150);
 })();
