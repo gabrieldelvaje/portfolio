@@ -5145,7 +5145,7 @@ body.stacked-pages .mobile-about-title { display: none; }
   }
 }
 
-/* Mobile: keep only Back + Info; hide Expand completely. */
+/* Mobile project capsule: retain two slots when no expansion is available. */
 @media (max-width: 600px), (max-width: 900px) and (max-height: 500px) {
   body.project-open .project-mobile-controls {
     width: 100px;
@@ -5157,9 +5157,6 @@ body.stacked-pages .mobile-about-title { display: none; }
     width: 50px;
   }
 
-  body.project-open .project-mobile-controls .project-expand-link {
-    display: none !important;
-  }
 }
 
 /* Desktop-only More About pill. Independent CSS transition: the original
@@ -5254,5 +5251,48 @@ body.stacked-pages .mobile-about-title { display: none; }
     margin-inline: auto;
     border: 0;
     transform: none;
+  }
+}
+
+/* Mobile glass and equally sized project controls. Desktop stays unchanged. */
+@media (max-width: 600px), (max-width: 900px) and (max-height: 500px) {
+  :root { --mobile-control-glass: color-mix(in srgb, var(--bg) 38%, transparent); }
+  [data-theme="dark"] { --mobile-control-glass: color-mix(in srgb, #211e1f 38%, transparent); }
+  body .site-header .nav,
+  :root body .theme-toggle-mobile,
+  :root body.work-active .work-page .project-filters::before,
+  body.project-open .project-mobile-controls {
+    background: var(--mobile-control-glass);
+    -webkit-backdrop-filter: blur(10px) saturate(135%);
+    backdrop-filter: blur(10px) saturate(135%);
+  }
+  body.project-open .project-mobile-controls:has(.project-expand-link) {
+    width: 150px;
+    grid-template-columns: repeat(3, 50px);
+  }
+  body.project-open .project-mobile-controls .project-back { order: 0; }
+  body.project-open .project-mobile-controls .project-info-button { order: 1; }
+  body.project-open .project-mobile-controls .project-expand-link {
+    order: 2;
+    display: grid;
+    place-items: center;
+    width: 50px !important;
+    min-width: 0;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--ink);
+    box-shadow: none;
+  }
+  body.project-open .project-mobile-controls .project-expand-link > span { display: none; }
+  body.project-open .project-mobile-controls .project-expand-icon {
+    width: 24px;
+    height: 24px;
+  }
+  body.project-open .project-mobile-controls .project-expand-link:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: -4px;
   }
 }
