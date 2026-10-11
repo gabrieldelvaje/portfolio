@@ -5309,7 +5309,8 @@ body.stacked-pages .mobile-about-title { display: none; }
     align-items: center;
   }
   body.project-open .project-mobile-controls:has(.project-expand-link) {
-    width: 152px;
+    width: 158px;
+    padding-right: 6px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   body.project-open .project-mobile-controls > :is(.project-back, .project-info-button, .project-expand-link) {
@@ -5343,7 +5344,7 @@ body.stacked-pages .mobile-about-title { display: none; }
   body.project-open .site-header {
     opacity: 1;
     translate: 0 calc(100% + 40px + env(safe-area-inset-bottom));
-    scale: .84;
+    scale: 1;
     visibility: hidden;
     pointer-events: none;
     transition: translate .55s cubic-bezier(.4, 0, .2, 1),
@@ -5354,5 +5355,25 @@ body.stacked-pages .mobile-about-title { display: none; }
     body .site-header,
     body.mobile-nav-hidden .site-header,
     body.project-open .site-header { transition: none; }
+  }
+}
+
+/* Scale the capsule itself equally on both axes as its wrapper slides. */
+@media (max-width: 600px) {
+  body .site-header .nav {
+    transform: scale(1);
+    transform-origin: center center;
+    transition: transform .65s cubic-bezier(.22, 1, .36, 1);
+  }
+  body.mobile-nav-hidden .site-header .nav,
+  body.project-open .site-header .nav {
+    transform: scale(.65);
+    transition: transform .55s cubic-bezier(.4, 0, .2, 1);
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body .site-header .nav,
+    body.mobile-nav-hidden .site-header .nav,
+    body.project-open .site-header .nav { transition: none; }
   }
 }
