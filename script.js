@@ -207,7 +207,7 @@ function showRoute(scrollOnly = false) {
 
   trackNavText();
 
-  if (shouldAnimate && projectOpen && !scrollOnly) {
+  if (shouldAnimate && projectOpen && !scrollOnly && !matchMedia('(max-width: 600px), (max-width: 900px) and (max-height: 500px)').matches) {
     activePage.getAnimations().forEach(animation => animation.cancel());
     const keepMobileFilterFixed = validRoute === 'work' && matchMedia('(max-width: 600px)').matches;
     const routeFrames = (keepMobileFilterFixed || projectOpen)
@@ -362,6 +362,7 @@ requestAnimationFrame(updateFilterSlider);
 if (filterBar) new ResizeObserver(updateFilterSlider).observe(filterBar);
 let filterScrollFrame = 0;
 let mobileNavLastY = scrollY;
+let mobileNavTravel = 0;
 addEventListener('scroll', () => {
   if (!filterScrollFrame) filterScrollFrame = requestAnimationFrame(() => {
     filterScrollFrame = 0;
@@ -371,11 +372,18 @@ addEventListener('scroll', () => {
   if (matchMedia('(max-width: 600px)').matches && !document.body.classList.contains('project-open')) {
     if (sectionNavigationRunning || performance.now() < mobileNavHoldUntil || y < 20) {
       document.body.classList.remove('mobile-nav-hidden');
-    } else if (Math.abs(y - mobileNavLastY) > 6) {
-      document.body.classList.toggle('mobile-nav-hidden', y > mobileNavLastY);
+      mobileNavTravel = 0;
+    } else {
+      const delta = y - mobileNavLastY;
+      if (Math.sign(delta) !== Math.sign(mobileNavTravel)) mobileNavTravel = 0;
+      mobileNavTravel += delta;
+      if (Math.abs(mobileNavTravel) > 24) {
+        document.body.classList.toggle('mobile-nav-hidden', mobileNavTravel > 0);
+        mobileNavTravel = 0;
+      }
     }
   }
-  if (Math.abs(y - mobileNavLastY) > 6) mobileNavLastY = y;
+  mobileNavLastY = y;
 }, { passive: true });
 
 const projectInfoDialog = document.querySelector('#project-info-dialog');

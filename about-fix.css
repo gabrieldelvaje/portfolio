@@ -5377,3 +5377,50 @@ body.stacked-pages .mobile-about-title { display: none; }
     body.project-open .site-header .nav { transition: none; }
   }
 }
+
+/* Stable project opening: fixed controls never inherit an entrance fade. */
+@media (max-width: 600px), (max-width: 900px) and (max-height: 500px) {
+  body.project-open .project-detail-page {
+    animation: none !important;
+    transform: none;
+    opacity: 1;
+    padding-top: 0;
+  }
+  body.project-open > main { padding-top: 0; }
+  body.project-open .project-detail-toolbar {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: 0;
+    padding-top: calc(78px + env(safe-area-inset-top));
+    padding-bottom: 16px;
+  }
+  body.project-open .project-detail-heading { margin-top: 0; }
+}
+/* One transform timeline avoids mismatched wrapper/capsule motion. */
+@media (max-width: 600px) {
+  body .site-header,
+  body.mobile-nav-hidden .site-header,
+  body.project-open .site-header {
+    translate: none;
+    scale: 1;
+    transition: visibility 0s;
+  }
+  body.mobile-nav-hidden .site-header { transition-delay: .6s; }
+  body .site-header .nav {
+    transform: translate3d(0, 0, 0) scale(1);
+    will-change: transform;
+    transition: transform .6s cubic-bezier(.25, .1, .25, 1);
+  }
+  body.mobile-nav-hidden .site-header .nav,
+  body.project-open .site-header .nav {
+    transform: translate3d(0, calc(100% + 50px + env(safe-area-inset-bottom)), 0) scale(.65);
+    transition: transform .6s cubic-bezier(.25, .1, .25, 1);
+  }
+  body.project-open .site-header,
+  body.project-open .site-header .nav { transition: none; }
+  @media (prefers-reduced-motion: reduce) {
+    body .site-header, body .site-header .nav,
+    body.mobile-nav-hidden .site-header, body.mobile-nav-hidden .site-header .nav { transition: none; }
+  }
+}
