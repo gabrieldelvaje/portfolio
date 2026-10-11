@@ -5424,3 +5424,22 @@ body.stacked-pages .mobile-about-title { display: none; }
     body.mobile-nav-hidden .site-header, body.mobile-nav-hidden .site-header .nav { transition: none; }
   }
 }
+
+/* Reserve both greeting lines while the overlay types, avoiding layout jumps. */
+.portrait-copy.is-typing > span { position: relative; }
+.portrait-copy .typewriter-reserve { visibility: hidden; }
+.portrait-copy .typewriter-output { position: absolute; inset: 0 auto auto 0; white-space: pre; }
+.portrait-copy .typewriter-output.is-current::after {
+  content: '';
+  display: inline-block;
+  width: .045em;
+  height: .92em;
+  margin-left: .08em;
+  vertical-align: -.06em;
+  background: currentColor;
+  animation: intro-caret-blink .8s step-end infinite;
+}
+@keyframes intro-caret-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .portrait-copy .typewriter-output.is-current::after { animation: none; }
+}
