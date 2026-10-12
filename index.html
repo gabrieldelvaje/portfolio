@@ -96,7 +96,7 @@
             const layer = document.createElement('span');
             layer.className = 'text-skeleton-layer';
             layer.setAttribute('aria-hidden', 'true');
-            const centered = !!host.closest('.project-card, .intro-card, .hard-skills-card');
+            const centered = !!host.closest('.hard-skills-card');
             for (const line of lines) {
               const pill = document.createElement('span');
               pill.className = 'text-skeleton-pill';
