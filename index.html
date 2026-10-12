@@ -11,6 +11,65 @@
   <link rel="stylesheet" href="about-fix.css?v=267" />
   <link rel="stylesheet" href="piracicaba.css?v=59" />
     <link rel="stylesheet" href="water-preview.css?v=4" />
+
+    <style id="text-loading-styles">
+      /* Keep the real text in flow: the placeholder never changes its geometry. */
+      html.text-loading [data-text-skeleton] {
+        position: relative;
+        color: transparent !important;
+        text-shadow: none !important;
+      }
+      html.text-loading [data-text-skeleton] * {
+        color: transparent !important;
+        text-shadow: none !important;
+      }
+      html.text-loading [data-text-skeleton]::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 4px;
+        pointer-events: none;
+        background: linear-gradient(90deg, transparent 0%, var(--skeleton-highlight, rgba(255,255,255,.55)) 50%, transparent 100%), var(--skeleton-base, #c8c8c5);
+        background-size: 45% 100%, 100% 100%;
+        background-repeat: no-repeat;
+        background-position: -90% 0, 0 0;
+        mask-image: repeating-linear-gradient(to bottom, transparent 0, #000 .15em, #000 .8em, transparent .9em, transparent 1lh);
+        -webkit-mask-image: repeating-linear-gradient(to bottom, transparent 0, #000 .15em, #000 .8em, transparent .9em, transparent 1lh);
+        animation: text-skeleton-sweep 1.1s linear infinite;
+      }
+      html[data-theme="dark"] {
+        --skeleton-base: #454345;
+        --skeleton-highlight: rgba(255,255,255,.16);
+      }
+      @keyframes text-skeleton-sweep {
+        to { background-position: 190% 0, 0 0; }
+      }
+    </style>
+    <script>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('text-loading');
+        // Start before first paint. Navigation within the document does not replay it.
+        document.addEventListener('DOMContentLoaded', () => {
+          const main = document.querySelector('main');
+          main?.setAttribute('aria-busy', 'true');
+          const minimumSweep = new Promise(resolve => {
+            requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, 1100)));
+          });
+          const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
+          Promise.allSettled([minimumSweep, fontsReady]).then(() => {
+            root.classList.remove('text-loading');
+            main?.removeAttribute('aria-busy');
+          });
+        }, { once: true });
+        window.addEventListener('pageshow', event => {
+          if (event.persisted) {
+            root.classList.remove('text-loading');
+            document.querySelector('main')?.removeAttribute('aria-busy');
+          }
+        });
+      })();
+    </script>
   </head>
   <body class="stacked-pages about-active work-active resume-active">
     <header class="site-header">
@@ -44,28 +103,27 @@
 
     <main>
       <section class="page shell about-page" data-page="about" aria-labelledby="about-title">
-        <h1 class="stacked-section-title mobile-about-title">About me</h1>
+        <h1 data-text-skeleton class="stacked-section-title mobile-about-title">About me</h1>
         <aside class="portrait-card">
-          <div class="portrait-copy"><span>Hi,</span><span>I’m Gabriel</span></div>
-          <script src="intro-typewriter.js?v=2"></script>
+          <div class="portrait-copy"><span data-text-skeleton>Hi,</span><span data-text-skeleton>I’m Gabriel</span></div>
           <div class="portrait-crop" aria-label="Portrait of Gabriel Delvaje" role="img">
             <img src="assets/gabriel-portrait.png?v=7" alt="" />
           </div>
         </aside>
 
         <div class="about-content">
-          <h1 id="about-title">Introduction</h1>
+          <h1 data-text-skeleton id="about-title">Introduction</h1>
           <article class="intro-card interactive-card">
             <div>
-              <h2>Data Analytics &amp; Visualization</h2>
-              <p>Welcome to my portfolio. Here, you'll find data solutions, interactive dashboards, and analytical projects that combine technical precision with intuitive design. I am passionate about transforming complex datasets into clear, actionable visual narratives that drive strategic decisions.</p>
+              <h2 data-text-skeleton>Data Analytics &amp; Visualization</h2>
+              <p data-text-skeleton>Welcome to my portfolio. Here, you'll find data solutions, interactive dashboards, and analytical projects that combine technical precision with intuitive design. I am passionate about transforming complex datasets into clear, actionable visual narratives that drive strategic decisions.</p>
             </div>
             <img class="intro-illustration" src="assets/analytics-illustration.png" alt="Illustration of a data analyst working with charts" />
           </article>
 
           <div class="section-rule"></div>
           <div class="section-heading">
-            <h2>Get in Touch</h2>
+            <h2 data-text-skeleton>Get in Touch</h2>
           </div>
           <div class="contact-grid">
             <a class="contact-card dark interactive-card" href="mailto:gabrieldelvaje@gmail.com">
@@ -82,7 +140,7 @@
       </section>
 
       <section class="page shell work-page" data-page="work" aria-labelledby="work-section-title" hidden>
-        <h1 class="stacked-section-title" id="work-section-title">Work</h1>
+        <h1 data-text-skeleton class="stacked-section-title" id="work-section-title">Work</h1>
         <div class="project-filters" role="group" aria-label="Filter projects">
           <button class="filter-menu-toggle" type="button" aria-label="Open project filters" aria-expanded="false"><span aria-hidden="true"></span></button>
           <span class="filter-slider" aria-hidden="true"></span>
@@ -103,8 +161,8 @@
                   <div class="sugar-chat-input"><b>↑</b></div>
                 </div>
               </div>
-              <div class="project-title-row"><h2>Sugar Cane Intelligence</h2></div>
-              <p>Chatbot for exploring sugar cane production, productivity, climate and municipalities.</p>
+              <div class="project-title-row"><h2 data-text-skeleton>Sugar Cane Intelligence</h2></div>
+              <p data-text-skeleton>Chatbot for exploring sugar cane production, productivity, climate and municipalities.</p>
               <div class="project-card-footer"><div class="project-tags"><span>Python</span><span>Streamlit</span><span>Data Analytics</span></div><span class="project-open-cue">Open project <b aria-hidden="true">›</b></span></div>
             </a>
           </article>
@@ -121,8 +179,8 @@
                   </div>
                 </div>
               </div>
-              <div class="project-title-row"><h2>Revenue &amp; Growth Tracker</h2></div>
-              <p>Revenue, target achievement and monthly growth in one executive dashboard.</p>
+              <div class="project-title-row"><h2 data-text-skeleton>Revenue &amp; Growth Tracker</h2></div>
+              <p data-text-skeleton>Revenue, target achievement and monthly growth in one executive dashboard.</p>
               <div class="project-card-footer"><div class="project-tags"><span>Power BI</span><span>DAX</span><span>Data Modeling</span></div><span class="project-open-cue">Open project <b aria-hidden="true">›</b></span></div>
             </a>
           </article>
@@ -138,8 +196,8 @@
                   </div>
                 </div>
               </div>
-              <div class="project-title-row"><h2>Piracicaba Data Stories</h2></div>
-              <p>A series of data stories using public data, statistics and local context to explore Piracicaba from different perspectives.</p>
+              <div class="project-title-row"><h2 data-text-skeleton>Piracicaba Data Stories</h2></div>
+              <p data-text-skeleton>A series of data stories using public data, statistics and local context to explore Piracicaba from different perspectives.</p>
               <div class="project-card-footer"><div class="project-tags"><span>Python</span><span>Public Data</span><span>Data Storytelling</span></div><span class="project-open-cue">Explore series <b aria-hidden="true">›</b></span></div>
             </a>
           </article>
@@ -170,8 +228,8 @@
                   </div>
                 </div>
               </div>
-              <div class="project-title-row"><h2>Piracicaba Water Series</h2></div>
-              <p>Interactive documentary series on water supply, the river and urban infrastructure, built from public data and historical records.</p>
+              <div class="project-title-row"><h2 data-text-skeleton>Piracicaba Water Series</h2></div>
+              <p data-text-skeleton>Interactive documentary series on water supply, the river and urban infrastructure, built from public data and historical records.</p>
               <div class="project-card-footer"><div class="project-tags"><span>Data Storytelling</span><span>Public Data</span><span>JavaScript</span></div><span class="project-open-cue">Explore series <b aria-hidden="true">›</b></span></div>
             </a>
           </article>
@@ -190,8 +248,8 @@
                   </div>
                 </div>
               </div>
-              <div class="project-title-row"><h2>Music Farming Race</h2></div>
-              <p>A listening-minutes competition between three friends, tracking daily progress, weekly rankings, favorite artists and music genres.</p>
+              <div class="project-title-row"><h2 data-text-skeleton>Music Farming Race</h2></div>
+              <p data-text-skeleton>A listening-minutes competition between three friends, tracking daily progress, weekly rankings, favorite artists and music genres.</p>
               <div class="project-card-footer"><div class="project-tags"><span>Power BI</span><span>DAX</span><span>Figma</span></div><span class="project-open-cue">Open project <b aria-hidden="true">›</b></span></div>
             </a>
           </article>
@@ -199,23 +257,23 @@
       </section>
 
       <section class="page shell resume-page" data-page="resume" aria-labelledby="resume-section-title" hidden>
-        <h1 class="stacked-section-title" id="resume-section-title">Resume</h1>
+        <h1 data-text-skeleton class="stacked-section-title" id="resume-section-title">Resume</h1>
         <div class="resume-layout">
           <div class="timeline">
-            <div class="resume-row"><h2>Experience</h2><article class="timeline-item"><time>Nov/25 — Present</time><h3>Data Analyst <span>| UNIMIL</span></h3><p>Data Analytics for Marketing &amp; Commercial performance within the John Deere Smart Connected Factory project. Developed <b>Power BI</b> dashboards, <b>SQL</b> queries, scalable data models, and advanced <b>DAX</b> solutions.</p></article></div>
-            <div class="resume-row"><article class="timeline-item"><time>Sep/24 — Oct/25</time><h3>Data Analyst <span>| COMERC</span></h3><p>Focused on Financial &amp; Credit Risk Analytics, including PDD, Aging &amp; MTM. Automated reporting with <b>Excel VBA</b>, developed <b>SQL</b> queries, and built <b>Power BI</b> dashboards.</p></article></div>
-            <div class="resume-row"><article class="timeline-item"><time>Feb/24 — Sep/24</time><h3>Revenue and Pricing Intern <span>| Whirlpool</span></h3><p>Automated pricing &amp; margin analysis using <b>Python</b>. Analyzed price trends and supported profitability and commercial decision-making.</p></article></div>
+            <div class="resume-row"><h2 data-text-skeleton>Experience</h2><article class="timeline-item"><time data-text-skeleton>Nov/25 — Present</time><h3 data-text-skeleton>Data Analyst <span>| UNIMIL</span></h3><p data-text-skeleton>Data Analytics for Marketing &amp; Commercial performance within the John Deere Smart Connected Factory project. Developed <b>Power BI</b> dashboards, <b>SQL</b> queries, scalable data models, and advanced <b>DAX</b> solutions.</p></article></div>
+            <div class="resume-row"><article class="timeline-item"><time data-text-skeleton>Sep/24 — Oct/25</time><h3 data-text-skeleton>Data Analyst <span>| COMERC</span></h3><p data-text-skeleton>Focused on Financial &amp; Credit Risk Analytics, including PDD, Aging &amp; MTM. Automated reporting with <b>Excel VBA</b>, developed <b>SQL</b> queries, and built <b>Power BI</b> dashboards.</p></article></div>
+            <div class="resume-row"><article class="timeline-item"><time data-text-skeleton>Feb/24 — Sep/24</time><h3 data-text-skeleton>Revenue and Pricing Intern <span>| Whirlpool</span></h3><p data-text-skeleton>Automated pricing &amp; margin analysis using <b>Python</b>. Analyzed price trends and supported profitability and commercial decision-making.</p></article></div>
           </div>
           <div class="education">
-            <div class="resume-row"><h2>Education</h2><article class="degree dark interactive-card"><h3>USP <span>| Bachelor’s degree in Applied and Computational Mathematics</span></h3><time>2023 — 2025</time></article></div>
-            <div class="resume-row"><article class="degree dark interactive-card"><h3>Anhembi-Morumbi <span>| Post degree in Data Science and Artificial Intelligence</span></h3><time>2025 — 2026</time></article></div>
-            <div class="resume-row"><article class="degree dark interactive-card"><h3>USP <span>| Bachelor’s degree in Language, Literature and Linguistics</span></h3><time>2017 — 2021</time></article></div>
+            <div class="resume-row"><h2 data-text-skeleton>Education</h2><article class="degree dark interactive-card"><h3 data-text-skeleton>USP <span>| Bachelor’s degree in Applied and Computational Mathematics</span></h3><time data-text-skeleton>2023 — 2025</time></article></div>
+            <div class="resume-row"><article class="degree dark interactive-card"><h3 data-text-skeleton>Anhembi-Morumbi <span>| Post degree in Data Science and Artificial Intelligence</span></h3><time data-text-skeleton>2025 — 2026</time></article></div>
+            <div class="resume-row"><article class="degree dark interactive-card"><h3 data-text-skeleton>USP <span>| Bachelor’s degree in Language, Literature and Linguistics</span></h3><time data-text-skeleton>2017 — 2021</time></article></div>
           </div>
           <aside class="skills-panel">
             <div class="resume-row skills-showcase">
               <div class="hard-skills-card">
                 <div class="hard-skills-image"><img src="assets/hard-skills-dashboard.png" alt="Analytics dashboard illustration" /></div>
-                <h2>Hard skills</h2>
+                <h2 data-text-skeleton>Hard skills</h2>
                 <div class="skill-icons" aria-label="Power BI, Excel, Python, MySQL and Figma">
                   <figure class="skill-tool"><img src="assets/hard-skill-power-bi.svg" alt="Power BI" /><figcaption>Power BI</figcaption></figure>
                   <figure class="skill-tool"><img src="assets/hard-skill-excel.svg" alt="Excel" /><figcaption>Excel</figcaption></figure>
@@ -225,7 +283,7 @@
                 </div>
               </div>
             </div>
-            <div class="resume-row skill-group"><h2>Soft skills</h2><div class="tags"><span>#Analytical Thinking</span><span class="accent">#Data Storytelling</span><span>#Problem Solving</span><span>#Strategic Thinking</span><span class="accent">#Business Acumen</span><span>#Communication</span></div></div>
+            <div class="resume-row skill-group"><h2 data-text-skeleton>Soft skills</h2><div class="tags"><span>#Analytical Thinking</span><span class="accent">#Data Storytelling</span><span>#Problem Solving</span><span>#Strategic Thinking</span><span class="accent">#Business Acumen</span><span>#Communication</span></div></div>
           </aside>
         </div>
       </section>
@@ -235,7 +293,7 @@
           <div class="project-mobile-controls"><a class="project-back" href="#work" aria-label="Back to Work"><span class="project-back-icon" aria-hidden="true"><img src="assets/project-back-arrow.png" alt="" /></span><img class="project-mobile-icon" src="assets/mobile-back-icon.png" alt=""><span class="project-back-label">Back to Work</span></a><a class="project-expand-link" href="https://app.powerbi.com/view?r=eyJrIjoiMzVkODllZDMtMWJjNS00MjU4LWJjNGMtMTIwNzcxZWFkZTU4IiwidCI6Ijg4OWIxOTFhLTc4NTAtNDFhMy05MTBjLWFkODMyZDcxZTVmOSJ9" target="_blank" rel="noreferrer" aria-label="Open Music Farming Race in a new window"><svg class="project-expand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M3 16v5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Open in new window</span></a><button class="project-info-button" type="button" aria-label="About Music Farming Race" data-project-info data-info-title="Music Farming Race" data-info-description="Music Farming Race started as a playful competition between three friends to see who could log the most listening minutes. The dashboard tracks daily activity and brings it together in weekly summaries, exploring music genres, artists and the performance of all three competitors. With a strong emphasis on visual design, it turns a friendly race to keep the music playing into an engaging analytics experience."><span class="project-info-glyph" aria-hidden="true">i</span><span class="project-info-label" aria-hidden="true">More About</span><img class="project-mobile-icon" src="assets/mobile-info-icon.png" alt=""></button></div>
           <div class="project-detail-actions">
             <div class="project-detail-heading">
-              <h1 id="music-farming-title">Music Farming Race</h1>
+              <h1 data-text-skeleton id="music-farming-title">Music Farming Race</h1>
               <span>Power BI · DAX · Figma</span>
             </div>
           </div>
@@ -248,7 +306,7 @@
           <div class="project-mobile-controls"><a class="project-back" href="#work" aria-label="Back to Work"><span class="project-back-icon" aria-hidden="true"><img src="assets/project-back-arrow.png" alt="" /></span><img class="project-mobile-icon" src="assets/mobile-back-icon.png" alt=""><span class="project-back-label">Back to Work</span></a><a class="project-expand-link" href="https://gabrieldelvaje.github.io/sugar-cane-intelligence/" target="_blank" rel="noreferrer" aria-label="Open Sugar Cane Intelligence in a new window"><svg class="project-expand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M3 16v5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Open in new window</span></a><button class="project-info-button" type="button" aria-label="About Sugar Cane Intelligence" data-project-info data-info-title="Sugar Cane Intelligence" data-info-description="Sugar Cane Intelligence reimagines dashboards for a world increasingly used to asking questions in AI chats. It explores how data analysis can feel more like a conversation: users ask for what they want to understand, and the chatbot responds in natural language. Using Brazilian sugar cane production and weather data, it compares results, builds rankings and presents insights through predefined analytical routines. The idea is to make dashboard exploration more intuitive by turning questions into a familiar way to interact with data."><span class="project-info-glyph" aria-hidden="true">i</span><span class="project-info-label" aria-hidden="true">More About</span><img class="project-mobile-icon" src="assets/mobile-info-icon.png" alt=""></button></div>
           <div class="project-detail-actions">
             <div class="project-detail-heading">
-              <h1 id="sugar-cane-title">Sugar Cane Intelligence</h1>
+              <h1 data-text-skeleton id="sugar-cane-title">Sugar Cane Intelligence</h1>
               <span>Python · Data Analysis · JavaScript</span>
             </div>
             <a class="project-repo-link" href="https://github.com/gabrieldelvaje/sugar-cane-intelligence" target="_blank" rel="noreferrer" aria-label="View Sugar Cane Intelligence on GitHub">
@@ -265,7 +323,7 @@
           <div class="project-mobile-controls"><a class="project-back" href="#work" aria-label="Back to Work"><span class="project-back-icon" aria-hidden="true"><img src="assets/project-back-arrow.png" alt="" /></span><img class="project-mobile-icon" src="assets/mobile-back-icon.png" alt=""><span class="project-back-label">Back to Work</span></a><a class="project-expand-link" href="https://gabrieldelvaje.github.io/agua-piracicaba/index.html" target="_blank" rel="noreferrer" aria-label="Open Piracicaba Water Series in a new window"><svg class="project-expand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M3 16v5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Open in new window</span></a><button class="project-info-button" type="button" aria-label="About Piracicaba Water Series" data-project-info data-info-title="Piracicaba Water Series" data-info-description="Piracicaba Water Series explores the relationship between Piracicaba, its rivers and its water supply. The interactive documentary combines public data, historical photographs, newspaper records and source documentation to tell the story of water distribution, the Cantareira System and the city’s search for water in the Corumbataí River. Each episode connects history and data through charts, timelines and archival material, making the city’s water infrastructure easier to understand."><span class="project-info-glyph" aria-hidden="true">i</span><span class="project-info-label" aria-hidden="true">More About</span><img class="project-mobile-icon" src="assets/mobile-info-icon.png" alt=""></button></div>
           <div class="project-detail-actions">
             <div class="project-detail-heading">
-              <h1 id="piracicaba-water-title">Piracicaba Water Series</h1>
+              <h1 data-text-skeleton id="piracicaba-water-title">Piracicaba Water Series</h1>
               <span>Data Storytelling · Public Data · JavaScript</span>
             </div>
             <a class="project-repo-link" href="https://github.com/gabrieldelvaje/agua-piracicaba" target="_blank" rel="noreferrer" aria-label="View Piracicaba Water Series on GitHub">
@@ -282,7 +340,7 @@
           <div class="project-mobile-controls"><a class="project-back" href="#work" aria-label="Back to Work"><span class="project-back-icon" aria-hidden="true"><img src="assets/project-back-arrow.png" alt="" /></span><img class="project-mobile-icon" src="assets/mobile-back-icon.png" alt=""><span class="project-back-label">Back to Work</span></a><a class="project-expand-link" href="https://app.powerbi.com/view?r=eyJrIjoiYzVmZGQ4MjUtYzc4YS00OTk2LTg0NTgtMmRiODJlYTg3YzEyIiwidCI6Ijg4OWIxOTFhLTc4NTAtNDFhMy05MTBjLWFkODMyZDcxZTVmOSJ9" target="_blank" rel="noreferrer" aria-label="Open Revenue and Growth Tracker in a new window"><svg class="project-expand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M3 16v5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Open in new window</span></a><button class="project-info-button" type="button" aria-label="About Revenue and Growth Tracker" data-project-info data-info-title="Revenue &amp; Growth Tracker" data-info-description="Created for an AB InBev case study, Revenue &amp; Growth Tracker is an executive dashboard for monitoring revenue and performance against targets. Its design draws strongly on the brand identity, using its colors, typography and straight lines to create a consistent visual experience. The dashboard brings together target tracking, product rankings and geographic distribution, helping users understand commercial performance and where results are coming from."><span class="project-info-glyph" aria-hidden="true">i</span><span class="project-info-label" aria-hidden="true">More About</span><img class="project-mobile-icon" src="assets/mobile-info-icon.png" alt=""></button></div>
           <div class="project-detail-actions">
             <div class="project-detail-heading">
-              <h1 id="revenue-growth-title">Revenue &amp; Growth Tracker</h1>
+              <h1 data-text-skeleton id="revenue-growth-title">Revenue &amp; Growth Tracker</h1>
               <span>Power BI · DAX · Data Modeling</span>
             </div>
           </div>
@@ -295,7 +353,7 @@
           <div class="project-detail-toolbar piracicaba-toolbar">
             <div class="project-mobile-controls"><a class="project-back" href="#work" aria-label="Back to Work"><span class="project-back-icon" aria-hidden="true"><img src="assets/project-back-arrow.png" alt="" /></span><img class="project-mobile-icon" src="assets/mobile-back-icon.png" alt=""><span class="project-back-label">Back to Work</span></a><button class="project-info-button" type="button" aria-label="About Piracicaba Data Stories" data-project-info data-info-title="Piracicaba Data Stories" data-info-description="Piracicaba Data Stories is a series of Instagram carousels that makes local data analysis accessible through visual storytelling. The series explores different aspects of life in Piracicaba, including income distribution, same-sex marriages and patterns in the local retail landscape. Each story aims to simplify the analysis while preserving its meaning, sharing knowledge about the city and the people who live in it. The portfolio features carousels on income distribution, tongue rolling in a voluntary local sample, same-sex civil marriages, the changing geography of local retail, and patterns in street names."><span class="project-info-glyph" aria-hidden="true">i</span><span class="project-info-label" aria-hidden="true">More About</span><img class="project-mobile-icon" src="assets/mobile-info-icon.png" alt=""></button></div>
             <div class="project-detail-actions">
-              <div class="project-detail-heading"><h1 id="piracicaba-title">Piracicaba Data Stories</h1><span>Data Analytics · Geospatial Analysis · Storytelling</span></div>
+              <div class="project-detail-heading"><h1 data-text-skeleton id="piracicaba-title">Piracicaba Data Stories</h1><span>Data Analytics · Geospatial Analysis · Storytelling</span></div>
               <a class="project-repo-link" id="story-repo-link" href="https://github.com/gabrieldelvaje/distribuicao-renda-piracicaba" target="_blank" rel="noreferrer" aria-label="Open Income Distribution repository on GitHub"><img src="assets/github-icon.png" alt="" /><span>View on GitHub</span></a>
             </div>
           </div>
@@ -309,55 +367,55 @@
           <section class="data-story" data-story-panel="income" aria-label="Income Distribution in Piracicaba carousel">
             <div class="story-carousel" data-carousel tabindex="0" aria-label="Income Distribution carousel">
               <div class="story-track">
-                <figure class="story-slide" aria-label="Slide 1 of 7"><div class="story-image-window"><img src="assets/piracicaba/01.png" alt="Original income distribution carousel cover" /></div><figcaption><span>1/7 · English</span><h3>Where is Piracicaba’s income going?</h3><p>Over 20 years, income concentration moved away from the center and spread toward outer neighborhoods.</p></figcaption></figure>
-                <figure class="story-slide" aria-label="Slide 2 of 7"><div class="story-image-window"><img src="assets/piracicaba/02.png" alt="Map of the five Piracicaba neighborhoods with the highest average income in 2000" /></div><figcaption><span>2/7 · English</span><h3>Highest average income · 2000</h3><p>In 2000, the highest-income neighborhoods were concentrated in the central area.</p></figcaption></figure>
-                <figure class="story-slide" aria-label="Slide 3 of 7"><div class="story-image-window"><img src="assets/piracicaba/03.png" alt="Map of the five Piracicaba neighborhoods with the highest average income in 2022" /></div><figcaption><span>3/7 · English</span><h3>Highest average income · 2022</h3><p>By 2022, the concentration had shifted toward the city’s outer areas.</p></figcaption></figure>
-                <figure class="story-slide" aria-label="Slide 4 of 7"><div class="story-image-window"><img src="assets/piracicaba/04.png" alt="Chart showing the largest average income increases from 2000 to 2022" /></div><figcaption><span>4/7 · English</span><h3>Largest percentage increases</h3><p>Morato +1,474% · Monte Alegre +1,249% · Unileste +1,162%. Nominal growth includes inflation.</p></figcaption></figure>
-                <figure class="story-slide" aria-label="Slide 5 of 7"><div class="story-image-window"><img src="assets/piracicaba/05.png" alt="Map relating high-end gated communities to rising average income" /></div><figcaption><span>5/7 · English</span><h3>Gated communities and income</h3><p>High-end residential developments expanded alongside rising neighborhood averages. This is an association, not proof of causality.</p></figcaption></figure>
-                <figure class="story-slide" aria-label="Slide 6 of 7"><div class="story-image-window"><img src="assets/piracicaba/06.png" alt="Mean versus median income chart for selected neighborhoods" /></div><figcaption><span>6/7 · English</span><h3>Higher averages can hide inequality</h3><p>A small number of very high-income households can pull the average upward while the median remains much lower.</p></figcaption></figure>
-                <figure class="story-slide" aria-label="Slide 7 of 7"><div class="story-image-window"><img src="assets/piracicaba/07.png" alt="Satellite comparison of residential expansion in Monte Alegre and Santa Rosa" /></div><figcaption><span>7/7 · English</span><h3>The city’s socioeconomic map changed</h3><p>Average income is rising in outer neighborhoods — and inequality is rising too.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 1 of 7"><div class="story-image-window"><img src="assets/piracicaba/01.png" alt="Original income distribution carousel cover" /></div><figcaption><span>1/7 · English</span><h3 data-text-skeleton>Where is Piracicaba’s income going?</h3><p data-text-skeleton>Over 20 years, income concentration moved away from the center and spread toward outer neighborhoods.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 2 of 7"><div class="story-image-window"><img src="assets/piracicaba/02.png" alt="Map of the five Piracicaba neighborhoods with the highest average income in 2000" /></div><figcaption><span>2/7 · English</span><h3 data-text-skeleton>Highest average income · 2000</h3><p data-text-skeleton>In 2000, the highest-income neighborhoods were concentrated in the central area.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 3 of 7"><div class="story-image-window"><img src="assets/piracicaba/03.png" alt="Map of the five Piracicaba neighborhoods with the highest average income in 2022" /></div><figcaption><span>3/7 · English</span><h3 data-text-skeleton>Highest average income · 2022</h3><p data-text-skeleton>By 2022, the concentration had shifted toward the city’s outer areas.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 4 of 7"><div class="story-image-window"><img src="assets/piracicaba/04.png" alt="Chart showing the largest average income increases from 2000 to 2022" /></div><figcaption><span>4/7 · English</span><h3 data-text-skeleton>Largest percentage increases</h3><p data-text-skeleton>Morato +1,474% · Monte Alegre +1,249% · Unileste +1,162%. Nominal growth includes inflation.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 5 of 7"><div class="story-image-window"><img src="assets/piracicaba/05.png" alt="Map relating high-end gated communities to rising average income" /></div><figcaption><span>5/7 · English</span><h3 data-text-skeleton>Gated communities and income</h3><p data-text-skeleton>High-end residential developments expanded alongside rising neighborhood averages. This is an association, not proof of causality.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 6 of 7"><div class="story-image-window"><img src="assets/piracicaba/06.png" alt="Mean versus median income chart for selected neighborhoods" /></div><figcaption><span>6/7 · English</span><h3 data-text-skeleton>Higher averages can hide inequality</h3><p data-text-skeleton>A small number of very high-income households can pull the average upward while the median remains much lower.</p></figcaption></figure>
+                <figure class="story-slide" aria-label="Slide 7 of 7"><div class="story-image-window"><img src="assets/piracicaba/07.png" alt="Satellite comparison of residential expansion in Monte Alegre and Santa Rosa" /></div><figcaption><span>7/7 · English</span><h3 data-text-skeleton>The city’s socioeconomic map changed</h3><p data-text-skeleton>Average income is rising in outer neighborhoods — and inequality is rising too.</p></figcaption></figure>
               </div>
               <button class="carousel-arrow previous" type="button" aria-label="Previous slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button><button class="carousel-arrow next" type="button" aria-label="Next slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button>
             </div>
             <div class="carousel-footer"><div class="carousel-dots" role="group" aria-label="Choose carousel slide"></div><span class="carousel-status" aria-live="polite">1 / 7</span></div>
           </section><section class="data-story tongue-story" data-story-panel="tongue" aria-label="Tongue Rolling in Piracicaba carousel" hidden>
-<div class="story-carousel" data-carousel tabindex="0" aria-label="Tongue Rolling carousel"><div class="story-track"><figure class="story-slide" aria-label="Slide 1 of 7"><img src="assets/piracicaba/tongue-rolling/01-cover.jpeg" alt="Tongue rolling in Piracicaba" loading="lazy" /><figcaption><span>1/7 · English</span><h3>Tongue rolling in Piracicaba</h3><p>What does a local sample reveal about this observed phenotype? A survey combining descriptive statistics and comparison with published studies.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 2 of 7"><img src="assets/piracicaba/tongue-rolling/02-methodology.jpeg" alt="How the survey was conducted" loading="lazy" /><figcaption><span>2/7 · English</span><h3>How the survey was conducted</h3><p>79 responses: 73 included in the Piracicaba subsample and 6 from other cities. Santa Rita responses were counted as Piracicaba. Participation was voluntary.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 3 of 7"><img src="assets/piracicaba/tongue-rolling/03-main-result.jpeg" alt="75.3% of the local sample" loading="lazy" /><figcaption><span>3/7 · English</span><h3>75.3% of the local sample</h3><p>55 of 73 respondents reported being able to roll their tongue; 18 reported they could not. These percentages describe the surveyed sample.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 4 of 7"><img src="assets/piracicaba/tongue-rolling/04-confidence-interval.jpeg" alt="Uncertainty around the result" loading="lazy" /><figcaption><span>4/7 · English</span><h3>Uncertainty around the result</h3><p>The 95% Wilson interval is 64.4%–83.8%. It captures binomial uncertainty, but does not remove selection bias or make the voluntary sample representative of the city.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 5 of 7"><img src="assets/piracicaba/tongue-rolling/05-literature-comparison.jpeg" alt="Comparison with published studies" loading="lazy" /><figcaption><span>5/7 · English</span><h3>Comparison with published studies</h3><p>The carousel compares Piracicaba’s 75.3% with 72.9% in an Esan sample, approximately 70% in Sturtevant’s study and 63.9% in a Lagos sample. Different samples and methods limit direct comparisons.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 6 of 7"><img src="assets/piracicaba/tongue-rolling/06-not-simple-gene.jpeg" alt="An observed phenotype" loading="lazy" /><figcaption><span>6/7 · English</span><h3>An observed phenotype</h3><p>The simple dominant-gene explanation is insufficient. Studies of identical twins and later research challenged a simple genetic model for tongue rolling.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 7 of 7"><img src="assets/piracicaba/tongue-rolling/07-summary.jpeg" alt="What the sample suggests" loading="lazy" /><figcaption><span>7/7 · English</span><h3>What the sample suggests</h3><p>About three in four surveyed Piracicaba residents reported tongue rolling. The result is close to some published estimates, but is not an exact prevalence for the whole city.</p></figcaption></figure></div><button class="carousel-arrow previous" type="button" aria-label="Previous slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button><button class="carousel-arrow next" type="button" aria-label="Next slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button></div>
+<div class="story-carousel" data-carousel tabindex="0" aria-label="Tongue Rolling carousel"><div class="story-track"><figure class="story-slide" aria-label="Slide 1 of 7"><img src="assets/piracicaba/tongue-rolling/01-cover.jpeg" alt="Tongue rolling in Piracicaba" loading="lazy" /><figcaption><span>1/7 · English</span><h3 data-text-skeleton>Tongue rolling in Piracicaba</h3><p data-text-skeleton>What does a local sample reveal about this observed phenotype? A survey combining descriptive statistics and comparison with published studies.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 2 of 7"><img src="assets/piracicaba/tongue-rolling/02-methodology.jpeg" alt="How the survey was conducted" loading="lazy" /><figcaption><span>2/7 · English</span><h3 data-text-skeleton>How the survey was conducted</h3><p data-text-skeleton>79 responses: 73 included in the Piracicaba subsample and 6 from other cities. Santa Rita responses were counted as Piracicaba. Participation was voluntary.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 3 of 7"><img src="assets/piracicaba/tongue-rolling/03-main-result.jpeg" alt="75.3% of the local sample" loading="lazy" /><figcaption><span>3/7 · English</span><h3 data-text-skeleton>75.3% of the local sample</h3><p data-text-skeleton>55 of 73 respondents reported being able to roll their tongue; 18 reported they could not. These percentages describe the surveyed sample.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 4 of 7"><img src="assets/piracicaba/tongue-rolling/04-confidence-interval.jpeg" alt="Uncertainty around the result" loading="lazy" /><figcaption><span>4/7 · English</span><h3 data-text-skeleton>Uncertainty around the result</h3><p data-text-skeleton>The 95% Wilson interval is 64.4%–83.8%. It captures binomial uncertainty, but does not remove selection bias or make the voluntary sample representative of the city.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 5 of 7"><img src="assets/piracicaba/tongue-rolling/05-literature-comparison.jpeg" alt="Comparison with published studies" loading="lazy" /><figcaption><span>5/7 · English</span><h3 data-text-skeleton>Comparison with published studies</h3><p data-text-skeleton>The carousel compares Piracicaba’s 75.3% with 72.9% in an Esan sample, approximately 70% in Sturtevant’s study and 63.9% in a Lagos sample. Different samples and methods limit direct comparisons.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 6 of 7"><img src="assets/piracicaba/tongue-rolling/06-not-simple-gene.jpeg" alt="An observed phenotype" loading="lazy" /><figcaption><span>6/7 · English</span><h3 data-text-skeleton>An observed phenotype</h3><p data-text-skeleton>The simple dominant-gene explanation is insufficient. Studies of identical twins and later research challenged a simple genetic model for tongue rolling.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 7 of 7"><img src="assets/piracicaba/tongue-rolling/07-summary.jpeg" alt="What the sample suggests" loading="lazy" /><figcaption><span>7/7 · English</span><h3 data-text-skeleton>What the sample suggests</h3><p data-text-skeleton>About three in four surveyed Piracicaba residents reported tongue rolling. The result is close to some published estimates, but is not an exact prevalence for the whole city.</p></figcaption></figure></div><button class="carousel-arrow previous" type="button" aria-label="Previous slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button><button class="carousel-arrow next" type="button" aria-label="Next slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button></div>
 <div class="carousel-footer"><div class="carousel-dots" role="group" aria-label="Choose carousel slide"></div><span class="carousel-status" aria-live="polite">1 / 7</span></div></section><section class="data-story marriage-story" data-story-panel="marriage" aria-label="Same-Sex Marriage in Piracicaba carousel" hidden>
-<div class="story-carousel" data-carousel tabindex="0" aria-label="Same-Sex Marriage carousel"><div class="story-track"><figure class="story-slide" aria-label="Slide 1 of 7"><img src="assets/piracicaba/same-sex-marriage/01-cover.jpeg" alt="Same-sex marriages in Piracicaba" loading="lazy" /><figcaption><span>1/7 · English</span><h3>Same-sex marriages in Piracicaba</h3><p>How have civil marriage registrations evolved since the 2013 nationwide standardization? A local time series with context from São Paulo state and Brazil.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 2 of 7"><img src="assets/piracicaba/same-sex-marriage/02-legal-context-2013.jpeg" alt="The 2013 milestone" loading="lazy" /><figcaption><span>2/7 · English</span><h3>The 2013 milestone</h3><p>CNJ Resolution 175/2013 prohibited registry offices from refusing civil marriages between same-sex spouses. It standardized access nationwide, building on earlier court decisions.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 3 of 7"><img src="assets/piracicaba/same-sex-marriage/03-piracicaba-growth.jpeg" alt="62 registrations in 2024" loading="lazy" /><figcaption><span>3/7 · English</span><h3>62 registrations in 2024</h3><p>The cited report identifies 2024 as a local high. The original artwork shows 17→62 (+264.7%), but reports disagree on the baseline: the detailed series records 22 in 2014 and 17 in 2013. The repository documents this conflict.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 4 of 7"><img src="assets/piracicaba/same-sex-marriage/04-women-majority.jpeg" alt="Female couples form the majority" loading="lazy" /><figcaption><span>4/7 · English</span><h3>Female couples form the majority</h3><p>Female couples accounted for 64.0% of local registrations accumulated through April 2023, compared with 65.0% in São Paulo and 64.6% in Brazil in 2024. These figures cover different periods.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 5 of 7"><img src="assets/piracicaba/same-sex-marriage/05-pandemic-series.jpeg" alt="A decline followed by recovery" loading="lazy" /><figcaption><span>5/7 · English</span><h3>A decline followed by recovery</h3><p>Piracicaba recorded 37 marriages in 2019, 20 in 2020, 19 in 2021, 34 in 2022 and 62 in 2024. The decline coincided with the pandemic; the descriptive series does not establish a single cause.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 6 of 7"><img src="assets/piracicaba/same-sex-marriage/06-sp-brazil-context.jpeg" alt="State and national context" loading="lazy" /><figcaption><span>6/7 · English</span><h3>State and national context</h3><p>In São Paulo, same-sex marriages rose from 0.7% to 1.8% of all marriages between 2013 and 2024, with 37,625 registrations accumulated. Brazil recorded 12,187 in 2024.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 7 of 7"><img src="assets/piracicaba/same-sex-marriage/07-summary.jpeg" alt="What the registrations show" loading="lazy" /><figcaption><span>7/7 · English</span><h3>What the registrations show</h3><p>Local registrations recovered and reached 62 in 2024. Female couples form the majority in the compared records. These statistics describe civil marriages, not the size of the LGBTQIA+ population.</p></figcaption></figure></div><button class="carousel-arrow previous" type="button" aria-label="Previous slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button><button class="carousel-arrow next" type="button" aria-label="Next slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button></div>
+<div class="story-carousel" data-carousel tabindex="0" aria-label="Same-Sex Marriage carousel"><div class="story-track"><figure class="story-slide" aria-label="Slide 1 of 7"><img src="assets/piracicaba/same-sex-marriage/01-cover.jpeg" alt="Same-sex marriages in Piracicaba" loading="lazy" /><figcaption><span>1/7 · English</span><h3 data-text-skeleton>Same-sex marriages in Piracicaba</h3><p data-text-skeleton>How have civil marriage registrations evolved since the 2013 nationwide standardization? A local time series with context from São Paulo state and Brazil.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 2 of 7"><img src="assets/piracicaba/same-sex-marriage/02-legal-context-2013.jpeg" alt="The 2013 milestone" loading="lazy" /><figcaption><span>2/7 · English</span><h3 data-text-skeleton>The 2013 milestone</h3><p data-text-skeleton>CNJ Resolution 175/2013 prohibited registry offices from refusing civil marriages between same-sex spouses. It standardized access nationwide, building on earlier court decisions.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 3 of 7"><img src="assets/piracicaba/same-sex-marriage/03-piracicaba-growth.jpeg" alt="62 registrations in 2024" loading="lazy" /><figcaption><span>3/7 · English</span><h3 data-text-skeleton>62 registrations in 2024</h3><p data-text-skeleton>The cited report identifies 2024 as a local high. The original artwork shows 17→62 (+264.7%), but reports disagree on the baseline: the detailed series records 22 in 2014 and 17 in 2013. The repository documents this conflict.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 4 of 7"><img src="assets/piracicaba/same-sex-marriage/04-women-majority.jpeg" alt="Female couples form the majority" loading="lazy" /><figcaption><span>4/7 · English</span><h3 data-text-skeleton>Female couples form the majority</h3><p data-text-skeleton>Female couples accounted for 64.0% of local registrations accumulated through April 2023, compared with 65.0% in São Paulo and 64.6% in Brazil in 2024. These figures cover different periods.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 5 of 7"><img src="assets/piracicaba/same-sex-marriage/05-pandemic-series.jpeg" alt="A decline followed by recovery" loading="lazy" /><figcaption><span>5/7 · English</span><h3 data-text-skeleton>A decline followed by recovery</h3><p data-text-skeleton>Piracicaba recorded 37 marriages in 2019, 20 in 2020, 19 in 2021, 34 in 2022 and 62 in 2024. The decline coincided with the pandemic; the descriptive series does not establish a single cause.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 6 of 7"><img src="assets/piracicaba/same-sex-marriage/06-sp-brazil-context.jpeg" alt="State and national context" loading="lazy" /><figcaption><span>6/7 · English</span><h3 data-text-skeleton>State and national context</h3><p data-text-skeleton>In São Paulo, same-sex marriages rose from 0.7% to 1.8% of all marriages between 2013 and 2024, with 37,625 registrations accumulated. Brazil recorded 12,187 in 2024.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 7 of 7"><img src="assets/piracicaba/same-sex-marriage/07-summary.jpeg" alt="What the registrations show" loading="lazy" /><figcaption><span>7/7 · English</span><h3 data-text-skeleton>What the registrations show</h3><p data-text-skeleton>Local registrations recovered and reached 62 in 2024. Female couples form the majority in the compared records. These statistics describe civil marriages, not the size of the LGBTQIA+ population.</p></figcaption></figure></div><button class="carousel-arrow previous" type="button" aria-label="Previous slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button><button class="carousel-arrow next" type="button" aria-label="Next slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button></div>
 <div class="carousel-footer"><div class="carousel-dots" role="group" aria-label="Choose carousel slide"></div><span class="carousel-status" aria-live="polite">1 / 7</span></div></section>
-<section class="data-story commerce-story" data-story-panel="commerce" aria-label="Where Did They Go retail carousel" hidden><div class="story-carousel" data-carousel tabindex="0" aria-label="Where Did They Go carousel"><div class="story-track"><figure class="story-slide" aria-label="Slide 1 of 7"><img src="assets/piracicaba/e-commerce/01-cover.jpeg" alt="Where did they go?" loading="lazy" /><figcaption><span>1/7 · English</span><h3>Where did they go?</h3><p>Is downtown Piracicaba losing the next generation of stores? Business registration data show that new retailers increasingly open elsewhere in the city.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 2 of 7"><img src="assets/piracicaba/e-commerce/02-new-stores-share.jpeg" alt="Fewer new stores choose downtown" loading="lazy" /><figcaption><span>2/7 · English</span><h3>Fewer new stores choose downtown</h3><p>Downtown accounted for 26.6% of new retail stores in 2000–2009, 16.1% in 2010–2019 and 9.1% in 2020–2026. Its share was 7.8% in 2025. The 2026 data run through August 8.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 3 of 7"><img src="assets/piracicaba/e-commerce/03-store-age.jpeg" alt="An older retail landscape" loading="lazy" /><figcaption><span>3/7 · English</span><h3>An older retail landscape</h3><p>Among retailers active on August 8, 2026, median store age was 15.2 years downtown and 7.4 elsewhere. Only 20.1% of downtown stores opened in the last five years, compared with 36.2% in other neighborhoods.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 4 of 7"><img src="assets/piracicaba/e-commerce/04-openings-closures-2025.jpeg" alt="The gap is in new openings" loading="lazy" /><figcaption><span>4/7 · English</span><h3>The gap is in new openings</h3><p>In 2025, opening rates were 4.7% downtown and 11.0% elsewhere; closure rates were 5.3% and 8.3%. The net balance was −17 stores downtown and +370 in other neighborhoods.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 5 of 7"><img src="assets/piracicaba/e-commerce/05-high-ecommerce-exposure.jpeg" alt="Physical retail keeps growing elsewhere" loading="lazy" /><figcaption><span>5/7 · English</span><h3>Physical retail keeps growing elsewhere</h3><p>In categories more exposed to e-commerce, store counts grew 4.3% downtown and 46.3% elsewhere from 2019 to August 2026. The 2025 net balance was −21 versus +172. These patterns alone do not establish an e-commerce effect.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 6 of 7"><img src="assets/piracicaba/e-commerce/06-category-share.jpeg" alt="Retail is spreading across the city" loading="lazy" /><figcaption><span>6/7 · English</span><h3>Retail is spreading across the city</h3><p>Between 2010 and 2026, downtown’s share fell from 62.3% to 25.7% in jewelry and watches, 42.8% to 22.0% in electronics, 35.7% to 18.9% in fashion, and 35.2% to 16.7% in home and decor.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 7 of 7"><img src="assets/piracicaba/e-commerce/07-summary.jpeg" alt="A shift in retail renewal" loading="lazy" /><figcaption><span>7/7 · English</span><h3>A shift in retail renewal</h3><p>Downtown’s declining share predates the pandemic. Its stores are older and new openings increasingly occur elsewhere. The study uses Receita Federal retail business registrations to describe this geographic shift, without isolating its causes.</p></figcaption></figure></div><button class="carousel-arrow previous" type="button" aria-label="Previous slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button><button class="carousel-arrow next" type="button" aria-label="Next slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button></div><div class="carousel-footer"><div class="carousel-dots" role="group" aria-label="Choose carousel slide"></div><span class="carousel-status" aria-live="polite">1 / 7</span></div></section>
-<section class="data-story street-story" data-story-panel="streets" aria-label="Street Names in Piracicaba carousel" hidden><div class="story-carousel" data-carousel tabindex="0" aria-label="Street Names carousel"><div class="story-track"><figure class="story-slide" aria-label="Slide 1 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/01-cover.jpg" alt="Hidden patterns in Piracicaba’s street names" loading="lazy" /><figcaption><span>1/7 · English</span><h3>Hidden patterns in Piracicaba’s street names</h3><p>An exploration of IBGE’s 2022 address register reveals recurring themes, surnames and titles across the city.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 2 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/02-bairros-tematicos.jpg" alt="Neighborhoods with a theme" loading="lazy" /><figcaption><span>2/7 · English</span><h3>Neighborhoods with a theme</h3><p>Nova Piracicaba has flower and bird names; Mário Dedini has trees and gemstones; Cidade Jardim has countries; Jupiá has fish. These groupings use CNEFE localities, which may differ from official neighborhood boundaries.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 3 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/03-nova-piracicaba.jpg" alt="A garden on the street map" loading="lazy" /><figcaption><span>3/7 · English</span><h3>A garden on the street map</h3><p>Nova Piracicaba includes 32 names associated with flowers or plants and 23 with birds. Examples include orchids, tulips, violets, macaws and hummingbirds.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 4 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/04-cidade-jardim.jpg" alt="A world map in Cidade Jardim" loading="lazy" /><figcaption><span>4/7 · English</span><h3>A world map in Cidade Jardim</h3><p>Nine country names appear in the local street names: Germany, Brazil, Spain, the United States, France, the Netherlands, Italy, Portugal and Switzerland.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 5 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/05-sobrenomes.jpg" alt="Surnames that appear again and again" loading="lazy" /><figcaption><span>5/7 · English</span><h3>Surnames that appear again and again</h3><p>Furlan appears in 22 distinct dedications, Trevisan in 19, Ometto in 9, and Dedini and Pecorari in 8 each. Shared surnames alone do not establish family relationships.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 6 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/06-titulos.jpg" alt="Who is remembered on the map?" loading="lazy" /><figcaption><span>6/7 · English</span><h3>Who is remembered on the map?</h3><p>Explicit titles include Doutor (102), Doutora (1), Professor (74) and Professora (29). These counts describe titles written in street names, not the total number of men and women honored.</p></figcaption></figure>
-<figure class="story-slide" aria-label="Slide 7 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/07-resumo.jpg" alt="Street names tell stories about the city" loading="lazy" /><figcaption><span>7/7 · English</span><h3>Street names tell stories about the city</h3><p>The study starts with 224,750 addresses and identifies 4,086 unique street designations. Thematic clusters, recurring surnames and titles offer clues to urban memory; naming laws and biographies are needed to establish the history behind them.</p></figcaption></figure></div><button class="carousel-arrow previous" type="button" aria-label="Previous slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button><button class="carousel-arrow next" type="button" aria-label="Next slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button></div><div class="carousel-footer"><div class="carousel-dots" role="group" aria-label="Choose carousel slide"></div><span class="carousel-status" aria-live="polite">1 / 7</span></div></section></div>
+<section class="data-story commerce-story" data-story-panel="commerce" aria-label="Where Did They Go retail carousel" hidden><div class="story-carousel" data-carousel tabindex="0" aria-label="Where Did They Go carousel"><div class="story-track"><figure class="story-slide" aria-label="Slide 1 of 7"><img src="assets/piracicaba/e-commerce/01-cover.jpeg" alt="Where did they go?" loading="lazy" /><figcaption><span>1/7 · English</span><h3 data-text-skeleton>Where did they go?</h3><p data-text-skeleton>Is downtown Piracicaba losing the next generation of stores? Business registration data show that new retailers increasingly open elsewhere in the city.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 2 of 7"><img src="assets/piracicaba/e-commerce/02-new-stores-share.jpeg" alt="Fewer new stores choose downtown" loading="lazy" /><figcaption><span>2/7 · English</span><h3 data-text-skeleton>Fewer new stores choose downtown</h3><p data-text-skeleton>Downtown accounted for 26.6% of new retail stores in 2000–2009, 16.1% in 2010–2019 and 9.1% in 2020–2026. Its share was 7.8% in 2025. The 2026 data run through August 8.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 3 of 7"><img src="assets/piracicaba/e-commerce/03-store-age.jpeg" alt="An older retail landscape" loading="lazy" /><figcaption><span>3/7 · English</span><h3 data-text-skeleton>An older retail landscape</h3><p data-text-skeleton>Among retailers active on August 8, 2026, median store age was 15.2 years downtown and 7.4 elsewhere. Only 20.1% of downtown stores opened in the last five years, compared with 36.2% in other neighborhoods.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 4 of 7"><img src="assets/piracicaba/e-commerce/04-openings-closures-2025.jpeg" alt="The gap is in new openings" loading="lazy" /><figcaption><span>4/7 · English</span><h3 data-text-skeleton>The gap is in new openings</h3><p data-text-skeleton>In 2025, opening rates were 4.7% downtown and 11.0% elsewhere; closure rates were 5.3% and 8.3%. The net balance was −17 stores downtown and +370 in other neighborhoods.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 5 of 7"><img src="assets/piracicaba/e-commerce/05-high-ecommerce-exposure.jpeg" alt="Physical retail keeps growing elsewhere" loading="lazy" /><figcaption><span>5/7 · English</span><h3 data-text-skeleton>Physical retail keeps growing elsewhere</h3><p data-text-skeleton>In categories more exposed to e-commerce, store counts grew 4.3% downtown and 46.3% elsewhere from 2019 to August 2026. The 2025 net balance was −21 versus +172. These patterns alone do not establish an e-commerce effect.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 6 of 7"><img src="assets/piracicaba/e-commerce/06-category-share.jpeg" alt="Retail is spreading across the city" loading="lazy" /><figcaption><span>6/7 · English</span><h3 data-text-skeleton>Retail is spreading across the city</h3><p data-text-skeleton>Between 2010 and 2026, downtown’s share fell from 62.3% to 25.7% in jewelry and watches, 42.8% to 22.0% in electronics, 35.7% to 18.9% in fashion, and 35.2% to 16.7% in home and decor.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 7 of 7"><img src="assets/piracicaba/e-commerce/07-summary.jpeg" alt="A shift in retail renewal" loading="lazy" /><figcaption><span>7/7 · English</span><h3 data-text-skeleton>A shift in retail renewal</h3><p data-text-skeleton>Downtown’s declining share predates the pandemic. Its stores are older and new openings increasingly occur elsewhere. The study uses Receita Federal retail business registrations to describe this geographic shift, without isolating its causes.</p></figcaption></figure></div><button class="carousel-arrow previous" type="button" aria-label="Previous slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button><button class="carousel-arrow next" type="button" aria-label="Next slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button></div><div class="carousel-footer"><div class="carousel-dots" role="group" aria-label="Choose carousel slide"></div><span class="carousel-status" aria-live="polite">1 / 7</span></div></section>
+<section class="data-story street-story" data-story-panel="streets" aria-label="Street Names in Piracicaba carousel" hidden><div class="story-carousel" data-carousel tabindex="0" aria-label="Street Names carousel"><div class="story-track"><figure class="story-slide" aria-label="Slide 1 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/01-cover.jpg" alt="Hidden patterns in Piracicaba’s street names" loading="lazy" /><figcaption><span>1/7 · English</span><h3 data-text-skeleton>Hidden patterns in Piracicaba’s street names</h3><p data-text-skeleton>An exploration of IBGE’s 2022 address register reveals recurring themes, surnames and titles across the city.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 2 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/02-bairros-tematicos.jpg" alt="Neighborhoods with a theme" loading="lazy" /><figcaption><span>2/7 · English</span><h3 data-text-skeleton>Neighborhoods with a theme</h3><p data-text-skeleton>Nova Piracicaba has flower and bird names; Mário Dedini has trees and gemstones; Cidade Jardim has countries; Jupiá has fish. These groupings use CNEFE localities, which may differ from official neighborhood boundaries.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 3 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/03-nova-piracicaba.jpg" alt="A garden on the street map" loading="lazy" /><figcaption><span>3/7 · English</span><h3 data-text-skeleton>A garden on the street map</h3><p data-text-skeleton>Nova Piracicaba includes 32 names associated with flowers or plants and 23 with birds. Examples include orchids, tulips, violets, macaws and hummingbirds.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 4 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/04-cidade-jardim.jpg" alt="A world map in Cidade Jardim" loading="lazy" /><figcaption><span>4/7 · English</span><h3 data-text-skeleton>A world map in Cidade Jardim</h3><p data-text-skeleton>Nine country names appear in the local street names: Germany, Brazil, Spain, the United States, France, the Netherlands, Italy, Portugal and Switzerland.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 5 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/05-sobrenomes.jpg" alt="Surnames that appear again and again" loading="lazy" /><figcaption><span>5/7 · English</span><h3 data-text-skeleton>Surnames that appear again and again</h3><p data-text-skeleton>Furlan appears in 22 distinct dedications, Trevisan in 19, Ometto in 9, and Dedini and Pecorari in 8 each. Shared surnames alone do not establish family relationships.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 6 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/06-titulos.jpg" alt="Who is remembered on the map?" loading="lazy" /><figcaption><span>6/7 · English</span><h3 data-text-skeleton>Who is remembered on the map?</h3><p data-text-skeleton>Explicit titles include Doutor (102), Doutora (1), Professor (74) and Professora (29). These counts describe titles written in street names, not the total number of men and women honored.</p></figcaption></figure>
+<figure class="story-slide" aria-label="Slide 7 of 7"><img src="https://raw.githubusercontent.com/gabrieldelvaje/piracicaba-street-names/main/carousel/07-resumo.jpg" alt="Street names tell stories about the city" loading="lazy" /><figcaption><span>7/7 · English</span><h3 data-text-skeleton>Street names tell stories about the city</h3><p data-text-skeleton>The study starts with 224,750 addresses and identifies 4,086 unique street designations. Thematic clusters, recurring surnames and titles offer clues to urban memory; naming laws and biographies are needed to establish the history behind them.</p></figcaption></figure></div><button class="carousel-arrow previous" type="button" aria-label="Previous slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button><button class="carousel-arrow next" type="button" aria-label="Next slide"><img src="assets/project-back-arrow.png" alt="" aria-hidden="true" /></button></div><div class="carousel-footer"><div class="carousel-dots" role="group" aria-label="Choose carousel slide"></div><span class="carousel-status" aria-live="polite">1 / 7</span></div></section></div>
         </div>
       </section>
       <dialog class="project-info-dialog" id="project-info-dialog" aria-labelledby="project-info-title">
         <div class="project-info-dialog-inner">
           <button class="project-info-close" type="button" aria-label="Close project information">×</button>
-          <h2 id="project-info-title"></h2>
-          <p id="project-info-description"></p>
+          <h2 data-text-skeleton id="project-info-title"></h2>
+          <p data-text-skeleton id="project-info-description"></p>
         </div>
       </dialog>
     </main>
