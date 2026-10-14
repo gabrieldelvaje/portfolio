@@ -146,6 +146,7 @@
         });
       })();
     </script>
+    <link rel="stylesheet" href="analytics.css?v=1" />
   </head>
   <body class="stacked-pages about-active work-active resume-active">
     <header class="site-header">
@@ -496,7 +497,31 @@
       </dialog>
     </main>
 
-    <footer class="footer shell"><span>© <span id="year"></span> Gabriel Delvaje</span><span>São Paulo, Brazil · <span class="local-time"></span></span></footer>
+    <footer class="footer shell"><span>© <button id="year" type="button" class="analytics-year" aria-label="Acessar estatísticas" aria-haspopup="dialog"></button> Gabriel Delvaje</span><span>São Paulo, Brazil · <span class="local-time"></span></span></footer>
+
+    <dialog id="analytics-dialog" class="analytics-dialog" aria-labelledby="analytics-title">
+      <div class="analytics-header"><h2 id="analytics-title">Estatísticas do portfólio</h2><button type="button" class="analytics-close" data-analytics-close aria-label="Fechar">×</button></div>
+      <form class="analytics-form">
+        <label for="analytics-password">Senha de acesso</label>
+        <input id="analytics-password" name="password" type="password" inputmode="numeric" pattern="[0-9]{8}" minlength="8" maxlength="8" autocomplete="current-password" required aria-describedby="analytics-status" />
+        <button type="submit" class="analytics-primary">Acessar</button>
+      </form>
+      <p class="analytics-status" id="analytics-status" data-analytics-status role="status" aria-live="polite"></p>
+      <div data-analytics-dashboard hidden>
+        <div class="analytics-grid">
+          <div class="analytics-kpi"><span>Únicos hoje</span><strong data-analytics-kpi="today">—</strong><small data-analytics-views="today"></small></div>
+          <div class="analytics-kpi"><span>Únicos nesta semana</span><strong data-analytics-kpi="week">—</strong><small data-analytics-views="week"></small></div>
+          <div class="analytics-kpi"><span>Únicos neste mês</span><strong data-analytics-kpi="month">—</strong><small data-analytics-views="month"></small></div>
+          <div class="analytics-kpi"><span>Únicos no total</span><strong data-analytics-kpi="total">—</strong><small data-analytics-views="total"></small></div>
+        </div>
+        <div class="analytics-chart-head"><h3>Evolução diária</h3><select class="analytics-period" data-analytics-period aria-label="Período do gráfico"><option value="7">7 dias</option><option value="30" selected>30 dias</option><option value="90">90 dias</option></select></div>
+        <svg class="analytics-chart" data-analytics-chart viewBox="0 0 680 220" role="img" aria-label="Evolução dos visitantes únicos"></svg>
+        <p class="analytics-notes">Visitantes únicos estimados por navegador. Semana começa na segunda-feira. <span data-analytics-since></span></p>
+        <div class="analytics-actions"><button type="button" data-analytics-refresh>Atualizar</button><button type="button" data-analytics-logout>Sair</button><label><input type="checkbox" data-analytics-exclude /> Não contar minhas próximas visitas neste navegador</label></div>
+      </div>
+    </dialog>
     <script src="script.js?v=120"></script>
+    <script src="analytics-config.js?v=1"></script>
+    <script src="analytics.js?v=1"></script>
   </body>
 </html>
