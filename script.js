@@ -15,45 +15,46 @@ backToTop.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor
 backToTop.inert = true;
 backToTop.setAttribute('aria-hidden', 'true');
 mobileNav.append(backToTop);
-// One continuous spring drives geometry and content together. Direction changes
-// preserve position and velocity instead of restarting CSS transition timelines.
+// Scroll chooses only the next state. Each morph runs on its own fixed clock,
+// always to completion; new scroll events cannot change its duration or path.
+const MOBILE_NAV_DURATION = 1100;
 let mobileNavProgress = 0;
-let mobileNavVelocity = 0;
-let mobileNavTarget = 0;
+let mobileNavDesired = 0;
+let mobileNavAnimation = null;
 let mobileNavFrame = 0;
-let mobileNavLastFrame = 0;
 function paintMobileNav() {
   mobileNav.style.setProperty('--mobile-nav-progress', mobileNavProgress.toFixed(6));
 }
 function stepMobileNav(now) {
-  const dt = Math.min(.032, Math.max(0, (now - mobileNavLastFrame) / 1000));
-  mobileNavLastFrame = now;
-  const omega = 6.5;
-  const displacement = mobileNavProgress - mobileNavTarget;
-  const momentum = mobileNavVelocity + omega * displacement;
-  const decay = Math.exp(-omega * dt);
-  mobileNavProgress = mobileNavTarget + (displacement + momentum * dt) * decay;
-  mobileNavVelocity = (mobileNavVelocity - omega * momentum * dt) * decay;
-  if (mobileNavProgress < 0 || mobileNavProgress > 1) {
-    mobileNavProgress = Math.max(0, Math.min(1, mobileNavProgress));
-    mobileNavVelocity = 0;
-  }
-  const settled = Math.abs(mobileNavProgress - mobileNavTarget) < .0005 && Math.abs(mobileNavVelocity) < .003;
-  if (settled) { mobileNavProgress = mobileNavTarget; mobileNavVelocity = 0; }
+  if (!mobileNavAnimation) return;
+  const { from, to, started } = mobileNavAnimation;
+  const t = Math.min(1, Math.max(0, (now - started) / MOBILE_NAV_DURATION));
+  const eased = (1 - Math.cos(Math.PI * t)) / 2;
+  mobileNavProgress = from + (to - from) * eased;
   paintMobileNav();
-  mobileNavFrame = settled ? 0 : requestAnimationFrame(stepMobileNav);
+  if (t < 1) {
+    mobileNavFrame = requestAnimationFrame(stepMobileNav);
+    return;
+  }
+  mobileNavAnimation = null;
+  mobileNavFrame = 0;
+  // Keep only the latest requested direction and give the return its full time.
+  if (mobileNavDesired !== mobileNavProgress) setMobileNavCollapsed(mobileNavDesired === 1);
 }
 function setMobileNavCollapsed(collapsed, reset = false) {
   collapsed = collapsed && mobileViewport.matches && !document.body.classList.contains('project-open');
-  mobileNavTarget = collapsed ? 1 : 0;
+  mobileNavDesired = collapsed ? 1 : 0;
   if (reset || matchMedia('(prefers-reduced-motion: reduce)').matches) {
     cancelAnimationFrame(mobileNavFrame);
     mobileNavFrame = 0;
-    mobileNavProgress = mobileNavTarget;
-    mobileNavVelocity = 0;
+    mobileNavAnimation = null;
+    mobileNavProgress = mobileNavDesired;
     paintMobileNav();
-  } else if (!mobileNavFrame && mobileNavProgress !== mobileNavTarget) {
-    mobileNavLastFrame = performance.now();
+  } else {
+    // Do not retarget, restart, or shorten an animation already in progress.
+    if (mobileNavAnimation) return;
+    if (mobileNavProgress === mobileNavDesired) return;
+    mobileNavAnimation = { from: mobileNavProgress, to: mobileNavDesired, started: performance.now() };
     mobileNavFrame = requestAnimationFrame(stepMobileNav);
   }
   document.body.classList.toggle('mobile-nav-collapsed', collapsed);
