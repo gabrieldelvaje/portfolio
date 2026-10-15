@@ -15,41 +15,51 @@ backToTop.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor
 backToTop.inert = true;
 backToTop.setAttribute('aria-hidden', 'true');
 mobileNav.append(backToTop);
-// Finish each morph before honoring the latest scroll direction. Inertia and
-// Safari overscroll must not repeatedly reverse/shorten the CSS transition.
-let mobileNavMorphUntil = 0;
-let mobileNavMorphTimer = 0;
-let mobileNavPending = null;
+// One continuous spring drives geometry and content together. Direction changes
+// preserve position and velocity instead of restarting CSS transition timelines.
+let mobileNavProgress = 0;
+let mobileNavVelocity = 0;
+let mobileNavTarget = 0;
+let mobileNavFrame = 0;
+let mobileNavLastFrame = 0;
+function paintMobileNav() {
+  mobileNav.style.setProperty('--mobile-nav-progress', mobileNavProgress.toFixed(6));
+}
+function stepMobileNav(now) {
+  const dt = Math.min(.032, Math.max(0, (now - mobileNavLastFrame) / 1000));
+  mobileNavLastFrame = now;
+  const omega = 6.5;
+  const displacement = mobileNavProgress - mobileNavTarget;
+  const momentum = mobileNavVelocity + omega * displacement;
+  const decay = Math.exp(-omega * dt);
+  mobileNavProgress = mobileNavTarget + (displacement + momentum * dt) * decay;
+  mobileNavVelocity = (mobileNavVelocity - omega * momentum * dt) * decay;
+  if (mobileNavProgress < 0 || mobileNavProgress > 1) {
+    mobileNavProgress = Math.max(0, Math.min(1, mobileNavProgress));
+    mobileNavVelocity = 0;
+  }
+  const settled = Math.abs(mobileNavProgress - mobileNavTarget) < .0005 && Math.abs(mobileNavVelocity) < .003;
+  if (settled) { mobileNavProgress = mobileNavTarget; mobileNavVelocity = 0; }
+  paintMobileNav();
+  mobileNavFrame = settled ? 0 : requestAnimationFrame(stepMobileNav);
+}
 function setMobileNavCollapsed(collapsed, reset = false) {
   collapsed = collapsed && mobileViewport.matches && !document.body.classList.contains('project-open');
-  const now = performance.now();
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reset || reducedMotion) {
-    clearTimeout(mobileNavMorphTimer);
-    mobileNavMorphTimer = 0;
-    mobileNavPending = null;
-    mobileNavMorphUntil = 0;
+  mobileNavTarget = collapsed ? 1 : 0;
+  if (reset || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    cancelAnimationFrame(mobileNavFrame);
+    mobileNavFrame = 0;
+    mobileNavProgress = mobileNavTarget;
+    mobileNavVelocity = 0;
+    paintMobileNav();
+  } else if (!mobileNavFrame && mobileNavProgress !== mobileNavTarget) {
+    mobileNavLastFrame = performance.now();
+    mobileNavFrame = requestAnimationFrame(stepMobileNav);
   }
-  if (now < mobileNavMorphUntil) {
-    mobileNavPending = collapsed;
-    if (!mobileNavMorphTimer) mobileNavMorphTimer = setTimeout(() => {
-      mobileNavMorphTimer = 0;
-      const next = mobileNavPending;
-      mobileNavPending = null;
-      if (next !== null) setMobileNavCollapsed(next);
-    }, mobileNavMorphUntil - now + 16);
-    return;
-  }
-  clearTimeout(mobileNavMorphTimer);
-  mobileNavMorphTimer = 0;
-  mobileNavPending = null;
-  if (document.body.classList.contains('mobile-nav-collapsed') === collapsed) return;
-  mobileNavMorphUntil = reducedMotion || reset ? 0 : now + 920;
   document.body.classList.toggle('mobile-nav-collapsed', collapsed);
   navLinks.inert = collapsed;
   backToTop.inert = !collapsed;
   backToTop.setAttribute('aria-hidden', String(!collapsed));
-  // Keep keyboard focus on a usable control throughout the morph.
   if (collapsed && navLinks.contains(document.activeElement)) backToTop.focus({ preventScroll: true });
   else if (!collapsed && document.activeElement === backToTop) {
     (navLinks.querySelector('[aria-current]') || links[0]).focus({ preventScroll: true });
