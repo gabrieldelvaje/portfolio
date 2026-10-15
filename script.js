@@ -15,8 +15,36 @@ backToTop.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor
 backToTop.inert = true;
 backToTop.setAttribute('aria-hidden', 'true');
 mobileNav.append(backToTop);
-function setMobileNavCollapsed(collapsed) {
+// Finish each morph before honoring the latest scroll direction. Inertia and
+// Safari overscroll must not repeatedly reverse/shorten the CSS transition.
+let mobileNavMorphUntil = 0;
+let mobileNavMorphTimer = 0;
+let mobileNavPending = null;
+function setMobileNavCollapsed(collapsed, reset = false) {
   collapsed = collapsed && mobileViewport.matches && !document.body.classList.contains('project-open');
+  const now = performance.now();
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reset || reducedMotion) {
+    clearTimeout(mobileNavMorphTimer);
+    mobileNavMorphTimer = 0;
+    mobileNavPending = null;
+    mobileNavMorphUntil = 0;
+  }
+  if (now < mobileNavMorphUntil) {
+    mobileNavPending = collapsed;
+    if (!mobileNavMorphTimer) mobileNavMorphTimer = setTimeout(() => {
+      mobileNavMorphTimer = 0;
+      const next = mobileNavPending;
+      mobileNavPending = null;
+      if (next !== null) setMobileNavCollapsed(next);
+    }, mobileNavMorphUntil - now + 16);
+    return;
+  }
+  clearTimeout(mobileNavMorphTimer);
+  mobileNavMorphTimer = 0;
+  mobileNavPending = null;
+  if (document.body.classList.contains('mobile-nav-collapsed') === collapsed) return;
+  mobileNavMorphUntil = reducedMotion || reset ? 0 : now + 920;
   document.body.classList.toggle('mobile-nav-collapsed', collapsed);
   navLinks.inert = collapsed;
   backToTop.inert = !collapsed;
@@ -31,7 +59,7 @@ backToTop.addEventListener('click', () => {
   setMobileNavCollapsed(false);
   scrollToSection(0, !matchMedia('(prefers-reduced-motion: reduce)').matches);
 });
-mobileViewport.addEventListener('change', () => setMobileNavCollapsed(false));
+mobileViewport.addEventListener('change', () => setMobileNavCollapsed(false, true));
 
 
 function setTheme(theme) {
@@ -146,7 +174,7 @@ function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction
     if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
   });
   document.body.classList.toggle('project-open', projectOpen);
-  if (projectOpen) setMobileNavCollapsed(false);
+  if (projectOpen) setMobileNavCollapsed(false, true);
   document.body.classList.toggle('stacked-pages', !projectOpen);
   routeOrder.forEach(route => document.body.classList.toggle(`${route}-active`, !projectOpen));
   if (validRoute !== 'work') {
@@ -398,7 +426,7 @@ addEventListener('scroll', () => {
     filterScrollFrame = 0;
     trackFilterText();
   });
-  const y = scrollY;
+  const y = Math.max(0, Math.min(scrollY, Math.max(0, document.documentElement.scrollHeight - innerHeight)));
   if (matchMedia('(max-width: 600px)').matches && !document.body.classList.contains('project-open')) {
     if (sectionNavigationRunning || performance.now() < mobileNavHoldUntil || y < 20) {
       setMobileNavCollapsed(false);
@@ -407,7 +435,7 @@ addEventListener('scroll', () => {
       const delta = y - mobileNavLastY;
       if (Math.sign(delta) !== Math.sign(mobileNavTravel)) mobileNavTravel = 0;
       mobileNavTravel += delta;
-      if (Math.abs(mobileNavTravel) > 24) {
+      if (Math.abs(mobileNavTravel) > 36) {
         setMobileNavCollapsed(mobileNavTravel > 0);
         mobileNavTravel = 0;
       }
