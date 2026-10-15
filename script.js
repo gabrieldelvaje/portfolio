@@ -5,6 +5,35 @@ const navLinks = document.querySelector('.nav-links');
 const navSlider = document.querySelector('.nav-slider');
 const toggles = [...document.querySelectorAll('.theme-toggle')];
 
+const mobileNav = document.querySelector('.site-header .nav');
+const mobileViewport = matchMedia('(max-width: 600px)');
+const backToTop = document.createElement('button');
+backToTop.type = 'button';
+backToTop.className = 'mobile-back-to-top';
+backToTop.setAttribute('aria-label', 'Voltar ao topo / Back to top');
+backToTop.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg>';
+backToTop.inert = true;
+backToTop.setAttribute('aria-hidden', 'true');
+mobileNav.append(backToTop);
+function setMobileNavCollapsed(collapsed) {
+  collapsed = collapsed && mobileViewport.matches && !document.body.classList.contains('project-open');
+  document.body.classList.toggle('mobile-nav-collapsed', collapsed);
+  navLinks.inert = collapsed;
+  backToTop.inert = !collapsed;
+  backToTop.setAttribute('aria-hidden', String(!collapsed));
+  // Keep keyboard focus on a usable control throughout the morph.
+  if (collapsed && navLinks.contains(document.activeElement)) backToTop.focus({ preventScroll: true });
+  else if (!collapsed && document.activeElement === backToTop) {
+    (navLinks.querySelector('[aria-current]') || links[0]).focus({ preventScroll: true });
+  }
+}
+backToTop.addEventListener('click', () => {
+  setMobileNavCollapsed(false);
+  scrollToSection(0, !matchMedia('(prefers-reduced-motion: reduce)').matches);
+});
+mobileViewport.addEventListener('change', () => setMobileNavCollapsed(false));
+
+
 function setTheme(theme) {
   root.dataset.theme = theme;
   localStorage.setItem('portfolio-theme', theme);
@@ -108,7 +137,7 @@ function primaryRouteFor(route, projectOpen) {
 
 function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction, scrollOnly = false) {
   const returningFromProject = document.body.classList.contains('project-open') && !projectOpen;
-  if (returningFromProject) { document.body.classList.remove('mobile-nav-hidden'); mobileNavHoldUntil = performance.now() + 400; }
+  if (returningFromProject) { setMobileNavCollapsed(false); mobileNavHoldUntil = performance.now() + 400; }
   root.dataset.routeDirection = direction;
   pages.forEach(page => page.hidden = projectOpen ? page.dataset.page !== validRoute : !routeOrder.includes(page.dataset.page));
   links.forEach(link => {
@@ -117,6 +146,7 @@ function applyRoute(validRoute, activePage, projectOpen, primaryRoute, direction
     if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
   });
   document.body.classList.toggle('project-open', projectOpen);
+  if (projectOpen) setMobileNavCollapsed(false);
   document.body.classList.toggle('stacked-pages', !projectOpen);
   routeOrder.forEach(route => document.body.classList.toggle(`${route}-active`, !projectOpen));
   if (validRoute !== 'work') {
@@ -231,7 +261,7 @@ links.forEach(link => link.addEventListener('click', event => {
   event.preventDefault();
   if (matchMedia('(max-width: 600px)').matches) {
     // Tapping the bottom navbar never dismisses it, even if the page scrolls.
-    document.body.classList.remove('mobile-nav-hidden');
+    setMobileNavCollapsed(false);
     mobileNavHoldUntil = performance.now() + 180;
   }
   history.pushState(null, '', `#${link.dataset.route}`);
@@ -371,14 +401,14 @@ addEventListener('scroll', () => {
   const y = scrollY;
   if (matchMedia('(max-width: 600px)').matches && !document.body.classList.contains('project-open')) {
     if (sectionNavigationRunning || performance.now() < mobileNavHoldUntil || y < 20) {
-      document.body.classList.remove('mobile-nav-hidden');
+      setMobileNavCollapsed(false);
       mobileNavTravel = 0;
     } else {
       const delta = y - mobileNavLastY;
       if (Math.sign(delta) !== Math.sign(mobileNavTravel)) mobileNavTravel = 0;
       mobileNavTravel += delta;
       if (Math.abs(mobileNavTravel) > 24) {
-        document.body.classList.toggle('mobile-nav-hidden', mobileNavTravel > 0);
+        setMobileNavCollapsed(mobileNavTravel > 0);
         mobileNavTravel = 0;
       }
     }
@@ -1104,3 +1134,4 @@ if (projectHeader) {
   new ResizeObserver(syncProjectHeaderHeight).observe(projectHeader);
   syncProjectHeaderHeight();
 }
+
