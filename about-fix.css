@@ -5466,8 +5466,8 @@ body.stacked-pages .mobile-about-title { display: none; }
     margin: 0;
     transform: none;
     will-change: width, right;
-    transition: width .6s cubic-bezier(.22, 1, .36, 1),
-                right .6s cubic-bezier(.22, 1, .36, 1);
+    transition: width .9s cubic-bezier(.4, 0, .2, 1),
+                right .9s cubic-bezier(.4, 0, .2, 1);
   }
   body:not(.project-open) .site-header .nav-links {
     flex: none;
@@ -5475,7 +5475,7 @@ body.stacked-pages .mobile-about-title { display: none; }
     opacity: 1;
     transform: translateX(0);
     visibility: visible;
-    transition: opacity .2s ease .18s, transform .6s cubic-bezier(.22, 1, .36, 1), visibility 0s;
+    transition: opacity .4s ease .32s, transform .9s cubic-bezier(.4, 0, .2, 1), visibility 0s;
   }
   body.mobile-nav-collapsed:not(.project-open) .site-header .nav {
     width: 52px;
@@ -5486,14 +5486,14 @@ body.stacked-pages .mobile-about-title { display: none; }
     transform: translateX(24px);
     visibility: hidden;
     pointer-events: none;
-    transition: opacity .16s ease, transform .6s cubic-bezier(.22, 1, .36, 1), visibility 0s .16s;
+    transition: opacity .32s ease, transform .9s cubic-bezier(.4, 0, .2, 1), visibility 0s .32s;
   }
   .site-header .mobile-back-to-top {
     position: absolute;
-    inset: 0;
+    inset: 0 0 0 auto;
     display: grid;
     place-items: center;
-    width: 100%;
+    width: 50px;
     height: 100%;
     padding: 0;
     border: 0;
@@ -5505,7 +5505,7 @@ body.stacked-pages .mobile-about-title { display: none; }
     visibility: hidden;
     pointer-events: none;
     transform: translateY(12px);
-    transition: opacity .16s ease, transform .28s ease, visibility 0s .28s;
+    transition: opacity .3s ease, transform .4s cubic-bezier(.4, 0, .2, 1), visibility 0s .4s;
     -webkit-tap-highlight-color: transparent;
   }
   .mobile-back-to-top svg { width: 23px; height: 23px; }
@@ -5514,7 +5514,7 @@ body.stacked-pages .mobile-about-title { display: none; }
     visibility: visible;
     pointer-events: auto;
     transform: translateY(0);
-    transition: opacity .25s ease .24s, transform .35s cubic-bezier(.22, 1, .36, 1) .24s, visibility 0s;
+    transition: opacity .38s ease .42s, transform .48s cubic-bezier(.4, 0, .2, 1) .42s, visibility 0s;
   }
   .mobile-back-to-top:focus-visible { outline: 2px solid var(--blue); outline-offset: -5px; }
   @media (prefers-reduced-motion: reduce) {
