@@ -5446,7 +5446,7 @@ body.stacked-pages .mobile-about-title { display: none; }
 
 
 
-/* Mobile navbar morph: the glass capsule contracts into a right-hand top control. */
+/* Mobile navbar: every visual property follows the same continuous progress. */
 .mobile-back-to-top { display: none; }
 @media (max-width: 600px) {
   body:not(.project-open) .site-header {
@@ -5458,36 +5458,30 @@ body.stacked-pages .mobile-about-title { display: none; }
   }
   body:not(.project-open) .site-header .nav {
     --mobile-nav-width: min(330px, calc(100vw - 56px));
+    --p: var(--mobile-nav-progress, 0);
     position: absolute;
     bottom: 0;
-    right: calc((100% - var(--mobile-nav-width)) / 2);
-    width: var(--mobile-nav-width);
+    right: calc(((100% - var(--mobile-nav-width)) / 2) * (1 - var(--p)) + max(14px, env(safe-area-inset-right)) * var(--p));
+    width: calc(var(--mobile-nav-width) * (1 - var(--p)) + 52px * var(--p));
     height: 52px;
     margin: 0;
-    transform: none;
+    transform: translateZ(0);
+    /* A stable, denser glass tint prevents bright scrolling cards flashing through. */
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    -webkit-backdrop-filter: blur(12px) saturate(110%);
+    backdrop-filter: blur(12px) saturate(110%);
+    transition: none;
     will-change: width, right;
-    transition: width .9s cubic-bezier(.4, 0, .2, 1),
-                right .9s cubic-bezier(.4, 0, .2, 1);
   }
   body:not(.project-open) .site-header .nav-links {
     flex: none;
     width: calc(var(--mobile-nav-width) - 12px);
-    opacity: 1;
-    transform: translateX(0);
+    opacity: clamp(0, calc(1 - var(--p) * 1.7), 1);
+    transform: translateX(calc(14px * var(--p)));
     visibility: visible;
-    transition: opacity .4s ease .32s, transform .9s cubic-bezier(.4, 0, .2, 1), visibility 0s;
+    transition: none;
   }
-  body.mobile-nav-collapsed:not(.project-open) .site-header .nav {
-    width: 52px;
-    right: max(14px, env(safe-area-inset-right));
-  }
-  body.mobile-nav-collapsed:not(.project-open) .site-header .nav-links {
-    opacity: 0;
-    transform: translateX(24px);
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity .32s ease, transform .9s cubic-bezier(.4, 0, .2, 1), visibility 0s .32s;
-  }
+  body.mobile-nav-collapsed .site-header .nav-links { pointer-events: none; }
   .site-header .mobile-back-to-top {
     position: absolute;
     inset: 0 0 0 auto;
@@ -5501,25 +5495,14 @@ body.stacked-pages .mobile-about-title { display: none; }
     background: transparent;
     color: var(--ink);
     cursor: pointer;
-    opacity: 0;
-    visibility: hidden;
+    opacity: clamp(0, calc((var(--p) - .28) * 1.388889), 1);
+    visibility: visible;
     pointer-events: none;
-    transform: translateY(12px);
-    transition: opacity .3s ease, transform .4s cubic-bezier(.4, 0, .2, 1), visibility 0s .4s;
+    transform: translateY(calc(12px * (1 - var(--p))));
+    transition: none;
     -webkit-tap-highlight-color: transparent;
   }
   .mobile-back-to-top svg { width: 23px; height: 23px; }
-  body.mobile-nav-collapsed .mobile-back-to-top {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translateY(0);
-    transition: opacity .38s ease .42s, transform .48s cubic-bezier(.4, 0, .2, 1) .42s, visibility 0s;
-  }
+  body.mobile-nav-collapsed .mobile-back-to-top { pointer-events: auto; }
   .mobile-back-to-top:focus-visible { outline: 2px solid var(--blue); outline-offset: -5px; }
-  @media (prefers-reduced-motion: reduce) {
-    body:not(.project-open) .site-header .nav,
-    body:not(.project-open) .site-header .nav-links,
-    .site-header .mobile-back-to-top { transition: none; }
-  }
 }
