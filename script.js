@@ -17,7 +17,7 @@ backToTop.setAttribute('aria-hidden', 'true');
 mobileNav.append(backToTop);
 // Scroll chooses only the next state. Each morph runs on its own fixed clock,
 // always to completion; new scroll events cannot change its duration or path.
-const MOBILE_NAV_DURATION = 1100;
+const MOBILE_NAV_DURATION = 650;
 let mobileNavProgress = 0;
 let mobileNavDesired = 0;
 let mobileNavAnimation = null;
