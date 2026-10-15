@@ -5466,10 +5466,10 @@ body.stacked-pages .mobile-about-title { display: none; }
     height: 52px;
     margin: 0;
     transform: translateZ(0);
-    /* A stable, denser glass tint prevents bright scrolling cards flashing through. */
-    background: color-mix(in srgb, var(--bg) 90%, transparent);
-    -webkit-backdrop-filter: blur(12px) saturate(110%);
-    backdrop-filter: blur(12px) saturate(110%);
+    /* Match the mobile theme toggle in both themes and throughout the morph. */
+    background: var(--mobile-control-glass);
+    -webkit-backdrop-filter: blur(10px) saturate(135%);
+    backdrop-filter: blur(10px) saturate(135%);
     transition: none;
     will-change: width, right;
   }
