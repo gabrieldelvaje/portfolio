@@ -68,6 +68,9 @@ function setMobileNavCollapsed(collapsed, reset = false) {
 }
 backToTop.addEventListener('click', () => {
   setMobileNavCollapsed(false);
+  // Automatic scrolling suspends the section observer, so select the destination now.
+  history.replaceState(null, '', '#about');
+  showRoute(true);
   scrollToSection(0, !matchMedia('(prefers-reduced-motion: reduce)').matches);
 });
 mobileViewport.addEventListener('change', () => setMobileNavCollapsed(false, true));
