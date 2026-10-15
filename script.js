@@ -22,6 +22,33 @@ let mobileNavProgress = 0;
 let mobileNavDesired = 0;
 let mobileNavAnimation = null;
 let mobileNavFrame = 0;
+let mobileNavPageReady = false;
+let mobileNavReadinessFrame = 0;
+function waitForMobileNavRendering() {
+  if (!mobileNavPageReady || mobileNavReadinessFrame || mobileNavAnimation) return;
+  let stableFrames = 0;
+  let previous = 0;
+  const check = now => {
+    const ready = !document.hidden && !root.classList.contains('text-loading');
+    stableFrames = ready && previous && now - previous <= 34 ? stableFrames + 1 : 0;
+    previous = now;
+    if (stableFrames >= 8) {
+      mobileNavReadinessFrame = 0;
+      setMobileNavCollapsed(mobileNavDesired === 1, false, true);
+    } else mobileNavReadinessFrame = requestAnimationFrame(check);
+  };
+  mobileNavReadinessFrame = requestAnimationFrame(check);
+}
+Promise.all([
+  new Promise(resolve => {
+    if (document.readyState === 'complete') resolve();
+    else addEventListener('load', resolve, { once: true });
+  }),
+  Promise.resolve(document.fonts?.ready).catch(() => {})
+]).then(() => {
+  mobileNavPageReady = true;
+  setMobileNavCollapsed(mobileNavDesired === 1);
+});
 function paintMobileNav() {
   mobileNav.style.setProperty('--mobile-nav-progress', mobileNavProgress.toFixed(6));
 }
@@ -41,10 +68,12 @@ function stepMobileNav(now) {
   // Keep only the latest requested direction and give the return its full time.
   if (mobileNavDesired !== mobileNavProgress) setMobileNavCollapsed(mobileNavDesired === 1);
 }
-function setMobileNavCollapsed(collapsed, reset = false) {
+function setMobileNavCollapsed(collapsed, reset = false, renderingReady = false) {
   collapsed = collapsed && mobileViewport.matches && !document.body.classList.contains('project-open');
   mobileNavDesired = collapsed ? 1 : 0;
   if (reset || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    cancelAnimationFrame(mobileNavReadinessFrame);
+    mobileNavReadinessFrame = 0;
     cancelAnimationFrame(mobileNavFrame);
     mobileNavFrame = 0;
     mobileNavAnimation = null;
@@ -54,6 +83,12 @@ function setMobileNavCollapsed(collapsed, reset = false) {
     // Do not retarget, restart, or shorten an animation already in progress.
     if (mobileNavAnimation) return;
     if (mobileNavProgress === mobileNavDesired) return;
+    // Keep the existing navbar visible and interactive until loading has finished
+    // and consecutive frames show the browser has room for a smooth transition.
+    if (!mobileNavPageReady || !renderingReady) {
+      waitForMobileNavRendering();
+      return;
+    }
     mobileNavAnimation = { from: mobileNavProgress, to: mobileNavDesired, started: performance.now() };
     mobileNavFrame = requestAnimationFrame(stepMobileNav);
   }
