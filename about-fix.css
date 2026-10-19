@@ -5511,7 +5511,7 @@ body.stacked-pages .mobile-about-title { display: none; }
   }
   body.stacked-pages .site-header,
   body.project-open .site-header {
-    background: transparent;
+    background: var(--bg);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
