@@ -1218,7 +1218,6 @@ document.querySelectorAll('.global-sales-preview').forEach(preview => {
   const bars = [...preview.querySelectorAll('.global-sales-bars i')];
   const indicators = [...preview.querySelectorAll('.global-sales-sidebar i')];
   const slices = [...preview.querySelectorAll('.global-sales-donut-panel circle')];
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const states = [
     { active: 0, values: [100, 83, 68, 51, 35], shares: [58, 25, 17] },
     { active: 0, values: [66, 94, 43, 80, 55], shares: [38, 42, 20] },
@@ -1228,7 +1227,7 @@ document.querySelectorAll('.global-sales-preview').forEach(preview => {
   const sequence = [[0, 0], [0, .04], [1, .22], [1, .28], [2, .46], [2, .52], [3, .70], [3, .76], [0, .96], [0, 1]];
   let playing = false;
   function play() {
-    if (playing || reducedMotion.matches) return;
+    if (playing) return;
     playing = true;
     const animations = [];
     const animate = (element, frame) => animations.push(element.animate(
