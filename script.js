@@ -799,12 +799,13 @@ document.querySelectorAll('.music-farming-preview').forEach(preview => {
     const nextTab = tabs[index];
     nextTab.getAnimations().forEach(animation => animation.cancel());
     const clickAnimation = nextTab.animate([
-      { transform: 'scale(1)', backgroundColor: '#b8b8b8' },
-      { transform: 'scale(.9)', backgroundColor: '#625e5f', offset: .48 },
-      { transform: 'scale(1)', backgroundColor: '#625e5f' }
+      { transform: 'scale(1)' },
+      { transform: 'scale(.9)', offset: .5 },
+      { transform: 'scale(1)' }
     ], {
-      duration: 190,
-      easing: 'cubic-bezier(.22, 1, .36, 1)',
+      // Identical press/release timing in both themes; colors stay theme-owned.
+      duration: 260,
+      easing: 'ease-in-out',
       iterations: 1
     });
     await clickAnimation.finished.catch(() => {});
