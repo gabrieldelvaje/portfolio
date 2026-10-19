@@ -5503,3 +5503,31 @@ body.stacked-pages .mobile-about-title { display: none; }
   body.mobile-nav-collapsed .mobile-back-to-top { pointer-events: auto; }
   .mobile-back-to-top:focus-visible { outline: 2px solid var(--blue); outline-offset: -5px; }
 }
+
+/* Desktop bands share the mobile controls' glass; capsules stay opaque. */
+@media (min-width: 901px) {
+  :root {
+    --desktop-navigation-glass: color-mix(in srgb, var(--bg) 38%, transparent);
+  }
+  body.stacked-pages .site-header,
+  body.project-open .site-header {
+    background: var(--desktop-navigation-glass);
+    -webkit-backdrop-filter: blur(10px) saturate(135%);
+    backdrop-filter: blur(10px) saturate(135%);
+  }
+  body .site-header .nav {
+    background: var(--bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  body.work-active .work-page .project-filters {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  body.work-active .work-page .project-filters::before {
+    background: var(--desktop-navigation-glass);
+    -webkit-backdrop-filter: blur(10px) saturate(135%);
+    backdrop-filter: blur(10px) saturate(135%);
+  }
+}
