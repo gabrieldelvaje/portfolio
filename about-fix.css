@@ -821,7 +821,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   padding: 10px 12px 12px;
   background: color-mix(in srgb,var(--ink) 10%,var(--bg));
   box-shadow: none !important;
-  transition: background-color .35s ease, border-color .35s ease, transform .42s cubic-bezier(.22,1,.36,1) !important;
+  transition: transform .42s cubic-bezier(.22,1,.36,1) !important;
 }
 
 [data-theme="dark"] .music-farming-preview {
@@ -834,7 +834,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   width: 100%;
   height: 100%;
   color: #242021;
-  transition: color .35s ease, transform .55s cubic-bezier(.22,1,.36,1);
+  transition: transform .55s cubic-bezier(.22,1,.36,1);
 }
 
 [data-theme="dark"] .music-dashboard {
@@ -861,7 +861,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   border-radius: 9px 9px 3px 3px;
   background: color-mix(in srgb,var(--ink) 24%,var(--bg));
   border: 1px solid color-mix(in srgb,var(--ink) 10%,var(--bg));
-  transition: background-color .35s ease, transform .4s cubic-bezier(.22,1,.36,1);
+  transition: transform .4s cubic-bezier(.22,1,.36,1);
 }
 
 .music-dashboard-tabs i.is-active {
@@ -904,7 +904,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   border: 1px solid #d8d4d1;
   border-radius: 27px;
   background: #f4f4f1;
-  transition: background-color .35s ease, border-color .35s ease;
+  transition: none;
 }
 
 [data-theme="dark"] .music-dashboard-grid {
@@ -918,7 +918,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   border: 1px solid #d8d4d1;
   border-radius: 18px;
   background: #ececea;
-  transition: transform .45s cubic-bezier(.22,1,.36,1), background-color .35s ease, border-color .35s ease;
+  transition: transform .45s cubic-bezier(.22,1,.36,1);
 }
 
 [data-theme="dark"] .music-dashboard-grid > div {
@@ -970,7 +970,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   z-index: 1;
   width: 100%;
   transform-origin: left center;
-  transition: width .68s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1), background-color .35s ease, border-color .35s ease !important;
+  transition: width .68s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1) !important;
 }
 
 .music-bars {
@@ -1050,7 +1050,7 @@ html[data-route-direction="backward"]::view-transition-new(portfolio-page) {
   align-content: center;
   gap: 16px;
   padding: 18px;
-  transition: opacity .3s ease, transform .5s cubic-bezier(.22,1,.36,1), background-color .35s ease, border-color .35s ease !important;
+  transition: opacity .3s ease, transform .5s cubic-bezier(.22,1,.36,1) !important;
 }
 
 .music-chart.show-line + .music-ranking {
@@ -3230,8 +3230,7 @@ body > .footer {
   z-index: 2;
   min-width: 0;
   border-radius: 999px;
-  transition: background-color .62s ease, border-color .62s ease,
-    transform .72s cubic-bezier(.22, 1, .36, 1);
+  transition: transform .72s cubic-bezier(.22, 1, .36, 1);
 }
 
 .work-page .music-dashboard-tabs i.is-active {
@@ -3273,9 +3272,7 @@ body > .footer {
 }
 
 .work-page .music-chart {
-  transition: width .82s cubic-bezier(.22, 1, .36, 1),
-    transform .68s cubic-bezier(.22, 1, .36, 1),
-    background-color .35s ease, border-color .35s ease !important;
+  transition: width .82s cubic-bezier(.22, 1, .36, 1), transform .68s cubic-bezier(.22, 1, .36, 1) !important;
 }
 
 .work-page .music-chart.show-line {
