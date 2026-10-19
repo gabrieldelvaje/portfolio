@@ -4,7 +4,7 @@
 .global-sales-sidebar i{width:58%;height:6px;border-radius:999px;background:#dfdfdc;opacity:.58}
 .global-sales-sidebar i:first-child{width:100%;opacity:1}
 .global-sales-main{position:relative;border-radius:26px;background:var(--sales-surface);min-width:0;min-height:0;display:grid;grid-template-rows:28% 1fr;gap:6%;padding:7.25% 5.6%}
-.global-sales-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:5%;min-height:0}
+.global-sales-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:5%;min-height:0}
 .global-sales-kpis span{border:1px solid var(--sales-line);border-radius:20px;background:var(--sales-panel)}
 .global-sales-charts{min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:5%}
 .global-sales-bars,.global-sales-donut-panel{min-width:0;min-height:0;border:1px solid var(--sales-line);border-radius:20px;background:var(--sales-panel)}
