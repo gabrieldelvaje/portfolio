@@ -1212,3 +1212,45 @@ if (projectHeader) {
   syncProjectHeaderHeight();
 }
 
+
+// One hover cycle: three synchronized selections, then the original artwork.
+document.querySelectorAll('.global-sales-preview').forEach(preview => {
+  const bars = [...preview.querySelectorAll('.global-sales-bars i')];
+  const indicators = [...preview.querySelectorAll('.global-sales-sidebar i')];
+  const slices = [...preview.querySelectorAll('.global-sales-donut-panel circle')];
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const states = [
+    { active: 0, values: [100, 83, 68, 51, 35], shares: [58, 25, 17] },
+    { active: 0, values: [66, 94, 43, 80, 55], shares: [38, 42, 20] },
+    { active: 1, values: [47, 62, 98, 38, 79], shares: [24, 31, 45] },
+    { active: 2, values: [84, 39, 57, 96, 70], shares: [46, 18, 36] }
+  ];
+  const sequence = [[0, 0], [0, .04], [1, .22], [1, .28], [2, .46], [2, .52], [3, .70], [3, .76], [0, .96], [0, 1]];
+  let playing = false;
+  function play() {
+    if (playing || reducedMotion.matches) return;
+    playing = true;
+    const animations = [];
+    const animate = (element, frame) => animations.push(element.animate(
+      sequence.map(([state, offset]) => ({ ...frame(states[state]), offset, easing: 'cubic-bezier(.22,1,.36,1)' })),
+      { duration: 3000, iterations: 1, fill: 'forwards' }
+    ));
+    bars.forEach((bar, index) => animate(bar, state => {
+      const rank = state.values.filter(value => value > state.values[index]).length;
+      return { top: `${13 + rank * 16}%`, width: `${state.values[index] * .76}%` };
+    }));
+    indicators.forEach((indicator, index) => animate(indicator, state => ({
+      width: state.active === index ? '100%' : '58%', opacity: state.active === index ? 1 : .58
+    })));
+    slices.forEach((slice, index) => animate(slice, state => ({
+      strokeDasharray: `${state.shares[index]} ${100 - state.shares[index]}`,
+      strokeDashoffset: `${-state.shares.slice(0, index).reduce((sum, share) => sum + share, 0)}`
+    })));
+    Promise.all(animations.map(animation => animation.finished.catch(() => {}))).then(() => {
+      animations.forEach(animation => animation.cancel());
+      playing = false;
+    });
+  }
+  preview.addEventListener('pointerenter', play);
+  preview.closest('.project-card-link')?.addEventListener('focus', play);
+});
