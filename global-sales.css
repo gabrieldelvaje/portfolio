@@ -1,5 +1,5 @@
 /* Scoped thumbnail: shares the existing Work card, title and footer styles. */
-.global-sales-dashboard{height:100%;width:100%;display:grid;grid-template-columns:12.2% 1fr;overflow:hidden;border:1px solid var(--work-card-border,#deddda);border-radius:26px;background:#0736fe;--sales-surface:#f3f3f1;--sales-panel:#e8e6e3;--sales-line:#dfdfdc;--sales-blue:#0736fe;--sales-secondary:#8b9eff;--sales-neutral:#d1d0cd}
+.global-sales-dashboard{height:100%;width:100%;display:grid;grid-template-columns:12.2% 1fr;overflow:hidden;border:1px solid var(--work-card-border,#deddda);border-radius:26px;background:linear-gradient(to right,var(--sales-blue) 0 50%,var(--sales-surface) 50% 100%);--sales-surface:#f3f3f1;--sales-panel:#e8e6e3;--sales-line:#dfdfdc;--sales-blue:#0736fe;--sales-secondary:#8b9eff;--sales-neutral:#d1d0cd}
 .global-sales-sidebar{display:grid;align-content:center;justify-items:center;gap:7px;padding:0 20%;background:var(--sales-blue)}
 .global-sales-sidebar i{width:58%;height:6px;border-radius:999px;background:#dfdfdc;opacity:.58}
 .global-sales-sidebar i:first-child{width:100%;opacity:1}
